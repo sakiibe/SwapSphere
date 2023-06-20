@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import Card from "../components/Card";
-import image1 from '../images/image1.jpg';
 import product_image from "../images/product.jpg"
 
 export default function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
-  
+
 
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
@@ -17,7 +16,7 @@ export default function HomePage() {
     setSelectedSubcategory(subcategory);
   };
 
-  const handleClickEvent = () =>{
+  const handleClickEvent = () => {
 
   }
 
@@ -161,7 +160,7 @@ export default function HomePage() {
       subcategory: "Screen",
     },
   ];
-  
+
 
   const filteredProductListings = productListings.filter(
     (product) =>
@@ -178,11 +177,10 @@ export default function HomePage() {
           {categories.map((category) => (
             <li key={category.id}>
               <button
-                className={`${
-                  category.name === selectedCategory
-                    ? "bg-gray-200"
-                    : "bg-gray-100"
-                } w-full px-4 py-2 rounded-md`}
+                className={`${category.name === selectedCategory
+                  ? "bg-gray-200"
+                  : "bg-gray-100"
+                  } w-full px-4 py-2 rounded-md`}
                 onClick={() => handleCategoryChange(category.name)}
               >
                 {category.name}
@@ -192,11 +190,10 @@ export default function HomePage() {
                   {category.subcategories.map((subcategory) => (
                     <li key={subcategory}>
                       <button
-                        className={`${
-                          subcategory === selectedSubcategory
-                            ? "bg-gray-200"
-                            : "bg-gray-100"
-                        } w-full px-6 py-2 rounded-md`}
+                        className={`${subcategory === selectedSubcategory
+                          ? "bg-gray-200"
+                          : "bg-gray-100"
+                          } w-full px-6 py-2 rounded-md`}
                         onClick={() => handleSubcategoryChange(subcategory)}
                       >
                         {subcategory}
@@ -216,11 +213,24 @@ export default function HomePage() {
             Products in {selectedSubcategory}
           </h2>
         ) : (
-          <h2 className="text-2xl font-bold mb-4">All Products " {selectedCategory} "</h2>
+          <h2 className="text-2xl font-bold mb-4">All Products</h2>
         )}
-        <div className="grid grid-cols-3 gap-4" >
-          {filteredProductListings.length > 0 ? (
-            filteredProductListings.map((product) => (
+        <div className="grid grid-cols-3 gap-4">
+          {selectedCategory || selectedSubcategory ? (
+            filteredProductListings.length > 0 ? (
+              filteredProductListings.map((product) => (
+                <Card
+                  key={product.id}
+                  title={product.title}
+                  imageSrc={product.imageSrc}
+                  price={product.price}
+                />
+              ))
+            ) : (
+              <p>No products found.</p>
+            )
+          ) : (
+            productListings.map((product) => (
               <Card
                 key={product.id}
                 title={product.title}
@@ -228,8 +238,6 @@ export default function HomePage() {
                 price={product.price}
               />
             ))
-          ) : (
-            <p>No products found.</p>
           )}
         </div>
       </div>
