@@ -1,7 +1,7 @@
 import React from 'react';
 import { FiSend, FiFacebook, FiInstagram, FiMail, FiPhone } from 'react-icons/fi';
 import { motion } from 'framer-motion';
-import './index.css';
+import '../index.css';
 
 const ContactUsPage = () => {
   return (
