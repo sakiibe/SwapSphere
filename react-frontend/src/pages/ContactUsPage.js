@@ -5,7 +5,7 @@ import '../index.css';
 
 const ContactUsPage = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 py-6 flex flex-col justify-center sm:py-12">
+    <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12">
       <div className="max-w-md mx-auto px-4">
       <div className="bg-white shadow-xl rounded-xl px-8 pt-6 pb-8 mb-4">     
            <div className="mb-4">
