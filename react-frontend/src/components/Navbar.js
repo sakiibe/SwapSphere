@@ -85,6 +85,14 @@ export default function Navbar() {
                     Contact
                   </Link>
                 </li>
+                <li>
+                  <Link
+                    to="/faq"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    FAQ
+                  </Link>
+                </li>
               </ul>
             </div>
             
