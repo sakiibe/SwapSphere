@@ -6,6 +6,7 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import FAQ from './pages/FAQ';
+import Wishlist from './pages/Wishlist';
 
 
 
@@ -19,6 +20,8 @@ function App() {
       <Route path = "/about" element = {<About />} />
       <Route path = "/contact" element = {<ContactUsPage />} />
       <Route path = "/faq" element = {<FAQ />} />
+      <Route path = "/wishlist" element = {<Wishlist />} />
+
     </Routes>
     <Footer />
     </div>
