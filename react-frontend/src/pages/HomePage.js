@@ -187,7 +187,7 @@ export default function HomePage() {
     const headers = {'Content-Type':'application/json',
                     'Access-Control-Allow-Origin':'*',
                     'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'}
-    const url = 'http://localhost:3001/add'; 
+    const url = 'http://localhost:3001/wishlist/addproduct'; 
     const email = "test@12.cs"; // Hardcoded email
     const productID = product.id
     const requestOptions = {
