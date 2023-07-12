@@ -16,7 +16,13 @@ app.use(express.json());
 app.use(cors()); // Enable CORS
 
 const wishlistRoutes = require('./routes/wishlist');
-app.use('/', wishlistRoutes);
+const productRoutes = require('./routes/product');
+const userRoutes = require('./routes/user');
+
+app.use('/wishlist', wishlistRoutes);
+app.use('/user', userRoutes);
+app.use('/product', productRoutes);
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const port =  3001;

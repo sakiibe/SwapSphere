@@ -11,7 +11,9 @@ const wishlist = require('../models/wishlist');
 
 
 module.exports = router
-router.post('/add', async (req, res) => {
+
+// add a new product to the wishlist 
+router.post('/addproduct', async (req, res) => {
     const { email, productID } = req.body;
   
     try {
@@ -59,7 +61,11 @@ router.post('/add', async (req, res) => {
   });
   
   
-  router.post('/remove', async (req, res) => {
+
+
+
+//remove the product from the exisitng wishlist
+  router.post('/removeproduct', async (req, res) => {
     const { email, productID } = req.body;
   
     try {
@@ -88,7 +94,6 @@ router.post('/add', async (req, res) => {
         }
   
         // Remove the product from the wishlist
-        // Remove the product from the wishlist
     existingWishlist.products = existingWishlist.products.filter((productId) => {
       if (productId.toString() !== existingProduct._id.toString()) {
         console.log(existingProduct._id+'====', productId.toString());
@@ -110,25 +115,12 @@ router.post('/add', async (req, res) => {
     }
   });
   
+ 
 
-  router.get('/product/:id', async (req, res) => {
-    const productId = req.params.id;
-  
-    console.log(productId)
-    try {
-      const existingProduct = await product.findById(productId);
-  
-      if (!existingProduct) {
-        return res.status(404).json({ message: 'Product not found' });
-      }
-  
-      return res.status(200).json({ product: existingProduct });
-    } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Internal server error: ' + error.message });
-    }
-  });
 
+
+
+  //get all wishlist items of a particular user by email as ID
   router.get('/getwishlist/:email', async (req, res) => {
     const email = req.params.email;
   
