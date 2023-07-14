@@ -56,7 +56,7 @@ export default function Navbar() {
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
               <Link to="/" className="flex items-center">
-                <h1 className="text-white font-bold text-xl">Logo</h1>
+                <h1 className="text-white font-bold text-xl italic" >Swap Sphere</h1>
               </Link>
             </div>
             <div className="hidden sm:block sm:ml-6">
@@ -127,16 +127,16 @@ export default function Navbar() {
                     />
                   </div>
                 </div>
- {/* Wishlist section */}
- <div className="relative ml-3">
-            <Link to="/wishlist" className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-              <span className="sr-only">Open wishlist</span>
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-              </svg>
-              {/* <span className="ml-1 text-white">{wishlistCount}</span> */}
-            </Link>
-          </div>
+                {/* Wishlist section */}
+                <div className="relative ml-3">
+                  <Link to="/wishlist" className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                    <span className="sr-only">Open wishlist</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
+                    </svg>
+                    {/* <span className="ml-1 text-white">{wishlistCount}</span> */}
+                  </Link>
+                </div>
                 {/* <!-- Profile dropdown --> */}
                 <div className="relative ml-3">
 
