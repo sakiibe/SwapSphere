@@ -68,10 +68,41 @@ function CreateListing() {
     "Newfoundland and Labrador",
     "Nova Scotia",
     "Ontario",
-    "Prince Edward Island",
     "Quebec",
     "Saskatchewan",
   ];
+
+  const cities = {
+    Alberta: ["Calgary", "Edmonton", "Red Deer", "Lethbridge", "St. Albert"],
+    "British Columbia": ["Vancouver", "Victoria", "Kelowna"],
+    Manitoba: ["Winnipeg", "Brandon", "Steinbach"],
+    "New Brunswick": ["Bathurst", "Caraquet", "Dalhousie", "Fredericton"],
+    "Newfoundland and Labrador": [
+      "Labrador City",
+      "Placentia",
+      "Saint Anthony",
+      "St. John's",
+      "Wabana",
+    ],
+    "Nova Scotia": [
+      "Halifax",
+      "Liverpool",
+      "Springhill",
+      "Sydney",
+      "",
+      "Yarmouth",
+    ],
+    Ontario: [
+      "Guelph",
+      "Kitchener",
+      "Mississauga",
+      "Oshawa",
+      "Ottawa",
+      "Toronto",
+    ],
+    Quebec: ["Montreal", "Sainte-Anne-de-Beaupré", "Sept-Îles"],
+    Saskatchewan: ["Prince Albert", "Regina", "Saskatoon"],
+  };
 
   return (
     <div className="bg-gray-100 p-10 pb-50 min-h-screen">
@@ -173,6 +204,7 @@ function CreateListing() {
               value={province}
               onChange={(e) => setProvince(e.target.value)}
             >
+              <option value="">Select a province</option>
               {provinces.map((province) => (
                 <option key={province} value={province}>
                   {province}
@@ -183,14 +215,21 @@ function CreateListing() {
             <label htmlFor="city" className="font-bold text-lg">
               City
             </label>
-            <input
-              type="text"
+            <select
               id="city"
               name="city"
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
               value={city}
               onChange={(e) => setCity(e.target.value)}
-            />
+            >
+              <option value="">Select a city</option>
+              {province &&
+                cities[province].map((city) => (
+                  <option key={city} value={city}>
+                    {city}
+                  </option>
+                ))}
+            </select>
 
             <label htmlFor="description" className="font-bold text-lg">
               Description
