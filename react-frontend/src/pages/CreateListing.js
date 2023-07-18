@@ -15,7 +15,7 @@ function CreateListing() {
     if (currentPage === 1) {
       if (!title.trim() || title.length < 3) {
         alert(
-          "Please enter the title. It should be at least 5 characters long."
+          "Please enter the title. It should be at least 3 characters long."
         );
         return;
       }
@@ -45,19 +45,31 @@ function CreateListing() {
     }
   };
 
-  const handleFormSubmission = () => {
-    console.log({
-      title,
-      fileUpload,
-      price,
-      category,
-      condition,
-      description,
-      province,
-      city,
-    });
+  const handleFormSubmission = async () => {
+    // Form a FormData object to hold the file and other data
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("fileUpload", fileUpload);
+    formData.append("price", price);
+    formData.append("category", category);
+    formData.append("condition", condition);
+    formData.append("description", description);
+    formData.append("province", province);
+    formData.append("city", city);
 
-    alert("Listing added!");
+    try {
+      // Make the POST request to the server
+      const response = await fetch("/product", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while adding the listing.");
+    }
   };
 
   const provinces = [
