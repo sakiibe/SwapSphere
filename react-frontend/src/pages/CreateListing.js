@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 function CreateListing() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,7 +49,8 @@ function CreateListing() {
   const handleFormSubmission = async () => {
     // Form a FormData object to hold the file and other data
     const formData = new FormData();
-    formData.append("title", title);
+    formData.append("productID", uuidv4()); // Autogenerate unique product ID
+    formData.append("productName", title);
     formData.append("fileUpload", fileUpload);
     formData.append("price", price);
     formData.append("category", category);
@@ -59,7 +61,7 @@ function CreateListing() {
 
     try {
       // Make the POST request to the server
-      const response = await fetch("/product", {
+      const response = await fetch("/product/add", {
         method: "POST",
         body: formData,
       });
