@@ -9,10 +9,7 @@ const product = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
-    type: String,
-    alias: "productName",
-  },
+
   fileUpload: {
     type: String, // TODO: change later
     required: false,
