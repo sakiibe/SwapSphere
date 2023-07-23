@@ -22,10 +22,10 @@ function CreateListing() {
       }
     }
 
-    if (currentPage === 2 && !fileUpload) {
-      alert("Please upload an image");
-      return;
-    }
+    // if (currentPage === 2 && !fileUpload) {
+    //   alert("Please upload an image");
+    //   return;
+    // }
 
     if (currentPage === 3) {
       if (!price.trim() || isNaN(price) || Number(price) <= 0) {
@@ -61,7 +61,7 @@ function CreateListing() {
 
     try {
       // Make the POST request to the server
-      const response = await fetch("/product/add", {
+      const response = await fetch("http://localhost:3001/product/add", {
         method: "POST",
         body: formData,
       });
