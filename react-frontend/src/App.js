@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import FAQ from "./pages/FAQ";
 import Wishlist from "./pages/Wishlist";
 import CreateListing from "./pages/CreateListing";
+import Product from "./pages/Product";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/CreateListing" element={<CreateListing />} />
+          <Route path="/product" element={<Product />} />
         </Routes>
         <Footer />
       </div>
