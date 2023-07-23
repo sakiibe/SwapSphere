@@ -11,9 +11,7 @@ module.exports = router;
 //add new product
 router.post("/add", upload.none(), async (req, res) => {
   try {
-    console.log("Received POST request to /product/add");
     console.log(req.body);
-    // Create a new product based on the request body
     const newProduct = new product({
       productID: req.body.productID,
       productName: req.body.productName,
