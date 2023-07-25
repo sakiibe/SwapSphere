@@ -18,6 +18,7 @@ router.post("/add", upload.none(), async (req, res) => {
       fileUpload: req.body.fileUpload ? req.body.fileUpload : null,
       price: req.body.price,
       category: req.body.category,
+      subcategory: req.body.subcategory,
       condition: req.body.condition,
       description: req.body.description,
       province: req.body.province,

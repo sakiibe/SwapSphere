@@ -6,7 +6,8 @@ function CreateListing() {
   const [title, setTitle] = useState("");
   const [fileUpload, setFileUpload] = useState(null);
   const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("home-appliance");
+  const [category, setCategory] = useState();
+  const [subcategory, setSubcategory] = useState("");
   const [condition, setCondition] = useState("mint");
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
@@ -54,6 +55,7 @@ function CreateListing() {
     formData.append("fileUpload", fileUpload);
     formData.append("price", price);
     formData.append("category", category);
+    formData.append("subcategory", subcategory);
     formData.append("condition", condition);
     formData.append("description", description);
     formData.append("province", province);
@@ -118,6 +120,30 @@ function CreateListing() {
     Saskatchewan: ["Prince Albert", "Regina", "Saskatoon"],
   };
 
+  const categories = {
+    "home-appliance": "Home Appliance",
+    electronics: "Electronics",
+    vehicle: "Vehicle",
+    furniture: "Furniture",
+    instruments: "Instruments",
+    tools: "Tools",
+  };
+
+  const subcategories = {
+    "home-appliance": ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
+    electronics: [
+      "Laptop",
+      "Phones",
+      "Computer Accessories",
+      "Video Games & Consoles",
+      "Smart Watch",
+    ],
+    vehicle: ["Car", "Motorcycle", "Bicycle", "Truck"],
+    furniture: ["Table", "Chair", "Cabinet", "Bed"],
+    instruments: ["Guitar", "Piano", "Violin", "Drums"],
+    tools: ["Hand Tools", "Power Tools", "Gardening Tools", "Automotive Tools"],
+  };
+
   return (
     <div className="bg-gray-100 p-10 pb-50 min-h-screen">
       <h1 className="text-center text-3xl font-semibold pb-20 text-black">
@@ -162,7 +188,6 @@ function CreateListing() {
             <h2 className="step-title text-xl text-black font-semibold pb-4 border-b border-blue-200">
               Add Description
             </h2>
-
             <label htmlFor="price" className="font-bold text-lg">
               Price
             </label>
@@ -174,7 +199,6 @@ function CreateListing() {
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-
             <label htmlFor="category" className="font-bold text-lg">
               Category
             </label>
@@ -183,16 +207,40 @@ function CreateListing() {
               name="category"
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
               value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              onChange={(e) => {
+                setCategory(e.target.value);
+                setSubcategory("");
+              }}
             >
-              <option value="home-appliance">Home-appliance</option>
-              <option value="electronics">Electronics</option>
-              <option value="vehicle">Vehicle</option>
-              <option value="furniture">Furniture</option>
-              <option value="instruments">Instruments</option>
-              <option value="tools">Tools</option>
+              <option value="">Select a category</option>
+              {Object.keys(categories).map((categoryKey) => (
+                <option key={categoryKey} value={categoryKey}>
+                  {categories[categoryKey]}
+                </option>
+              ))}
             </select>
 
+            {category && (
+              <div className="mt-4">
+                <label htmlFor="subcategory" className="font-bold text-lg">
+                  Subcategory
+                </label>
+                <select
+                  id="subcategory"
+                  name="subcategory"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  value={subcategory}
+                  onChange={(e) => setSubcategory(e.target.value)}
+                >
+                  <option value="">Select a subcategory</option>
+                  {subcategories[category].map((subcategory) => (
+                    <option key={subcategory} value={subcategory}>
+                      {subcategory}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
             <label htmlFor="condition" className="font-bold text-lg">
               Condition
             </label>
@@ -207,7 +255,6 @@ function CreateListing() {
               <option value="used">Used</option>
               <option value="aged">Aged</option>
             </select>
-
             <label htmlFor="province" className="font-bold text-lg">
               Province
             </label>
@@ -225,7 +272,6 @@ function CreateListing() {
                 </option>
               ))}
             </select>
-
             <label htmlFor="city" className="font-bold text-lg">
               City
             </label>
@@ -244,7 +290,6 @@ function CreateListing() {
                   </option>
                 ))}
             </select>
-
             <label htmlFor="description" className="font-bold text-lg">
               Description
             </label>

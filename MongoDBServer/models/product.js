@@ -22,6 +22,10 @@ const product = new mongoose.Schema({
     type: String,
     required: true,
   },
+  subcategory: {
+    type: String,
+    required: true,
+  },
   condition: {
     type: String,
     required: true,
