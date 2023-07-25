@@ -4,6 +4,14 @@ const app = express();
 const mongoose = require("mongoose");
 const specs = require("./swagger");
 const swaggerUi = require("swagger-ui-express");
+const AWS = require("aws-sdk");
+
+AWS.config.update({
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  region: process.env.AWS_REGION,
+});
+
 mongoose.connect(
   "mongodb+srv://tapanpatel:tapanpatel@mongocluster.2v9b1cl.mongodb.net/csci5709project",
   { useNewUrlParser: true }
