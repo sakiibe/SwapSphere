@@ -1,3 +1,5 @@
+//author: Sakib Sadman <sakib.sadman@dal.ca>
+
 const mongoose = require("mongoose");
 
 const product = new mongoose.Schema({
