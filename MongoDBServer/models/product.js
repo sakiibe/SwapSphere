@@ -1,3 +1,5 @@
+//author: Sakib Sadman <sakib.sadman@dal.ca>
+
 const mongoose = require("mongoose");
 
 const product = new mongoose.Schema({
@@ -19,6 +21,10 @@ const product = new mongoose.Schema({
     required: true,
   },
   category: {
+    type: String,
+    required: true,
+  },
+  subcategory: {
     type: String,
     required: true,
   },
