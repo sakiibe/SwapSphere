@@ -38,14 +38,7 @@ router.post("/add", upload.single("fileUpload"), async (req, res) => {
     let fileUploadURL = null;
 
     if (req.file) {
-      const command = new GetObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: req.file.key,
-      });
-
-      fileUploadURL = await getSignedUrl(s3Client, command, {
-        expiresIn: 3600,
-      });
+      fileUploadURL = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.key}`;
     }
 
     const newProduct = new product({
@@ -99,6 +92,8 @@ router.get("/product/getAll", async (req, res) => {
     return res.status(200).json({ products: allProducts });
   } catch (error) {
     console.error("Error:", error);
-    res.status(500).json({ message: "Internal server error: " + error.message });
+    res
+      .status(500)
+      .json({ message: "Internal server error: " + error.message });
   }
 });
