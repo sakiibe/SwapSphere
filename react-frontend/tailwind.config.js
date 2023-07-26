@@ -2,7 +2,12 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Roboto", "ui-sans-serif", "system-ui"],
+        serif: ["Montserrat", "ui-serif", "Georgia"],
+      },
+    },
   },
   plugins: [],
-}
+};
