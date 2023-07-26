@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
+import { Link } from "react-router-dom";
 import product_image from "../images/product.jpg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import axios from 'axios';
 
 import '../css/HomePage.css'
 import slider1 from '../images/slider1.png'
@@ -12,6 +14,24 @@ import Footer from "../components/Footer";
 
 export default function HomePage() {
 
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/product/product/getAll")
+      .then((response) => {
+        setProducts(response.data.products);
+        console.log("response", response);
+        console.log("response data", response.data);
+        console.log("response prods", response.data.products);
+        console.log("data is ")
+        console.log(products)
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   // categories and subcategories feature
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -26,12 +46,6 @@ export default function HomePage() {
   const handleSubcategoryChange = (subcategory) => {
     setSelectedSubcategory(subcategory);
   };
-
-  const handleClickEvent = () => {
-
-  }
-
-
   const categories = [
     {
       id: 1,
@@ -77,130 +91,9 @@ export default function HomePage() {
 
   ];
 
-  const productListings = [
-    {
-      id: 1,
-      title: "Product 1",
-      imageSrc: product_image,
-      price: "$100",
-      category: "Furniture",
-      subcategory: "Table",
-    },
-    {
-      id: 2,
-      title: "Product 2",
-      imageSrc: product_image,
-      price: "$200",
-      category: "Furniture",
-      subcategory: "Chair",
-    },
-    {
-      id: 3,
-      title: "Product 3",
-      imageSrc: product_image,
-      price: "$300",
-      category: "Furniture",
-      subcategory: "Bedframe",
-    },
-    {
-      id: 4,
-      title: "Product 4",
-      imageSrc: product_image,
-      price: "$50",
-      category: "Sports",
-      subcategory: "Football",
-    },
-    {
-      id: 5,
-      title: "Product 5",
-      imageSrc: product_image,
-      price: "$80",
-      category: "Sports",
-      subcategory: "Tennis Racquet",
-    },
-    {
-      id: 6,
-      title: "Product 6",
-      imageSrc: product_image,
-      price: "$120",
-      category: "Sports",
-      subcategory: "Bat",
-    },
-    {
-      id: 7,
-      title: "Product 7",
-      imageSrc: product_image,
-      price: "$150",
-      category: "Computer Parts",
-      subcategory: "Hard-disk",
-    },
-    {
-      id: 8,
-      title: "Product 8",
-      imageSrc: product_image,
-      price: "$250",
-      category: "Computer Parts",
-      subcategory: "Screen",
-    },
-    {
-      id: 9,
-      title: "Product 9",
-      imageSrc: product_image,
-      price: "$180",
-      category: "Computer Parts",
-      subcategory: "Keyboards",
-    },
-    {
-      id: 10,
-      title: "Product 10",
-      imageSrc: product_image,
-      price: "$150",
-      category: "Furniture",
-      subcategory: "Table",
-    },
-    {
-      id: 11,
-      title: "Product 11",
-      imageSrc: product_image,
-      price: "$250",
-      category: "Furniture",
-      subcategory: "Chair",
-    },
-    {
-      id: 12,
-      title: "Product 12",
-      imageSrc: product_image,
-      price: "$120",
-      category: "Sports",
-      subcategory: "Football",
-    },
-    {
-      id: 13,
-      title: "Product 13",
-      imageSrc: product_image,
-      price: "$180",
-      category: "Sports",
-      subcategory: "Tennis Racquet",
-    },
-    {
-      id: 14,
-      title: "Product 14",
-      imageSrc: product_image,
-      price: "$200",
-      category: "Computer Parts",
-      subcategory: "Hard-disk",
-    },
-    {
-      id: 15,
-      title: "Product 15",
-      imageSrc: product_image,
-      price: "$300",
-      category: "Computer Parts",
-      subcategory: "Screen",
-    },
-  ];
 
-  const filteredProductListings = productListings.filter(
+
+  const filteredProductListings = products.filter(
     (product) =>
       product.category === selectedCategory &&
       (selectedSubcategory === null || product.subcategory === selectedSubcategory)
@@ -308,7 +201,12 @@ export default function HomePage() {
             {selectedCategory || selectedSubcategory ? (
               filteredProductListings.length > 0 ? (
                 filteredProductListings.map((product) => (
-                  <div key={product.id}>
+                  <Link
+                    key={product.id}
+                    to={`/product?id=${product.productID}&email=${product.email}`}
+                    className="flex flex-col items-center justify-center"
+                  >
+
                     <Card
                       title={product.title}
                       imageSrc={product.imageSrc}
@@ -316,7 +214,7 @@ export default function HomePage() {
                     />
 
                     {/* insert slider 1 image here */}
-                    <img src={slider1} alt="Slider 1" />
+                    < img src={slider1} alt="Slider 1" />
 
                     {isWishlisted(product.id) ? (
                       <button disabled className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
@@ -331,17 +229,17 @@ export default function HomePage() {
                         </svg>
                       </button>
                     )}
-                  </div>
+                  </Link>
                 ))
               ) : (
                 <p>No products found.</p>
               )
             ) : (
-              productListings.map((product) => (
-                <div key={product.id}>
+              products.map((product) => (
+                <div key={product.productID}>
                   <Card
-                    title={product.title}
-                    imageSrc={product.imageSrc}
+                    title={product.productName}
+                    // imageSrc={product.imageSrc}
                     price={product.price}
                   />
                   {isWishlisted(product.id) ? (
@@ -364,6 +262,6 @@ export default function HomePage() {
           <ToastContainer position="bottom-right" />
         </div>
       </div>
-    </div>
+    </div >
   );
 }  

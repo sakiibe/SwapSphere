@@ -28,8 +28,10 @@ const LoginPage = () => {
         console.log(response);
           const  token  = response.data.token;
           localStorage.setItem('authToken', response.data.token);
+          
           if(response.data.status === 'true'){
-
+            localStorage.setItem('email', response.data.email);
+            console.log("email of user is " + localStorage.getItem('email'))
             navigate("/")
           }
         } catch (error) {
