@@ -3,19 +3,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const WishlistPage = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:3001/wishlist/getwishlist/test@12.cs')
+    fetch('http://localhost:8080/wishlist/getwishlist/test@12.cs')
       .then((response) => response.json())
       .then((data) => setWishlistItems(data.products))
       .catch((error) => console.log(error));
   }, []);
 
   const fetchWishlistItems = () => {
-    fetch('http://localhost:3001/wishlist/getwishlist/test@12.cs')
+    fetch('http://localhost:8080/wishlist/getwishlist/test@12.cs')
       .then((response) => response.json())
       .then((data) => setWishlistItems(data.products))
       .catch((error) => console.log(error));
@@ -23,7 +25,7 @@ const WishlistPage = () => {
 
   const handleDelete = (itemId) => {
     // Call the API to remove the item from the wishlist
-    fetch('http://localhost:3001/wishlist/removeproduct', {
+    fetch('http://localhost:8080/wishlist/removeproduct', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -49,6 +51,8 @@ const WishlistPage = () => {
   };
 
   return (
+    <div>
+    <Navbar />
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Wishlist</h1>
       {wishlistItems && wishlistItems.length > 0 ? (
@@ -71,6 +75,7 @@ const WishlistPage = () => {
         <p>Your wishlist is empty.</p>
       )}
       <ToastContainer /> {/* Add this component to display the toast notifications */}
+    </div>
     </div>
   );
 };

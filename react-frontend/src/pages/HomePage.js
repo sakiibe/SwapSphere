@@ -1,12 +1,22 @@
 import React, { useEffect, useState } from "react";
+
 import Card from "../components/Card";
 import product_image from "../images/product.jpg"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import 'swiper/css/bundle';
 import Swiper from 'swiper/bundle';
+import {  SwiperSlide } from 'swiper/react';
+import { Pagination, Navigation } from 'swiper';
+
 import '../css/HomePage.css'
 import slider1 from '../images/slider1.png'
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+
+
+SwiperCore.use([Pagination, Navigation]);
+
 export default function HomePage() {
 
 
@@ -218,13 +228,11 @@ export default function HomePage() {
 
   const handleClick = (product) => {
     setWishlist([...wishlist, product]);
-    console.log(product.title + ' added to wishlist!')
-    const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
-    }
-    const url = 'http://localhost:3001/wishlist/addproduct';
+    console.log(product.title+' added to wishlist!')
+    const headers = {'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin':'*',
+                    'Access-Control-Allow-Methods':'POST,PATCH,OPTIONS'}
+    const url = 'http://localhost:8080/wishlist/addproduct'; 
     const email = "test@12.cs"; // Hardcoded email
     const productID = product.id
     const requestOptions = {
@@ -277,7 +285,66 @@ export default function HomePage() {
 
   })
   return (
-    <div>
+    
+    <div> 
+    <Navbar />
+    <div className="flex sm:py-12">
+      <div className="w-1/5 px-4 py-8">
+        {/* Sidebar */}
+        <h2 className="text-2xl font-bold mb-4">Categories</h2>
+        <ul className="space-y-2">
+          {categories.map((category) => (
+            <li key={category.id}>
+              <button
+                className={`${category.name === selectedCategory
+                  ? "bg-gray-200"
+                  : "bg-gray-100"
+                  } w-full px-4 py-2 rounded-md`}
+                onClick={() => handleCategoryChange(category.name)}
+              >
+                {category.name}
+              </button>
+              {selectedCategory === category.name && (
+                <ul className="pl-5 space-y-2">
+                  {category.subcategories.map((subcategory) => (
+                    <li key={subcategory}>
+                      <button
+                        className={`${subcategory === selectedSubcategory
+                          ? "bg-gray-200"
+                          : "bg-gray-100"
+                          } w-full px-6 py-2 rounded-md`}
+                        onClick={() => handleSubcategoryChange(subcategory)}
+                      >
+                        {subcategory}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="w-4/5 px-4 py-8">
+        {/* Product Listing */}
+        {selectedCategory && selectedSubcategory ? (
+          <h2 className="text-2xl font-bold mb-4">
+            Products in {selectedSubcategory}
+          </h2>
+        ) : (
+          <h2 className="text-2xl font-bold mb-4">All Products</h2>
+        )}
+        <div className="grid grid-cols-3 gap-4">
+          {selectedCategory || selectedSubcategory ? (
+            filteredProductListings.length > 0 ? (
+              filteredProductListings.map((product) => (
+                <div>
+                <Card
+                  key={product.id}
+                  title={product.title}
+                  imageSrc={product.imageSrc}
+                  price={product.price}
+                />
 
       <div >
         {/* insert slider 1 image here */}
@@ -390,8 +457,9 @@ export default function HomePage() {
 
         </div>
         <ToastContainer position="bottom-right" />
+     
+        </div>
       </div>
     </div>
-
   );
 }

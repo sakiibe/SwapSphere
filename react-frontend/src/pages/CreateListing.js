@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 function CreateListing() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -65,7 +67,7 @@ function CreateListing() {
 
     try {
       // Make the POST request to the server
-      const response = await fetch("http://localhost:3001/product/add", {
+      const response = await fetch("http://localhost:8080/product/add", {
         method: "POST",
         body: formData,
       });
@@ -147,6 +149,8 @@ function CreateListing() {
   };
 
   return (
+    <div>
+    <Navbar />
     <div className="bg-gray-100 p-10 pb-50 min-h-screen">
       <h1 className="text-center text-3xl font-semibold pb-20 text-black">
         Create Listing
@@ -312,6 +316,7 @@ function CreateListing() {
           {currentPage < 3 ? "Next" : "Post"}
         </button>
       </div>
+    </div>
     </div>
   );
 }
