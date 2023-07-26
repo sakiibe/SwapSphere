@@ -12,19 +12,19 @@ export default function Navbar() {
   const [loginError,setLoginError]= useState('');
 
   const handleLogout = async (e) => {
+    console.log("Flag")
     e.preventDefault();
     const tokenrequest = {
-      token  : localStorage.getItem("token"),
+      token : localStorage.getItem("authToken"),
     };
     try {
-      // console.log(loginData)
-      const response = await axios.delete('http://localhost:8080/user/deleteTokens', tokenrequest);
+      console.log(tokenrequest.token)
+      const response = await axios.post('http://localhost:8080/user/deleteTokens', tokenrequest);
       console.log(response);
         const  token  = response.data.token;
-        localStorage.setItem('authToken', ' ');
         if(response.data.status === 'true'){
-        
-          navigate("/user/login")
+          localStorage.setItem('authToken', ' ');
+          navigate("/user/login");
         }
       } catch (error) {
         if (error.response && error.response.data && error.response.data.error) {
@@ -210,16 +210,15 @@ export default function Navbar() {
                       tabIndex="-1"
                     >
                       {/* Dropdown menu items */}
-                      <a
-                        href="/profile"
+                      <div
                         className="block px-4 py-2 text-sm text-gray-700"
                         role="menuitem"
                         tabIndex="-1"
                         id="user-menu-item-0"
-                        onclick = {handleLogout}
+                        onClick = {handleLogout}
                       >
                         Logout
-                      </a>
+                      </div>
                       <a
                         href="/settings"
                         className="block px-4 py-2 text-sm text-gray-700"

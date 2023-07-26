@@ -57,8 +57,8 @@ router.post('/login',asyncHandler( async (req, res) => {
       const token = generateToken(User.email)
       const authToken = await authenticationTokens.findOne({email});
       if (authToken) {
-    
         authToken.token = token;
+        await authToken.save();
       }else{
         const newAuthToken = new authenticationTokens({
           email: email,
@@ -69,7 +69,7 @@ router.post('/login',asyncHandler( async (req, res) => {
       }
       res.status(200).json({ status : 'true', token : token });
     } catch (error) {
-        res.status(500).json({ status : 'false' });
+        res.status(500).json({ status : error });
     }
 }));
 
@@ -116,28 +116,29 @@ router.post('/checkTokens',asyncHandler( async (req, res) => {
   }
 }));
 
-router.delete('/deleteTokens',asyncHandler( async (req, res) => {
-  console.log(req.body);
+
+router.post('/deleteTokens', asyncHandler(async (req, res) => {
   try {
-    // Create a new user based on the request body
-    console.log("Flag1")
-    const authToken = await authenticationTokens.findOne({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InJhajEyMzRAZ21haWwuY29tIiwiaWF0IjoxNjkwMzcxOTUyLCJleHAiOjE2OTI5NjM5NTJ9.7CBs-UiKLNp25dwwjpt0OVmD0r6PaaprTNlcF4ZEEjs" });
-    console.log("op");
+    const token = req.body.token; // Get the token value from the request body
+    console.log(req);
+    const authToken = await authenticationTokens.findOne({ token });
+    console.log(authToken)
+    console.log("hello") ;// Find the token in the database based on its value
     if (authToken) {
-      await authToken.deleteOne();
+      await authToken.deleteOne(); // If the token exists, delete it
       res.status(201).json({
-        status : "true",
-      }); 
-    }else{
+        status: "true",
+      });
+    } else {
       res.status(201).json({
-        status : "false",
+        status: "false",
       });
     }
-    // Respond with the saved user object
   } catch (error) {
-    res.status(500).json({ status: 'false' });
+    res.status(500).json({ status: error });
   }
 }));
+
 
 
 const generateToken = (id)=>{

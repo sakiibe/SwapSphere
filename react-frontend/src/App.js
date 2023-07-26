@@ -28,7 +28,7 @@ function App() {
           <Route path = "/user/login" element = {<LoginPage />}/>
           <Route path = "/user/register" element = {<RegisterPage />}/>
         </Routes>
-       
+      
       </div>
     </BrowserRouter>
   );
