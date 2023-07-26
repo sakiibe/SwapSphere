@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const FAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -40,7 +42,9 @@ const FAQ = () => {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
-  return (
+  return (  
+  <div>
+    <Navbar />
     <div className="flex justify-center items-center h-screen">
   <div className="max-w-md">
     {questions.map((item, index) => (
@@ -72,6 +76,7 @@ const FAQ = () => {
       </div>
     ))}
   </div>
+</div>
 </div>
 
   );

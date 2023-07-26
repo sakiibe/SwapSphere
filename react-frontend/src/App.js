@@ -9,12 +9,14 @@ import FAQ from "./pages/FAQ";
 import Wishlist from "./pages/Wishlist";
 import CreateListing from "./pages/CreateListing";
 import Product from "./pages/Product";
+import LoginPage from "../src/pages/LoginPage/LoginPage";
+import RegisterPage from "../src/pages/RegisterPage/RegisterPage";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <Navbar />
+    
         <Routes>
           <Route index path="/" element={<HomePage />} />
           <Route path="/about" element={<About />} />
@@ -23,8 +25,10 @@ function App() {
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/CreateListing" element={<CreateListing />} />
           <Route path="/product" element={<Product />} />
+          <Route path = "/user/login" element = {<LoginPage />}/>
+          <Route path = "/user/register" element = {<RegisterPage />}/>
         </Routes>
-        <Footer />
+       
       </div>
     </BrowserRouter>
   );

@@ -2,9 +2,48 @@ import React from 'react';
 import { FiSend, FiFacebook, FiInstagram, FiMail, FiPhone } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 import '../index.css';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
+import axios from 'axios'; 
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const ContactUsPage = () => {
+  const verifyToken = async (e)=>{
+    const authToken = {
+      token :  localStorage.getItem('authToken'),
+    };
+    console.log(authToken)
+    const response =  await axios.post('http://localhost:8080/user/checkTokens',authToken);
+    const tokenstatus  = response.data.status;
+    console.log(tokenstatus)
+    if(tokenstatus=="true"){
+      return true;
+    }
+    else{
+      return false;
+      }
+  }
+  const navigate = useNavigate();
+  useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    const authToken = {
+      token :  localStorage.getItem('authToken'),
+    };
+    console.log(authToken)
+    axios.post('http://localhost:8080/user/checkTokens',authToken).then((response)=>{
+      const tokenstatus  = response.data.status;
+      console.log(tokenstatus)
+      if(tokenstatus!="true"){
+        navigate("/user/login"); // Assuming you have a login route defined
+      }
+    }).catch((error)=>{
+      console.log(error)
+    });
+  }, []); 
   return (
+  <div>
+    <Navbar />
     <div className="min-h-screen py-6 flex flex-col justify-center sm:py-12">
       <div className="max-w-md mx-auto px-4">
       <div className="bg-white shadow-xl rounded-xl px-8 pt-6 pb-8 mb-4">     
@@ -105,6 +144,7 @@ const ContactUsPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };
