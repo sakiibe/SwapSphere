@@ -2,9 +2,13 @@ import React from "react";
 import ImagePanel from "../components/ImagePanel";
 import ProductDetails from "../components/ProductDetails";
 import UserDetails from "../components/UserDetails";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 export default function Product() {
-  return (
+  return (  
+  <div>
+    <Navbar />
     <div className="flex flex-wrap">
       <div className="w-1/2 p-4">
         <ImagePanel />
@@ -13,6 +17,7 @@ export default function Product() {
         <ProductDetails />
         <UserDetails />
       </div>
+    </div>
     </div>
   );
 }

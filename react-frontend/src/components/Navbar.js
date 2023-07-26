@@ -1,10 +1,39 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
+import axios from 'axios'; // Import Axios
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isToggleOpen, setIsToggleOpen] = React.useState(false);
+  const [loginError,setLoginError]= useState('');
+
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    const tokenrequest = {
+      token  : localStorage.getItem("token"),
+    };
+    try {
+      // console.log(loginData)
+      const response = await axios.delete('http://localhost:8080/user/deleteTokens', tokenrequest);
+      console.log(response);
+        const  token  = response.data.token;
+        localStorage.setItem('authToken', ' ');
+        if(response.data.status === 'true'){
+        
+          navigate("/user/login")
+        }
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.error) {
+          setLoginError(error.response.data.error);
+        } else {
+          setLoginError('An error occurred during login');
+        }
+      }
+    };
 
   const userToggleDrop = () => {
     setIsToggleOpen((isToggleOpen) => !isToggleOpen);
@@ -187,8 +216,9 @@ export default function Navbar() {
                         role="menuitem"
                         tabIndex="-1"
                         id="user-menu-item-0"
+                        onclick = {handleLogout}
                       >
-                        Login
+                        Logout
                       </a>
                       <a
                         href="/settings"
