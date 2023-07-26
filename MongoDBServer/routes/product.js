@@ -2,6 +2,7 @@
 
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const swaggerAnnotations = require("../swagger-annotations");
 const multer = require("multer");
 const multerS3 = require("multer-s3");
@@ -86,5 +87,18 @@ router.get("/product/:id", async (req, res) => {
     res
       .status(500)
       .json({ message: "Internal server error: " + error.message });
+  }
+});
+
+router.get("/product/getAll", async (req, res) => {
+  try {
+    const allProducts = await product.find();
+    if (!allProducts || allProducts.length === 0) {
+      return res.status(404).json({ message: "No products found" });
+    }
+    return res.status(200).json({ products: allProducts });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error: " + error.message });
   }
 });
