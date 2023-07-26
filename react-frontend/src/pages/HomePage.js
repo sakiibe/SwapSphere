@@ -201,16 +201,13 @@ export default function HomePage() {
             {selectedCategory || selectedSubcategory ? (
               filteredProductListings.length > 0 ? (
                 filteredProductListings.map((product) => (
-                  <Link
-                    key={product.id}
-                    to={`/product?id=${product.productID}&email=${product.email}`}
-                    className="flex flex-col items-center justify-center"
-                  >
-
+                  <div key={product.id}>
                     <Card
                       title={product.title}
                       imageSrc={product.imageSrc}
                       price={product.price}
+                      email={product.email}
+                      productID={product.productID}
                     />
 
                     {/* insert slider 1 image here */}
@@ -229,7 +226,7 @@ export default function HomePage() {
                         </svg>
                       </button>
                     )}
-                  </Link>
+                  </div>
                 ))
               ) : (
                 <p>No products found.</p>
@@ -238,9 +235,11 @@ export default function HomePage() {
               products.map((product) => (
                 <div key={product.productID}>
                   <Card
-                    title={product.productName}
-                    // imageSrc={product.imageSrc}
+                    title={product.title}
+                    imageSrc={product.imageSrc}
                     price={product.price}
+                    email={product.email}
+                    productID={product.productID}
                   />
                   {isWishlisted(product.id) ? (
                     <button disabled className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">

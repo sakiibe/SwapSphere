@@ -1,6 +1,9 @@
 import React from "react";
-
+import { useLocation } from 'react-router-dom'
 const ProductDetails = () => {
+  const location = useLocation();
+  const { email, productID } = location.state;
+  console.log(email, productID);
   return (
     <div className="p-4">
       <h2 className="text-xl font-semibold">Product 1</h2>

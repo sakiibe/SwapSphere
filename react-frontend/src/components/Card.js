@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Card({ title, imageSrc, price, location, email, productID }) {
   const navigate = useNavigate();
   const handleCardClick = () => {
+    console.log(email, productID)
     navigate("/product", { state: { email, productID } });
   };
   return (
