@@ -17,9 +17,9 @@ function CreateListing() {
 
   const handleNextClick = () => {
     if (currentPage === 1) {
-      if (!title.trim() || title.length < 3) {
+      if (!title.trim() || title.length < 5) {
         alert(
-          "Please enter the title. It should be at least 3 characters long."
+          "Please enter the title. It should be at least 5 characters long."
         );
         return;
       }
@@ -148,7 +148,7 @@ function CreateListing() {
 
   return (
     <div className="bg-gray-100 p-10 pb-50 min-h-screen">
-      <h1 className="text-center text-3xl font-semibold pb-20 text-black">
+      <h1 className="font-sans text-center text-3xl font-medium pb-20 text-black">
         Create Listing
       </h1>
 
@@ -156,8 +156,8 @@ function CreateListing() {
         {" "}
         {currentPage >= 1 && (
           <div className="container py-6" id="stepOne">
-            <h2 className="step-title text-xl text-black font-semibold pb-4 border-b border-blue-200">
-              {" "}
+            {/* title */}
+            <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200">
               Title
             </h2>
             <input
@@ -170,10 +170,10 @@ function CreateListing() {
             />
           </div>
         )}
+        {/* upload photo */}
         {currentPage >= 2 && (
           <div className="container py-6" id="stepTwo">
-            <h2 className="step-title text-xl text-black font-semibold pb-4 border-b border-blue-200">
-              {" "}
+            <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200">
               Upload Photo
             </h2>
 
@@ -185,29 +185,33 @@ function CreateListing() {
             />
           </div>
         )}
+        {/* description */}
         {currentPage >= 3 && (
           <div className="container py-6" id="stepThree">
-            <h2 className="step-title text-xl text-black font-semibold pb-4 border-b border-blue-200">
+            <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200">
               Add Description
             </h2>
-            <label htmlFor="price" className="font-bold text-lg">
+            <label htmlFor="price" className="font-sans font-medium text-lg">
               Price
             </label>
             <input
               type="text"
               id="price"
               name="price"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
             />
-            <label htmlFor="category" className="font-bold text-lg">
+            <label
+              htmlFor="category"
+              className="font-sans font-medium text-lg mb-3"
+            >
               Category
             </label>
             <select
               id="category"
               name="category"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
               value={category}
               onChange={(e) => {
                 setCategory(e.target.value);
@@ -223,14 +227,17 @@ function CreateListing() {
             </select>
 
             {category && (
-              <div className="mt-4">
-                <label htmlFor="subcategory" className="font-bold text-lg">
+              <div className="mt-3">
+                <label
+                  htmlFor="subcategory"
+                  className="font-sans font-medium text-lg "
+                >
                   Subcategory
                 </label>
                 <select
                   id="subcategory"
                   name="subcategory"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
                   value={subcategory}
                   onChange={(e) => setSubcategory(e.target.value)}
                 >
@@ -243,13 +250,16 @@ function CreateListing() {
                 </select>
               </div>
             )}
-            <label htmlFor="condition" className="font-bold text-lg">
+            <label
+              htmlFor="condition"
+              className="font-sans font-medium text-lg "
+            >
               Condition
             </label>
             <select
               id="condition"
               name="condition"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
               value={condition}
               onChange={(e) => setCondition(e.target.value)}
             >
@@ -257,13 +267,13 @@ function CreateListing() {
               <option value="used">Used</option>
               <option value="aged">Aged</option>
             </select>
-            <label htmlFor="province" className="font-bold text-lg">
+            <label htmlFor="province" className="font-sans font-medium text-lg">
               Province
             </label>
             <select
               id="province"
               name="province"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
               value={province}
               onChange={(e) => setProvince(e.target.value)}
             >
@@ -274,13 +284,13 @@ function CreateListing() {
                 </option>
               ))}
             </select>
-            <label htmlFor="city" className="font-bold text-lg">
+            <label htmlFor="city" className="font-sans font-medium text-lg">
               City
             </label>
             <select
               id="city"
               name="city"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
               value={city}
               onChange={(e) => setCity(e.target.value)}
             >
@@ -292,20 +302,23 @@ function CreateListing() {
                   </option>
                 ))}
             </select>
-            <label htmlFor="description" className="font-bold text-lg">
+            <label
+              htmlFor="description"
+              className="font-sans font-medium text-lg"
+            >
               Description
             </label>
             <textarea
               id="description"
               name="description"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
+              className="w-full px-3 py-2 border border-gray-300 rounded-md mb-3 mt-3"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
         )}
         <button
-          className="next-btn bg-indigo-700 text-white px-4 py-2 rounded-md w-full mt-5 mb-20 block"
+          className="next-btn bg-black text-white px-4 py-2 rounded-md w-full mt-5 mb-20 block"
           id="nextButton"
           onClick={handleNextClick}
         >
