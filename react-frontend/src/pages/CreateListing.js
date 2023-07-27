@@ -75,6 +75,7 @@ function CreateListing() {
 
       const result = await response.json();
       console.log(result.message);
+      alert("Listing has been added!");
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while adding the listing.");
