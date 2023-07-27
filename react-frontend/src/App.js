@@ -11,24 +11,26 @@ import CreateListing from "./pages/CreateListing";
 import Product from "./pages/Product";
 import LoginPage from "../src/pages/LoginPage/LoginPage";
 import RegisterPage from "../src/pages/RegisterPage/RegisterPage";
+import LandingPage from "./pages/LandingPage";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="app">
-    
+
         <Routes>
-          <Route index path="/" element={<HomePage />} />
+          <Route index path="/" element={<LandingPage />} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<ContactUsPage />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/CreateListing" element={<CreateListing />} />
           <Route path="/product" element={<Product />} />
-          <Route path = "/user/login" element = {<LoginPage />}/>
-          <Route path = "/user/register" element = {<RegisterPage />}/>
+          <Route path="/user/login" element={<LoginPage />} />
+          <Route path="/user/register" element={<RegisterPage />} />
         </Routes>
-       
+
       </div>
     </BrowserRouter>
   );

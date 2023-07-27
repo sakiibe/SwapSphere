@@ -32,6 +32,36 @@ const upload = multer({
   }),
 });
 
+router.get("/product/getAll", async (req, res) => {
+  // try {
+  //   const allProducts = await product.find();
+  //   if (!allProducts || allProducts.length === 0) {
+  //     return res.status(404).json({ message: "No products found" });
+  //   }
+  //   return res.status(200).json({ products: allProducts });
+  // } catch (error) {
+  //   console.error("Error:", error);
+  //   res.status(500).json({ message: "Internal server error: " + error.message });
+  // }
+  product.find({}, { _id: 0 })
+    .exec()
+    .then((products) => {
+      if (!products || !products.length) {
+        return res
+          .status(404)
+          .json({ success: false, data: "No Products found!" });
+      }
+      return res.status(200).json({
+        message: "Products retrived",
+        success: true,
+        products: products,
+      });
+    })
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
+
 router.post("/add", upload.single("fileUpload"), async (req, res) => {
   try {
     console.log(req.body);
@@ -52,6 +82,7 @@ router.post("/add", upload.single("fileUpload"), async (req, res) => {
       description: req.body.description,
       province: req.body.province,
       city: req.body.city,
+      email: req.body.email,
     });
 
     // Save the new product to the database
