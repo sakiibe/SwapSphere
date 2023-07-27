@@ -13,7 +13,7 @@ const product = new mongoose.Schema({
   },
 
   fileUpload: {
-    type: String, // TODO: change later
+    type: String,
     required: false,
   },
   price: {
@@ -47,7 +47,7 @@ const product = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-  }
+  },
 });
 
 module.exports = mongoose.model("Product", product);

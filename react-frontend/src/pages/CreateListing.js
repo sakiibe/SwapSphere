@@ -64,7 +64,7 @@ function CreateListing() {
     formData.append("description", description);
     formData.append("province", province);
     formData.append("city", city);
-    formData.append("email", localStorage.getItem('email'));
+    formData.append("email", localStorage.getItem("email"));
 
     try {
       // Make the POST request to the server
@@ -152,7 +152,7 @@ function CreateListing() {
   return (
     <div>
       <Navbar />
-      <div className="bg-gray-100 p-10 pb-50 min-h-screen">
+      <div className="bg-gray-100 p-10 pb-50 min-h-screen pt-20">
         <h1 className="font-sans text-center text-3xl font-medium pb-20 text-black">
           Create Listing
         </h1>
@@ -272,7 +272,10 @@ function CreateListing() {
                 <option value="used">Used</option>
                 <option value="aged">Aged</option>
               </select>
-              <label htmlFor="province" className="font-sans font-medium text-lg">
+              <label
+                htmlFor="province"
+                className="font-sans font-medium text-lg"
+              >
                 Province
               </label>
               <select
