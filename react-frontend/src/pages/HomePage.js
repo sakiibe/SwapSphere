@@ -76,7 +76,7 @@ export default function HomePage() {
           toast.success(product.title + ' added to wishlist!');
           console.log(data.message);
         } else {
-          toast.error('Failed to add ' + product.title + ' to wishlist!');
+          toast.error('Failed to add ' + product.productName + ' to wishlist!');
         }
       })
       .catch((error) => {
@@ -96,11 +96,12 @@ export default function HomePage() {
             {products.map((product) => (
               <div key={product.id}>
                 <Card
-                  title={product.title}
-                  imageSrc={product.imageSrc}
+                  title={product.productName}
+                  imageSrc={product.fileUpload}
                   price={product.price}
                   email={product.email}
                   productID={product.productID}
+                  location={product.city}
                 />
                 {isWishlisted(product.id) ? (
                   <button disabled className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">

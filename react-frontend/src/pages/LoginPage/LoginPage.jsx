@@ -32,7 +32,7 @@ const LoginPage = () => {
           if(response.data.status === 'true'){
             localStorage.setItem('email', response.data.email);
             console.log("email of user is " + localStorage.getItem('email'))
-            navigate("/")
+            navigate("/home")
           }
         } catch (error) {
           if (error.response && error.response.data && error.response.data.error) {
