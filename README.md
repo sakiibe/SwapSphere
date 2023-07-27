@@ -58,6 +58,8 @@ Follow these steps to get a copy of the project running on your machine:
 
 We pushed the same code (as linked above the GitLab repository) to GitHub. Then, we connected that GitHub account to Netlify and Render, gave access to the project repository, and deployed it after configuring the build commands (node) and website name.
 
+Link: <https://csci-5709-grp-15.netlify.app/>
+
 ## Built With
 
 - [React](https://react.dev/) - JavaScript library for building user interfaces or UI components.
