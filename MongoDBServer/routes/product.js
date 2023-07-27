@@ -68,14 +68,7 @@ router.post("/add", upload.single("fileUpload"), async (req, res) => {
     let fileUploadURL = null;
 
     if (req.file) {
-      const command = new GetObjectCommand({
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: req.file.key,
-      });
-
-      fileUploadURL = await getSignedUrl(s3Client, command, {
-        expiresIn: 3600,
-      });
+      fileUploadURL = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.key}`;
     }
 
     const newProduct = new product({
@@ -121,4 +114,17 @@ router.get("/product/:id", async (req, res) => {
   }
 });
 
-
+router.get("/product/getAll", async (req, res) => {
+  try {
+    const allProducts = await product.find();
+    if (!allProducts || allProducts.length === 0) {
+      return res.status(404).json({ message: "No products found" });
+    }
+    return res.status(200).json({ products: allProducts });
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error: " + error.message });
+  }
+});
