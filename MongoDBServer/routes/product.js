@@ -83,6 +83,24 @@ router.get("/product/:id", async (req, res) => {
   }
 });
 
+router.get("/:id/fileUpload", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const existingProduct = await product.findOne({ productID: productId });
+    if (!existingProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    // Send back the fileUpload URL
+    return res.status(200).json({ fileUpload: existingProduct.fileUpload });
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error: " + error.message });
+  }
+});
+
 router.get("/product/getAll", async (req, res) => {
   try {
     const allProducts = await product.find();
