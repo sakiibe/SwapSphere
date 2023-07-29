@@ -70,10 +70,6 @@ Link: <https://csci-5709-grp-15.netlify.app/>
 - [MongoDB] (https://www.mongodb.com/) - NoSQL database used for storing application data.
 - [AWS] (https://aws.amazon.com/) - Cloud platform used for storing product images.
 
-## Sources Used
-
-If in completing your lab / assignment / project you used any interpretation of someone else's code, then provide a list of where the code was implement, how it was implemented, why it was implemented, and how it was modified. See the sections below for more details.
-
 ## Acknowledgments
 
 - [Canva](https://canva.com/) created high-quality images that have been used in the background and the landing page's carouse
