@@ -1,7 +1,14 @@
 import React from "react";
 import { useLocation } from 'react-router-dom'
+import useWishlist from "../pages/useWishlist";
+import { Button } from '@mui/material';
+import { Favorite, AddShoppingCart } from '@mui/icons-material';
+
+
 const ProductDetails = () => {
   const location = useLocation();
+  const { addToWishlist, wishlistLoading } = useWishlist();
+
   const { email, productID } = location.state;
   console.log(email, productID);
   return (
@@ -15,9 +22,15 @@ const ProductDetails = () => {
       <p className="text-gray-800 font-bold">$99.99</p>
       <p className="text-gray-500">Category: Food</p>
       <div className="mt-4">
-        <button className="mr-2 px-4 py-2 bg-blue-500 text-white rounded">
-          Add to Wishlist
-        </button>
+      <Button
+              onClick={() => addToWishlist(productID)}
+              variant="contained"
+              startIcon={<AddShoppingCart />}
+              color="primary"
+              disabled={wishlistLoading} 
+            >
+              {wishlistLoading ? 'Adding...' : ''}
+            </Button>
         <button className="mr-2 px-4 py-2 bg-gray-500 text-white rounded">
           Share
         </button>

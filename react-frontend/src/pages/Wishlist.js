@@ -10,20 +10,26 @@ const WishlistPage = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/wishlist/getwishlist/test@12.cs')
+    const email = localStorage.getItem('email');
+
+    fetch('http://localhost:8080/wishlist/getwishlist/'+email)
       .then((response) => response.json())
       .then((data) => setWishlistItems(data.products))
       .catch((error) => console.log(error));
   }, []);
 
   const fetchWishlistItems = () => {
-    fetch('http://localhost:8080/wishlist/getwishlist/test@12.cs')
+    const email = localStorage.getItem('email');
+
+    fetch('http://localhost:8080/wishlist/getwishlist/'+email)
       .then((response) => response.json())
       .then((data) => setWishlistItems(data.products))
       .catch((error) => console.log(error));
   };
 
   const handleDelete = (itemId) => {
+    const email = localStorage.getItem('email');
+
     // Call the API to remove the item from the wishlist
     fetch('http://localhost:8080/wishlist/removeproduct', {
       method: 'POST',
@@ -32,7 +38,7 @@ const WishlistPage = () => {
       },
       body: JSON.stringify({
         productID: itemId,
-        email: 'test@12.cs', // Replace with the actual email
+        email: email, // Replace with the actual email
       }),
     })
       .then((response) => response.json())
@@ -74,7 +80,7 @@ const WishlistPage = () => {
       ) : (
         <p>Your wishlist is empty.</p>
       )}
-      <ToastContainer /> {/* Add this component to display the toast notifications */}
+      <ToastContainer /> 
     </div>
     </div>
   );
