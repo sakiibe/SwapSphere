@@ -95,24 +95,51 @@ router.post("/add", upload.single("fileUpload"), async (req, res) => {
   }
 });
 
-//get the product based on the productID
-router.get("/product/:id", async (req, res) => {
-  const productId = req.params.id;
-  console.log(productId);
+// //get the product based on the productID
+// router.get("/product/:id", async (req, res) => {
+//   // const productId = req.params.id;
+//   // console.log(productId);
 
+//   // try {
+//   //   const existingProduct = await product.findById(productId);
+//   //   if (!existingProduct) {
+//   //     return res.status(404).json({ message: "Product not found" });
+//   //   }
+//   //   return res.status(200).json({ product: existingProduct });
+//   // } catch (error) {
+//   //   console.error("Error:", error);
+//   //   res
+//   //     .status(500)
+//   //     .json({ message: "Internal server error: " + error.message });
+//   // }
+// });
+
+
+router.get('/product/:id', async (req, res) => {
   try {
-    const existingProduct = await product.findById(productId);
-    if (!existingProduct) {
-      return res.status(404).json({ message: "Product not found" });
+    const productId = req.params.id; // Extract the product ID from the request parameters
+
+    // Validate the product ID format (optional)
+   
+
+    // Find the product with the given productID
+    const foundProduct = await product.findOne({ productID: productId });
+
+    if (!foundProduct) {
+      return res.status(404).json({ error: 'Product not found' });
     }
-    return res.status(200).json({ product: existingProduct });
-  } catch (error) {
-    console.error("Error:", error);
-    res
-      .status(500)
-      .json({ message: "Internal server error: " + error.message });
+
+    // Return the product as JSON
+    res.json(foundProduct);
+  } catch (err) {
+    console.error('Error retrieving product:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+
+
+
 
 router.get("/:id/fileUpload", async (req, res) => {
   const productId = req.params.id;

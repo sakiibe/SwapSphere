@@ -37,46 +37,6 @@ export default function HomePage() {
   }, []);
 
 
-  const handleWishlistClick = (product) => {
-    const email = localStorage.getItem('email');
-    const productID = product.productID
-    console.log(email)
-    console.log(product)
-    console.log(product.productName + ' adding to wishlist!')
-
-    const url = 'http://localhost:8080/wishlist/addproduct';
-    const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
-    }
-    const requestOptions = {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({ email: email, productID: productID }) 
-    };
-
-    fetch(url, requestOptions)
-    .then(async (response) => {
-      const isJson = response.headers.get('content-type')?.includes('application/json');
-      const data = isJson && await response.json();
-      console.log(data);
-      if (response.status === 201 || response.status === 200) {
-        toast.success(product.productName + ' : '+data.message);
-        console.log();
-      } else {
-        toast.error('Failed to add ' + product.productName + ' to wishlist!');
-      }
-    })
-    .catch((error) => {
-      toast.error('Failed to add ' + product.productName + ' to wishlist!');
-      console.error('There was an error!', error);
-    });
-   
-
-  };
-
-
  
   
 
