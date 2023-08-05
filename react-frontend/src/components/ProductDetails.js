@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import useWishlist from "../pages/useWishlist";
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import { Button } from '@mui/material';
 import { Favorite, AddShoppingCart } from '@mui/icons-material';
 
@@ -38,8 +38,9 @@ const ProductDetails = () => {
       <p className="text-gray-800 font-bold">${productDetails.price}</p>
       <p className="text-gray-500">Category: {productDetails.category}</p>
       <div className="mt-4">
+    {console.log(productDetails)}
         <Button
-          onClick={() => addToWishlist(productID)}
+          onClick={() => addToWishlist(productDetails)}
           variant="contained"
           startIcon={<AddShoppingCart />}
           color="primary"
@@ -54,6 +55,8 @@ const ProductDetails = () => {
           Report Item
         </button>
       </div>
+      <ToastContainer position="bottom-right" />
+
     </div>
   );
 };

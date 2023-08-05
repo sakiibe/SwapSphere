@@ -7,6 +7,10 @@ const useWishlist = () => {
 
   const addToWishlist = async (product) => {
     try {
+      console.log('==================')
+
+      console.log(product)
+      console.log('==================')
       setWishlistLoading(true);
       const email = localStorage.getItem('email');
       const productID = product.productID;
