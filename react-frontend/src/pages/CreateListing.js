@@ -4,11 +4,13 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import DragDropUploader from "../components/DragDropUploader";
 
 function CreateListing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [fileUpload, setFileUpload] = useState(null);
+  const [mainImage, setMainImage] = useState(null);
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState();
   const [subcategory, setSubcategory] = useState("");
@@ -56,7 +58,13 @@ function CreateListing() {
     const formData = new FormData();
     formData.append("productID", uuidv4()); // Autogenerate unique product ID
     formData.append("productName", title);
-    formData.append("fileUpload", fileUpload);
+
+    if (fileUpload) {
+      for (let i = 0; i < fileUpload.length; i++) {
+        formData.append("fileUpload", fileUpload[i]);
+      }
+    }
+
     formData.append("price", price);
     formData.append("category", category);
     formData.append("subcategory", subcategory);
@@ -106,14 +114,7 @@ function CreateListing() {
       "St. John's",
       "Wabana",
     ],
-    "Nova Scotia": [
-      "Halifax",
-      "Liverpool",
-      "Springhill",
-      "Sydney",
-      "",
-      "Yarmouth",
-    ],
+    "Nova Scotia": ["Halifax", "Liverpool", "Springhill", "Sydney", "Yarmouth"],
     Ontario: [
       "Guelph",
       "Kitchener",
@@ -180,15 +181,25 @@ function CreateListing() {
           {currentPage >= 2 && (
             <div className="container py-6" id="stepTwo">
               <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200">
-                Upload Photo
+                Upload Main Photo
               </h2>
-
-              <input
-                type="file"
-                id="fileUpload"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                onChange={(e) => setFileUpload(e.target.files[0])}
+              <DragDropUploader
+                onFilesAdded={(files) => setMainImage(files[0])}
               />
+
+              {mainImage && (
+                <div>
+                  <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200 mt-5">
+                    Upload Additional Photos
+                  </h2>
+                  <DragDropUploader
+                    onFilesAdded={(files) => {
+                      const allFiles = [mainImage, ...files];
+                      setFileUpload(allFiles);
+                    }}
+                  />
+                </div>
+              )}
             </div>
           )}
           {/* description */}
