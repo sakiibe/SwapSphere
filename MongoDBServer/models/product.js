@@ -48,6 +48,10 @@ const product = new mongoose.Schema({
     type: String,
     required: true,
   },
+  noOfTimesProductReported: {
+    type: Number,
+    default: 0,
+  },
 });
 
 module.exports = mongoose.model("Product", product);
