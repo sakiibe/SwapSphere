@@ -231,6 +231,36 @@ const Product = () => {
     }
   };
 
+  const handleReportUser = () => {
+    console.log("userId", user._id);
+    axios
+      .get(`http://localhost:8080/report/user/${user._id}`)
+      .then((response) => {
+        toast.success("User reported successfully.");
+        // Refresh the user details after reporting
+        setUser(response.data);
+      })
+      .catch((error) => {
+        toast.error("An error occurred while reporting the user.");
+        console.error(error);
+      });
+  };
+
+  const handleReportProduct = () => {
+    console.log("productId", product._id);
+    axios
+      .get(`http://localhost:8080/report/product/${product._id}`)
+      .then((response) => {
+        toast.success("Product reported successfully.");
+        // Refresh the product details after reporting
+        setUser(response.data);
+      })
+      .catch((error) => {
+        toast.error("An error occurred while reporting the product.");
+        console.error(error);
+      });
+  };
+
   return (
     <div>
       <Navbar />
@@ -276,7 +306,7 @@ const Product = () => {
               <p className="text-gray-600">{product.description}</p>
               <p className="text-gray-800 font-bold">{"$" + product.price}</p>
               <p className="text-gray-500">Category: {product.category}</p>
-              <p className="text-gray-500">Category: {product.condition}</p>
+              <p className="text-gray-500">Condition: {product.condition}</p>
               <div className="mt-4">
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
@@ -290,7 +320,10 @@ const Product = () => {
                 <button className="mr-2 px-4 py-2 bg-gray-500 text-white rounded">
                   Share
                 </button>
-                <button className="px-4 py-2 bg-red-500 text-white rounded">
+                <button
+                  className="px-4 py-2 bg-red-500 text-white rounded"
+                  onClick={handleReportProduct}
+                >
                   Report Item
                 </button>
               </div>
@@ -302,7 +335,10 @@ const Product = () => {
               <p className="text-gray-600">Email: {user.email}</p>
               <p className="text-gray-600">Phone: {user.mobile}</p>
               <div className="mt-4">
-                <button className="mr-2 px-4 py-2 bg-blue-500 text-white rounded">
+                <button
+                  className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
+                  onClick={handleReportUser}
+                >
                   User Profile
                 </button>
                 <button className="px-4 py-2 bg-red-500 text-white rounded">
