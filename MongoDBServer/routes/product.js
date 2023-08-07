@@ -204,3 +204,50 @@ router.get("/products/getAll/:email", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+//put api for products
+router.put(
+  "/product/update/:productID",
+  upload.array("fileUpload"),
+  async (req, res) => {
+    try {
+      const productID = req.params.productID;
+
+      let fileUploadURLs = [];
+      if (req.files) {
+        fileUploadURLs = req.files.map(
+          (file) =>
+            `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${file.key}`
+        );
+      }
+
+      const updatedData = {
+        productName: req.body.productName,
+        fileUpload: fileUploadURLs.length > 0 ? fileUploadURLs : undefined,
+        price: req.body.price,
+        category: req.body.category,
+        subcategory: req.body.subcategory,
+        condition: req.body.condition,
+        description: req.body.description,
+        province: req.body.province,
+        city: req.body.city,
+        email: req.body.email,
+      };
+
+      const updatedProduct = await product.findOneAndUpdate(
+        { productID: productID },
+        updatedData,
+        { new: true }
+      );
+
+      if (!updatedProduct) {
+        return res.status(404).json({ error: "Product not found" });
+      }
+
+      res.status(200).json(updatedProduct); // Respond with the updated product object
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: "Failed to update product" });
+    }
+  }
+);

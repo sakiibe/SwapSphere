@@ -1,14 +1,12 @@
-//author: Sakib Sadman <sakib.sadman@dal.ca>
-
-import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function CreateListing() {
+function EditListing({ match }) {
+  const productId = match.params.id;
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [fileUpload, setFileUpload] = useState(null);
@@ -16,11 +14,11 @@ function CreateListing() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState();
   const [subcategory, setSubcategory] = useState("");
-  const [condition, setCondition] = useState("");
+  const [condition, setCondition] = useState("mint");
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
-
+  const [email, setEmail] = useState("");
   const handleNextClick = () => {
     if (currentPage === 1) {
       if (!title.trim() || title.length < 5) {
@@ -30,11 +28,6 @@ function CreateListing() {
         return;
       }
     }
-
-    // if (currentPage === 2 && !fileUpload) {
-    //   alert("Please upload an image");
-    //   return;
-    // }
 
     if (currentPage === 3) {
       if (!price.trim() || isNaN(price) || Number(price) <= 0) {
@@ -54,11 +47,34 @@ function CreateListing() {
       handleFormSubmission();
     }
   };
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/product/${productId}`
+        );
+        const data = await response.json();
+
+        setTitle(data.productName);
+        setPrice(data.price);
+        setCategory(data.category);
+        setSubcategory(data.subcategory);
+        setCondition(data.condition);
+        setDescription(data.description);
+        setProvince(data.province);
+        setCity(data.city);
+        setEmail(data.email);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    fetchProductDetails();
+  }, [productId]);
 
   const handleFormSubmission = async () => {
     // Form a FormData object to hold the file and other data
     const formData = new FormData();
-    formData.append("productID", uuidv4()); // Autogenerate unique product ID
     formData.append("productName", title);
 
     if (fileUpload) {
@@ -74,24 +90,25 @@ function CreateListing() {
     formData.append("description", description);
     formData.append("province", province);
     formData.append("city", city);
-    formData.append("email", localStorage.getItem("email"));
+    formData.append("email", email);
 
     try {
-      // Make the POST request to the server
-      const response = await fetch("http://localhost:8080/product/add", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `http://localhost:8080/product/update/${productId}`,
+        {
+          method: "PUT",
+          body: formData,
+        }
+      );
 
       const result = await response.json();
       console.log(result.message);
-      alert("Listing has been added!");
+      alert("Listing has been updated!");
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while adding the listing.");
+      alert("An error occurred while updating the listing.");
     }
   };
-
   const provinces = [
     "Alberta",
     "British Columbia",
@@ -159,7 +176,7 @@ function CreateListing() {
       <ToastContainer position="bottom-right" />{" "}
       <div className="bg-gray-100 p-10 pb-50 min-h-screen pt-20">
         <h1 className="font-sans text-center text-3xl font-medium pb-20 text-black">
-          Create Listing
+          Edit Listing
         </h1>
 
         <div id="mainContent" className="mx-auto mb-5 w-1/3 pt-20">
@@ -368,4 +385,4 @@ function CreateListing() {
   );
 }
 
-export default CreateListing;
+export default EditListing;
