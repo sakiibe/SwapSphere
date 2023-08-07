@@ -30,7 +30,7 @@ const LoginPage = () => {
           localStorage.setItem('authToken', token);
           if(response.data.status === 'true'){
 
-            navigate("/")
+            navigate("/home")
           }
         } catch (error) {
           if (error.response && error.response.data && error.response.data.error) {

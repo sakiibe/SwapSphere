@@ -346,6 +346,24 @@ router.post(
   })
 );
 
+router.post("/get", async (req, res) => {
+  try {
+    const email = req.body.email;
+
+    const foundUser = await user.findOne({ email: email });
+
+    if (!foundUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Return the product as JSON
+    res.json(foundUser);
+  } catch (err) {
+    console.error("Error retrieving user:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 router.get(
   "/me",
   protectRoute,

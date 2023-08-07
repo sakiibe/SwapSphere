@@ -147,23 +147,6 @@ const UserProfile = () => {
               </div>
 
               <div class=" m-3 w-75 ">
-                <label for="password " class=" mb-1 text-white   ">
-                  Password:
-                </label>
-                {isEditMode ? (
-                  <input
-                    type="text"
-                    name="password"
-                    className="form-control "
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                ) : (
-                  <div class="text-white">{password}</div>
-                )}
-              </div>
-
-              <div class=" m-3 w-75 ">
                 <label for="email " class=" mb-1 text-white   ">
                   Mobile:
                 </label>
