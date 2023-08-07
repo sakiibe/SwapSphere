@@ -40,6 +40,7 @@ const Product = () => {
   const [commentText, setCommentText] = useState("");
   const backendURL = "http://localhost:8080"; //'https://swapsphere-backend.onrender.com'
   const [comments, setComments] = useState([]);
+  const [showShareButtons, setShowShareButtons] = useState(false);
 
   useEffect(() => {
     //fetch all comments
@@ -318,15 +319,26 @@ const Product = () => {
                 >
                   Add to Wishlist
                 </button>
-                <button className="mr-2 px-4 py-2 bg-gray-500 text-white rounded">
+                {/* <button className="mr-2 px-4 py-2 bg-gray-500 text-white rounded">
                   Share
-                </button>
+                </button> */}
                 <button
                   className="px-4 py-2 bg-red-500 text-white rounded"
                   onClick={handleReportProduct}
                 >
                   Report Item
                 </button>
+              </div>
+              <div className="mt-4">
+                <button
+                  className="mr-2 px-4 py-2 bg-gray-500 text-white rounded"
+                  onClick={() => setShowShareButtons(!showShareButtons)}
+                >
+                  Share
+                </button>
+                {showShareButtons && (
+                  <Share showShareButtons={showShareButtons} />
+                )}
               </div>
             </div>
             <div className="p-4">
@@ -345,7 +357,6 @@ const Product = () => {
                 <button className="px-4 py-2 bg-red-500 text-white rounded">
                   Report User
                 </button>
-                <Share />
               </div>
             </div>
           </div>
