@@ -25,14 +25,12 @@ const LoginPage = () => {
       try {
         // console.log(loginData)
         const response = await axios.post('http://localhost:8080/user/login', loginData);
-        console.log(response);
+
           const  token  = response.data.token;
-          localStorage.setItem('authToken', response.data.token);
-          
+          localStorage.setItem('authToken', token);
           if(response.data.status === 'true'){
-            localStorage.setItem('email', response.data.email);
-            console.log("email of user is " + localStorage.getItem('email'))
-            navigate("/home")
+
+            navigate("/")
           }
         } catch (error) {
           if (error.response && error.response.data && error.response.data.error) {
@@ -64,10 +62,10 @@ const LoginPage = () => {
                 <div className="col-lg-5 d-none d-lg-flex justify-content-center align-items-center max-height p-0"><img src={LoginImage} alt="" /></div>
                     <div class="col-lg-7  max-height p-0 d-flex align-items-center ">
                         <div class="container-fluid m-0 p-4 ">
-                            <div className="m-3 text-white">        
+                            <div className=" text-white flex-responsive d-flex flex-column align-items-center justify-content-center">        
                                 <p class="fs-1 font">Login Page</p>
                             </div>
-                            <form className=' d-flex flex-column align-items-center justify-content-center p-3' >
+                            <form className='d-flex flex-column align-items-center justify-content-center px-3' >
 
                                 <div class="form-group m-3 w-75 ">
                                 <label for="email " class=" mb-1 text-white   ">Email:</label>
@@ -75,15 +73,20 @@ const LoginPage = () => {
                                 <div id="emailAlert" class='text-white bg-danger rounded-2'>The email is not correct</div>
                                 </div>
 
+
                                 <div class="form-group m-3 w-75">
-                                <label for="password" class=" mb-1 text-white ">Password:</label>
-                                <input type="password" class="form-control rounded" value={password} id="password" placeholder="Enter your password" onChange={(e)=>setPassword(e.target.value)}/>
+                                  <div className="row">
+                                    <label for="password" class=" mb-1 text-white col-6">Password:</label>
+                                    <div class="col-6 d-flex justify-content-end">
+                                      <button class="link-btn text-white" onClick={() => navigate("/user/forgotpassword")}>forgot password?</button>
+                                    </div>                                 
+                                  </div>
+                                  <input type="password" class="form-control rounded" value={password} id="password" placeholder="Enter your password" onChange={(e)=>setPassword(e.target.value)}/>
                                 </div>
 {/*                                 
                                 <div className="d-flex flex-row justify-content-end w-100 p-5"> */}
                                 <button type="submit " class="btn btn-light mr-5  mx-1" onClick={handleLogin}>Login</button>
                                 <button className="link-btn  mt-4 text-white" onClick={() => navigate("/user/register")}>Don't have an account? Register here.</button>
-
                                 {/* </div> */}
                             </form>
                         </div>

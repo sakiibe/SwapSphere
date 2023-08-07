@@ -53,7 +53,6 @@ const RegisterPage = () => {
         };
       
         try {
-        
           const response = await axios.post('http://localhost:8080/user/register', formDataToSend);
           console.log('User registered:', response); 
           if(response.data.email){
@@ -62,12 +61,11 @@ const RegisterPage = () => {
         
         } catch (error) {
           console.error('Registration error:', error); 
-           
           if (error.response && error.response.data && error.response.data.error === 'Email already exists') {
             setRegistrationError('Account already exist with this email Id');
           }
         }
-      };
+      } ;
       
         const firstnameValidation=(e)=>{
             setFirstName(e.target.value);
@@ -125,12 +123,12 @@ const RegisterPage = () => {
         }
 
     return (
-        <div class='container-fluid registertheme-color box  p-0 m-0 max-height'>
+        <div class='container-fluid registertheme-color box  p-0 m-0 '>
                 <div class="row m-0">
-                    <div class="col-lg-5 d-none d-lg-flex justify-content-center align-items-center max-height p-0"><img src={RegisterImage} alt="" /></div>
+                    <div class="col-lg-5 d-none d-lg-flex justify-content-center align-items-center p-0 register-page-image"><img src={RegisterImage} alt="" /></div>
                     <div class="col-lg-7 custom-color max-height p-0 d-flex align-items-center ">
                         <div class="container-fluid m-0 p-4 ">
-                            <div className="m-3 ">        
+                            <div className="m-3  flex-responsive d-flex flex-column align-items-center justify-content-center">        
                                 <p class="fs-1 font">Register Page</p>
                             </div>
                             <form className=' d-flex flex-column align-items-center justify-content-center p-3' onSubmit={handleSubmit}>
@@ -164,8 +162,9 @@ const RegisterPage = () => {
                                 <div id="confirmPasswordAlert" class='text-white bg-danger rounded-2 ps-2'>Password do not match. </div>
                                 </div>
                                 <button type="submit " class="btn btn-primary mt-3 mx-1">Submit</button>
-                                <button className="link-btn font-weight-bolder mt-4" onClick={() => navigate("/user/login")}>Already have an account? Login here.</button>
-
+                             
+                                    <button className="link-btn font-weight-bolder mt-3 " onClick={() => navigate("/user/login")}>Already have an account? Login here.</button>
+            
                             </form>
                         </div>
                     </div>  
