@@ -32,12 +32,14 @@ const productRoutes = require("./routes/product");
 const userRoutes = require("./routes/user");
 const commentRoutes = require("./routes/comment");
 const reportRoutes = require("./routes/report");
+const adminRoutes = require("./routes/admin");
 
 app.use("/wishlist", wishlistRoutes);
 app.use("/user", userRoutes);
 app.use("/product", productRoutes);
 app.use("/comment", commentRoutes);
 app.use("/report", reportRoutes);
+app.use("/admin", adminRoutes);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
 const port = 8080;

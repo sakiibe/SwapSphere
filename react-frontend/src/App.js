@@ -15,6 +15,8 @@ import LandingPage from "./pages/LandingPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage/ForgotPasswordPage";
 import ForgotPasswordSetPage from "../src/pages/ForgotPasswordSetPage/ForgotPasswordSetPage";
 import UserProfilePage from "../src/pages/UserProfile/UserProfile";
+import Admin from "../src/pages/Admin";
+
 function App() {
   return (
     <BrowserRouter>
@@ -27,7 +29,7 @@ function App() {
           <Route path="/faq" element={<FAQ />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/CreateListing" element={<CreateListing />} />
-          <Route path="/product" element={<Product />} />
+          <Route path="/product/:productId" element={<Product />} />
           <Route path="/user/login" element={<LoginPage />} />
           <Route path="/user/register" element={<RegisterPage />} />
           <Route path="/user/forgotpassword" element={<ForgotPasswordPage />} />
@@ -36,6 +38,7 @@ function App() {
             element={<ForgotPasswordSetPage />}
           />
           <Route path="/user/userprofile" element={<UserProfilePage />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </div>
     </BrowserRouter>
