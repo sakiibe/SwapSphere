@@ -4,11 +4,15 @@ import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import DragDropUploader from "../components/DragDropUploader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CreateListing() {
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [fileUpload, setFileUpload] = useState(null);
+  const [mainImage, setMainImage] = useState(null);
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState();
   const [subcategory, setSubcategory] = useState("");
@@ -56,7 +60,13 @@ function CreateListing() {
     const formData = new FormData();
     formData.append("productID", uuidv4()); // Autogenerate unique product ID
     formData.append("productName", title);
-    formData.append("fileUpload", fileUpload);
+
+    if (fileUpload) {
+      for (let i = 0; i < fileUpload.length; i++) {
+        formData.append("fileUpload", fileUpload[i]);
+      }
+    }
+
     formData.append("price", price);
     formData.append("category", category);
     formData.append("subcategory", subcategory);
@@ -106,14 +116,7 @@ function CreateListing() {
       "St. John's",
       "Wabana",
     ],
-    "Nova Scotia": [
-      "Halifax",
-      "Liverpool",
-      "Springhill",
-      "Sydney",
-      "",
-      "Yarmouth",
-    ],
+    "Nova Scotia": ["Halifax", "Liverpool", "Springhill", "Sydney", "Yarmouth"],
     Ontario: [
       "Guelph",
       "Kitchener",
@@ -153,6 +156,7 @@ function CreateListing() {
   return (
     <div>
       <Navbar />
+      <ToastContainer position="bottom-right" />{" "}
       <div className="bg-gray-100 p-10 pb-50 min-h-screen pt-20">
         <h1 className="font-sans text-center text-3xl font-medium pb-20 text-black">
           Create Listing
@@ -183,12 +187,37 @@ function CreateListing() {
                 Upload Photo
               </h2>
 
-              <input
-                type="file"
-                id="fileUpload"
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-                onChange={(e) => setFileUpload(e.target.files[0])}
+              <DragDropUploader
+                onFilesAdded={(fileList) => {
+                  const filesArray = Array.from(fileList);
+                  if (filesArray.length > 1) {
+                    toast.error("Upload single photo!");
+                    toast.error("You can add additional photos afterwards.");
+
+                    return;
+                  }
+                  setMainImage(filesArray[0]);
+                  toast.success(`${filesArray[0].name} uploaded!`);
+                }}
               />
+
+              {mainImage && (
+                <div>
+                  <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200 mt-5">
+                    Upload Additional Photos
+                  </h2>
+                  <DragDropUploader
+                    onFilesAdded={(fileList) => {
+                      const filesArray = Array.from(fileList);
+                      const allFiles = [mainImage, ...filesArray];
+                      setFileUpload(allFiles);
+                      toast.success(
+                        `${filesArray.map((f) => f.name).join(", ")} uploaded!`
+                      );
+                    }}
+                  />
+                </div>
+              )}
             </div>
           )}
           {/* description */}

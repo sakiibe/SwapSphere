@@ -1,373 +1,303 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
+import ReactSlider from "react-slider";
 import { Link } from "react-router-dom";
 import product_image from "../images/product.jpg";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Button } from '@mui/material';
-import { Favorite, AddShoppingCart } from '@mui/icons-material';
-import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@mui/material";
+import { Favorite, AddShoppingCart } from "@mui/icons-material";
+import axios from "axios";
 import useWishlist from "./useWishlist";
-import '../css/HomePage.css'
-import slider1 from '../images/slider1.png'
+import "../css/HomePage.css";
+import slider1 from "../images/slider1.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function HomePage() {
-
   const { addToWishlist, wishlistLoading } = useWishlist();
 
-  // categories and subcategories feature
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedSubcategory, setSelectedSubcategory] = useState(null);
+  const [products, setProducts] = useState([]);
+  const [search, setSearch] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
+  const [minPriceFilter, setMinPriceFilter] = useState(0); // Assuming you want to start with 0
+  const [maxPriceFilter, setMaxPriceFilter] = useState(10000); // Assuming you want to start with 10000 as the max
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategory(category);
-    setSelectedSubcategory(null);
-  };
+  // const [priceFilter, setPriceFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [subCategoryFilter, setSubCategoryFilter] = useState("");
+  const [conditionFilter, setConditionFilter] = useState("");
+  const [provinceFilter, setProvinceFilter] = useState("");
 
-  const handleSubcategoryChange = (subcategory) => {
-    setSelectedSubcategory(subcategory);
-  };
+  const [cityFilter, setCityFilter] = useState("");
 
-  const handleClickEvent = () => {
-
-  }
-
-
-  const categories = [
-    {
-      id: 1,
-      name: "Home Appliance",
-      subcategories: ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
-    },
-    {
-      id: 2,
-      name: "Electronics",
-      subcategories: [
-        "Laptop",
-        "Phones",
-        "Computer Accessories",
-        "Video Games & Consoles",
-        "Smart Watch",
-      ],
-    },
-    {
-      id: 3,
-      name: "Computer Parts",
-      subcategories: ["Hard-disk", "Screen", "Keyboards"],
-    },
-    {
-      id: 4,
-      name: "Vehile",
-      subcategories: ["Car", "Motorcycle", "Bicycle", "Truck"],
-    },
-    {
-      id: 5,
-      name: "Furniture",
-      subcategories: ["Table", "Chair", "Cabinet", "Bed"],
-    },
-    {
-      id: 6,
-      name: "Instruments",
-      subcategories: ["Guitar", "Piano", "Violin", "Drums"],
-    },
-    {
-      id: 7,
-      name: "Tools",
-      subcategories: ["Hand Tools", "Power Tools", "Gardening Tools", "Automotive Tools"]
-    }
-
+  // Constants for the filter data
+  const provinces = [
+    "Alberta",
+    "British Columbia",
+    "Manitoba",
+    "New Brunswick",
+    "Newfoundland and Labrador",
+    "Nova Scotia",
+    "Ontario",
+    "Quebec",
+    "Saskatchewan",
   ];
 
-  const productListings = [
-    {
-      id: 1,
-      title: "Product 1",
-      imageSrc: product_image,
-      price: "$100",
-      category: "Furniture",
-      subcategory: "Table",
-    },
-    {
-      id: 2,
-      title: "Product 2",
-      imageSrc: product_image,
-      price: "$200",
-      category: "Furniture",
-      subcategory: "Chair",
-    },
-    {
-      id: 3,
-      title: "Product 3",
-      imageSrc: product_image,
-      price: "$300",
-      category: "Furniture",
-      subcategory: "Bedframe",
-    },
-    {
-      id: 4,
-      title: "Product 4",
-      imageSrc: product_image,
-      price: "$50",
-      category: "Sports",
-      subcategory: "Football",
-    },
-    {
-      id: 5,
-      title: "Product 5",
-      imageSrc: product_image,
-      price: "$80",
-      category: "Sports",
-      subcategory: "Tennis Racquet",
-    },
-    {
-      id: 6,
-      title: "Product 6",
-      imageSrc: product_image,
-      price: "$120",
-      category: "Sports",
-      subcategory: "Bat",
-    },
-    {
-      id: 7,
-      title: "Product 7",
-      imageSrc: product_image,
-      price: "$150",
-      category: "Computer Parts",
-      subcategory: "Hard-disk",
-    },
-    {
-      id: 8,
-      title: "Product 8",
-      imageSrc: product_image,
-      price: "$250",
-      category: "Computer Parts",
-      subcategory: "Screen",
-    },
-    {
-      id: 9,
-      title: "Product 9",
-      imageSrc: product_image,
-      price: "$180",
-      category: "Computer Parts",
-      subcategory: "Keyboards",
-    },
-    {
-      id: 10,
-      title: "Product 10",
-      imageSrc: product_image,
-      price: "$150",
-      category: "Furniture",
-      subcategory: "Table",
-    },
-    {
-      id: 11,
-      title: "Product 11",
-      imageSrc: product_image,
-      price: "$250",
-      category: "Furniture",
-      subcategory: "Chair",
-    },
-    {
-      id: 12,
-      title: "Product 12",
-      imageSrc: product_image,
-      price: "$120",
-      category: "Sports",
-      subcategory: "Football",
-    },
-    {
-      id: 13,
-      title: "Product 13",
-      imageSrc: product_image,
-      price: "$180",
-      category: "Sports",
-      subcategory: "Tennis Racquet",
-    },
-    {
-      id: 14,
-      title: "Product 14",
-      imageSrc: product_image,
-      price: "$200",
-      category: "Computer Parts",
-      subcategory: "Hard-disk",
-    },
-    {
-      id: 15,
-      title: "Product 15",
-      imageSrc: product_image,
-      price: "$300",
-      category: "Computer Parts",
-      subcategory: "Screen",
-    },
-  ];
-
-  const filteredProductListings = productListings.filter(
-    (product) =>
-      product.category === selectedCategory &&
-      (selectedSubcategory === null || product.subcategory === selectedSubcategory)
-  );
-
-  // wishlist feature
-  const [wishlist, setWishlist] = useState([]);
-  const isWishlisted = (productId) => {
-    return wishlist.some(item => item.id === productId);
+  const cities = {
+    Alberta: ["Calgary", "Edmonton", "Red Deer", "Lethbridge", "St. Albert"],
+    "British Columbia": ["Vancouver", "Victoria", "Kelowna"],
+    Manitoba: ["Winnipeg", "Brandon", "Steinbach"],
+    "New Brunswick": ["Bathurst", "Caraquet", "Dalhousie", "Fredericton"],
+    "Newfoundland and Labrador": [
+      "Labrador City",
+      "Placentia",
+      "Saint Anthony",
+      "St. John's",
+      "Wabana",
+    ],
+    "Nova Scotia": ["Halifax", "Liverpool", "Springhill", "Sydney", "Yarmouth"],
+    Ontario: [
+      "Guelph",
+      "Kitchener",
+      "Mississauga",
+      "Oshawa",
+      "Ottawa",
+      "Toronto",
+    ],
+    Quebec: ["Montreal", "Sainte-Anne-de-Beaupré", "Sept-Îles"],
+    Saskatchewan: ["Prince Albert", "Regina", "Saskatoon"],
   };
 
-  const handleWishlistButtonClick = (product) => {
-    if (isWishlisted(product.id)) {
-      return;
-    }
-    handleClick(product);
+  const categories = {
+    "home-appliance": "Home Appliance",
+    electronics: "Electronics",
+    vehicle: "Vehicle",
+    furniture: "Furniture",
+    instruments: "Instruments",
+    tools: "Tools",
   };
 
-  const handleClick = (product) => {
-    setWishlist([...wishlist, product]);
-    console.log(product.title + ' added to wishlist!')
-    const headers = {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST,PATCH,OPTIONS'
-    }
-    const url = 'http://localhost:8080/wishlist/addproduct';
-    const email = "test@12.cs"; // Hardcoded email
-    const productID = product.id
-    const requestOptions = {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify({ email: email, productID: productID }) // Replace with your request payload
-    };
-
-    fetch(url, requestOptions)
-      .then(async (response) => {
-        const isJson = response.headers.get('content-type')?.includes('application/json');
-        const data = isJson && await response.json();
-        console.log(data);
-        if (response.status === 201 || response.status === 200) {
-          toast.success(product.title + ' added to wishlist!');
-          console.log(data.message);
-        } else {
-          toast.error('Failed to add ' + product.title + ' to wishlist!');
-        }
+  const subcategories = {
+    "home-appliance": ["Kitchen", "Living Room", "Bedroom", "Bathroom"],
+    electronics: [
+      "Laptop",
+      "Phones",
+      "Computer Accessories",
+      "Video Games & Consoles",
+      "Smart Watch",
+    ],
+    vehicle: ["Car", "Motorcycle", "Bicycle", "Truck"],
+    furniture: ["Table", "Chair", "Cabinet", "Bed"],
+    instruments: ["Guitar", "Piano", "Violin", "Drums"],
+    tools: ["Hand Tools", "Power Tools", "Gardening Tools", "Automotive Tools"],
+  };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/product/product/getAll")
+      .then((response) => {
+        setProducts(response.data.products);
+        setFilteredProducts(response.data.products);
+        console.log("response", response);
+        console.log("response data", response.data);
+        console.log("response prods", response.data.products);
+        console.log("data is ");
+        console.log(products);
       })
       .catch((error) => {
-        toast.error('Failed to add ' + product.title + ' to wishlist!');
-        console.error('There was an error!', error);
+        console.error(error);
       });
+  }, []);
+
+  // const filteredProducts = products.filter(product =>
+  //   product.productName.toLowerCase().includes(search.toLowerCase())
+  // );
+
+  const applyAllFilter = () => {
+    const results = products.filter((product) => {
+      return (
+        (product.price >= minPriceFilter || !minPriceFilter) &&
+        (product.price <= maxPriceFilter || !maxPriceFilter) &&
+        (product.category === categoryFilter || !categoryFilter) &&
+        (product.subcategory === subCategoryFilter || !subCategoryFilter) &&
+        (product.condition === conditionFilter || !conditionFilter) &&
+        (product.province === provinceFilter || !provinceFilter) &&
+        product.productName.toLowerCase().includes(search.toLowerCase())
+      );
+    });
+
+    setFilteredProducts(results);
   };
 
+  useEffect(() => {
+    applyAllFilter();
+  }, [search]);
 
   return (
     <div>
       <Navbar />
       <div className="flex sm:py-12">
-        <div className="w-1/5 px-4 py-8">
-          {/* Sidebar */}
-          <h2 className="text-2xl font-bold mb-4">Categories</h2>
-          <ul className="space-y-2">
-            {categories.map((category) => (
-              <li key={category.id}>
-                <button
-                  className={`${category.name === selectedCategory
-                    ? "bg-gray-200"
-                    : "bg-gray-100"
-                    } w-full px-4 py-2 rounded-md`}
-                  onClick={() => handleCategoryChange(category.name)}
-                >
-                  {category.name}
-                </button>
-                {selectedCategory === category.name && (
-                  <ul className="pl-5 space-y-2">
-                    {category.subcategories.map((subcategory) => (
-                      <li key={subcategory}>
-                        <button
-                          className={`${subcategory === selectedSubcategory
-                            ? "bg-gray-200"
-                            : "bg-gray-100"
-                            } w-full px-6 py-2 rounded-md`}
-                          onClick={() => handleSubcategoryChange(subcategory)}
-                        >
-                          {subcategory}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="w-4/5 px-4 py-8">
-          {/* Product Listing */}
-          {selectedCategory && selectedSubcategory ? (
-            <h2 className="text-2xl font-bold mb-4">
-              Products in {selectedSubcategory}
+        {/* Filter Sidebar */}
+        <aside className="w-1/4 p-4 border-r-2">
+          <h2 className="text-2xl font-bold mb-4">Filters</h2>{" "}
+          {/* Added title */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">Price</h3>
+            <div className="mt-2 mb-4">
+              <label
+                htmlFor="minPrice"
+                className="block text-sm font-medium mb-2"
+              >
+                From:
+              </label>
+              <input
+                type="number"
+                id="minPrice"
+                value={minPriceFilter}
+                onChange={(e) => setMinPriceFilter(Number(e.target.value))}
+                className="p-2 border rounded-md w-full focus:ring-2 focus:ring-blue-200"
+              />
+            </div>
+            <div className="mt-2 mb-4">
+              <label
+                htmlFor="maxPrice"
+                className="block text-sm font-medium mb-2"
+              >
+                To:
+              </label>
+              <input
+                type="number"
+                id="maxPrice"
+                value={maxPriceFilter}
+                onChange={(e) => setMaxPriceFilter(Number(e.target.value))}
+                className="p-2 border rounded-md w-full focus:ring-2 focus:ring-blue-200"
+              />
+            </div>
+          </div>
+          {/* Category filter */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">Category</h3>
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
+              <option value="">All Categories</option>
+              {Object.entries(categories).map(([key, value]) => (
+                <option key={key} value={key}>
+                  {value}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* Sub-Category filter */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">Sub-Category</h3>
+            <select
+              value={subCategoryFilter}
+              onChange={(e) => setSubCategoryFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
+              <option value="">All Sub-Categories</option>
+              {subcategories[categoryFilter]?.map((sub) => (
+                <option key={sub} value={sub}>
+                  {sub}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">Condition</h3>
+            <select
+              value={conditionFilter}
+              onChange={(e) => setConditionFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
+              <option value="">All Conditions</option>
+              <option value="mint">Mint</option>
+              {/* Add more conditions as needed */}
+            </select>
+          </div>
+          {/* Province filter */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">Province</h3>
+            <select
+              value={provinceFilter}
+              onChange={(e) => setProvinceFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
+              <option value="">All Provinces</option>
+              {provinces.map((province) => (
+                <option key={province} value={province}>
+                  {province}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/* City filter based on selected province */}
+          <div className="mb-6">
+            <h3 className="text-lg font-semibold mb-3">City</h3>
+            <select
+              value={cityFilter}
+              onChange={(e) => setCityFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
+              <option value="">All Cities</option>
+              {cities[provinceFilter]?.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
+              ))}
+            </select>
+          </div>
+          <button
+            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 w-full transition duration-200 transform hover:scale-105"
+            onClick={applyAllFilter}
+          >
+            Apply
+          </button>
+        </aside>
+
+        {/* Main All Products Section */}
+        <main className="w-3/4 px-4 py-8">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold">
+              {search ? `Search results for "${search}"` : "All Products"}
             </h2>
-          ) : (
-            <h2 className="text-2xl font-bold mb-4">All Products</h2>
-          )}
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search products..."
+              className="p-2 border rounded-md"
+              style={{ width: "250px" }} // Adjust width based on your preference
+            />
+          </div>
           <div className="grid grid-cols-3 gap-4">
-            {selectedCategory || selectedSubcategory ? (
-              filteredProductListings.length > 0 ? (
-                filteredProductListings.map((product) => (
-                  <div key={product.id}>
-                    <Card
-                      title={product.title}
-                      imageSrc={product.imageSrc}
-                      price={product.price}
-                    />
-
-                    {/* insert slider 1 image here */}
-                    <img src={slider1} alt="Slider 1" />
-
-                    {isWishlisted(product.id) ? (
-                      <button disabled className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </button>
-                    ) : (
-                      <button onClick={() => handleWishlistButtonClick(product)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                        </svg>
-                      </button>
-                    )}
-                  </div>
-                ))
-              ) : (
-                <p>No products found.</p>
-              )
-            ) : (
-              productListings.map((product) => (
-                <div key={product.id}>
-                  <Card
-                    title={product.title}
-                    imageSrc={product.imageSrc}
-                    price={product.price}
-                  />
-                  {isWishlisted(product.id) ? (
-                    <button disabled className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </button>
-                  ) : (
-                    <button onClick={() => handleWishlistButtonClick(product)} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-              ))
-            )}
+            {filteredProducts.map((product) => (
+              // ... (rest of the code remains unchanged)
+              <div key={product.id}>
+                <Card
+                  title={product.productName}
+                  imageSrc={product.fileUpload}
+                  price={product.price}
+                  email={product.email}
+                  productID={product.productID}
+                  location={product.city}
+                />
+                <Button
+                  onClick={() => addToWishlist(product)}
+                  variant="contained"
+                  startIcon={<AddShoppingCart />}
+                  color="primary"
+                ></Button>
+              </div>
+            ))}
           </div>
           <ToastContainer position="bottom-right" />
-        </div>
+        </main>
       </div>
-    </div >
+    </div>
   );
 }
