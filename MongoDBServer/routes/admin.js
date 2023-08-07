@@ -34,10 +34,10 @@ router.get(
 router.delete(
   "/deleteUser/:userId",
   asyncHandler(async (req, res) => {
-    const userId = req.params.productId;
+    const userId = req.params.userId;
 
     try {
-      const deletedUser = await user.deleteById(userId);
+      const deletedUser = await user.findByIdAndDelete(userId);
       if (!deletedUser) {
         return res.status(404).json({ error: "User not found" });
       }
