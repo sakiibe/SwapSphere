@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "../css/Product.css";
 import { ToastContainer, toast } from "react-toastify";
+import Share from "../components/Share";
 import {
   Favorite,
   AddShoppingCart,
@@ -344,6 +345,7 @@ const Product = () => {
                 <button className="px-4 py-2 bg-red-500 text-white rounded">
                   Report User
                 </button>
+                <Share />
               </div>
             </div>
           </div>
