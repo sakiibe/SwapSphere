@@ -3,6 +3,7 @@ const router = express.Router();
 const swaggerAnnotations = require("../swagger-annotations");
 const product = require("../models/product");
 const user = require("../models/user");
+const forgotPasswordToken = require("../models/forgotPasswordTokens");
 const wishlist = require("../models/wishlist");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -74,9 +75,34 @@ router.post(
         // Save the new user to the database
         await newAuthToken.save();
       }
-      res.status(200).json({ status: "true", token: token });
+      res.status(200).json({ status: "true", token: token, email: email });
     } catch (error) {
       res.status(500).json({ status: error });
+    }
+  })
+);
+
+router.post(
+  "/forgotpassword",
+  asyncHandler(async (req, res) => {
+    try {
+      const { email } = req.body;
+      // user id ,token email
+      const token = generateToken(email);
+      const authToken = await authenticationTokens.findOne({ email });
+      if (authToken) {
+        authToken.token = token;
+      } else {
+        const newAuthToken = new authenticationTokens({
+          email: email,
+          token: token,
+        });
+        // Save the new user to the database
+        await newAuthToken.save();
+      }
+      res.status(200).json({ status: "true", token: token });
+    } catch (error) {
+      res.status(500).json({ status: "false" });
     }
   })
 );
