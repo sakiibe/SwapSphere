@@ -5,6 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import DragDropUploader from "../components/DragDropUploader";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CreateListing() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -154,6 +156,7 @@ function CreateListing() {
   return (
     <div>
       <Navbar />
+      <ToastContainer position="bottom-right" />{" "}
       <div className="bg-gray-100 p-10 pb-50 min-h-screen pt-20">
         <h1 className="font-sans text-center text-3xl font-medium pb-20 text-black">
           Create Listing
@@ -181,10 +184,21 @@ function CreateListing() {
           {currentPage >= 2 && (
             <div className="container py-6" id="stepTwo">
               <h2 className="step-title text-xl text-black font-medium pb-4 border-b border-blue-200">
-                Upload Main Photo
+                Upload Photo
               </h2>
+
               <DragDropUploader
-                onFilesAdded={(files) => setMainImage(files[0])}
+                onFilesAdded={(fileList) => {
+                  const filesArray = Array.from(fileList);
+                  if (filesArray.length > 1) {
+                    toast.error("Upload single photo!");
+                    toast.error("You can add additional photos afterwards.");
+
+                    return;
+                  }
+                  setMainImage(filesArray[0]);
+                  toast.success(`${filesArray[0].name} uploaded!`);
+                }}
               />
 
               {mainImage && (
@@ -193,9 +207,13 @@ function CreateListing() {
                     Upload Additional Photos
                   </h2>
                   <DragDropUploader
-                    onFilesAdded={(files) => {
-                      const allFiles = [mainImage, ...files];
+                    onFilesAdded={(fileList) => {
+                      const filesArray = Array.from(fileList);
+                      const allFiles = [mainImage, ...filesArray];
                       setFileUpload(allFiles);
+                      toast.success(
+                        `${filesArray.map((f) => f.name).join(", ")} uploaded!`
+                      );
                     }}
                   />
                 </div>
