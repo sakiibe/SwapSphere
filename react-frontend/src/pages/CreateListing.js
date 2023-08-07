@@ -20,8 +20,6 @@ function CreateListing() {
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
-  const [showMainUploader, setShowMainUploader] = useState(true);
-  const [showAdditionalUploader, setShowAdditionalUploader] = useState(false);
 
   const handleNextClick = () => {
     if (currentPage === 1) {
@@ -192,8 +190,14 @@ function CreateListing() {
               <DragDropUploader
                 onFilesAdded={(fileList) => {
                   const filesArray = Array.from(fileList);
+                  if (filesArray.length > 1) {
+                    toast.error("Upload single photo!");
+                    toast.error("You can add additional photos afterwards.");
+
+                    return;
+                  }
                   setMainImage(filesArray[0]);
-                  toast.success(`Main photo: ${filesArray[0].name} uploaded!`);
+                  toast.success(`${filesArray[0].name} uploaded!`);
                 }}
               />
 
