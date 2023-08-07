@@ -182,3 +182,25 @@ router.get("/product/getAll", async (req, res) => {
       .json({ message: "Internal server error: " + error.message });
   }
 });
+
+//get all products for a user
+router.get("/products/getAll/:email", async (req, res) => {
+  try {
+    const userEmail = req.params.email;
+
+    // Find all products with the given user
+    const userProducts = await product.find({ email: userEmail });
+
+    if (!userProducts || userProducts.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No products found for this user" });
+    }
+
+    // Return the products as JSON
+    res.json({ products: userProducts });
+  } catch (err) {
+    console.error("Error retrieving products by email:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
