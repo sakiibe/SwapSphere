@@ -292,83 +292,86 @@ const Product = () => {
           </div>
         </div>
       </div>
+      {/* {START OF COMMENT FEATURE} */}
       <Divider className="my-4" />
-       {/* START OF COMMENT FEATURE*/}
-
-       <Box sx={{ mt: 4 }}>
-  <Typography variant="h5" gutterBottom>
-    Comments
-  </Typography>
-  <Box sx={{ maxWidth: 600, margin: "0 auto" }}>
-    {comments.map((comment) => (
+      <Box sx={{ mt: 4, maxWidth: 600, margin: "0 auto" }}>
       <Box
-        key={comment._id}
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center", // Center the comments horizontally
+          alignItems: "left", // Left align the comments horizontally
           mb: 2,
-          textAlign: "center", // Center the comment text
+          textAlign: "left", // Left align the comment text
         }}
       >
-        <Avatar sx={{ bgcolor: "primary.main", mr: 2 }}>
-          <Favorite />
-        </Avatar>
-        {editedCommentId === comment._id ? (
-          // Show an editable text field when the comment is in edit mode
-          <TextField
-            multiline
-            fullWidth
-            value={editedCommentText}
-            onChange={(event) => setEditedCommentText(event.target.value)}
-          />
-        ) : (
-          // Show the comment text when not in edit mode
-          <Typography variant="body1" sx={{ color: "text.secondary", mb: 1 }}>
-            {comment.commentText}
-          </Typography>
-        )}
-        <Typography variant="caption" sx={{ color: "text.disabled" }}>
-          Posted by: {comment.useremail}, Date:{" "}
-          {new Date(comment.createdAt).toLocaleString()}
+        <Typography variant="h5" gutterBottom>
+          Comments
         </Typography>
-        {comment.useremail === loggedInUser && (
-          <div>
+        {comments.map((comment) => (
+          <Box
+            key={comment._id}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "left", // Left align the comments horizontally
+              mb: 2,
+              textAlign: "left", // Left align the comment text
+            }}
+          >
+            <Avatar sx={{ bgcolor: "primary.main", mr: 2 }}>
+              <Favorite />
+            </Avatar>
             {editedCommentId === comment._id ? (
-              // Show save button when editing the comment
-              <IconButton color="primary" onClick={() => toggleEditMode(comment._id, comment.commentText)}>
-                <Save />
-              </IconButton>
+              // Show an editable text field when the comment is in edit mode
+              <TextField
+                multiline
+                fullWidth
+                value={editedCommentText}
+                onChange={(event) => setEditedCommentText(event.target.value)}
+              />
             ) : (
-              // Show edit button when not in edit mode
-              <IconButton color="black" onClick={() => toggleEditMode(comment._id, comment.commentText)}>
-                <Edit />
-              </IconButton>
+              // Show the comment text when not in edit mode
+              <Typography variant="body1" sx={{ color: "text.secondary", mb: 1 }}>
+                {comment.commentText}
+              </Typography>
             )}
-            {!editedCommentId && ( // Hide delete button when editing the comment
-              <IconButton
-                color="error"
-                onClick={() => {
-                  if (window.confirm("Are you sure you want to delete this comment?")) {
-                    handleDeleteComment(comment._id);
-                  }
-                }}
-              >
-                <Delete />
-              </IconButton>
+            <Typography variant="caption" sx={{ color: "text.disabled" }}>
+              Posted by: {comment.useremail}, Date:{" "}
+              {new Date(comment.createdAt).toLocaleString()}
+            </Typography>
+            {comment.useremail === loggedInUser && (
+              <div>
+                {editedCommentId === comment._id ? (
+                  // Show save button when editing the comment
+                  <IconButton color="primary" onClick={() => toggleEditMode(comment._id, comment.commentText)}>
+                    <Save />
+                  </IconButton>
+                ) : (
+                  // Show edit button when not in edit mode
+                  <IconButton color="black" onClick={() => toggleEditMode(comment._id, comment.commentText)}>
+                    <Edit />
+                  </IconButton>
+                )}
+                {!editedCommentId && ( // Hide delete button when editing the comment
+                  <IconButton
+                    color="error"
+                    onClick={() => {
+                      if (window.confirm("Are you sure you want to delete this comment?")) {
+                        handleDeleteComment(comment._id);
+                      }
+                    }}
+                  >
+                    <Delete />
+                  </IconButton>
+                )}
+              </div>
             )}
-          </div>
-        )}
-        <Divider sx={{ mt: 1, mb: 2 }} />
-        
+            <Divider sx={{ mt: 1, mb: 2 }} />
+          </Box>
+        ))}
       </Box>
-    ))}
-    
-  </Box>
-</Box>
-<Box sx={{ maxWidth: 600, margin: "0 auto" }}>
-
-<TextField
+      <Box sx={{ display: "flex", alignItems: "center", mt: 2 }}>
+        <TextField
           label="Write a comment"
           variant="outlined"
           multiline
@@ -379,12 +382,10 @@ const Product = () => {
         <IconButton color="primary" onClick={handleCommentSubmit}>
           <Send />
         </IconButton>
-        </Box>
+      </Box>
+    </Box>
+          {/* {END OF COMMENT FEATURE} */}
 
-
-    
-
-      {/* END OF COMMENT FEATURE*/}
       <ToastContainer position="bottom-right" />
     </div>
   );
