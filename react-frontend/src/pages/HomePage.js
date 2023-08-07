@@ -1,38 +1,36 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
-import ReactSlider from 'react-slider';
+import ReactSlider from "react-slider";
 import { Link } from "react-router-dom";
 import product_image from "../images/product.jpg";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Button } from '@mui/material';
-import { Favorite, AddShoppingCart } from '@mui/icons-material';
-import axios from 'axios';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@mui/material";
+import { Favorite, AddShoppingCart } from "@mui/icons-material";
+import axios from "axios";
 import useWishlist from "./useWishlist";
-import '../css/HomePage.css'
-import slider1 from '../images/slider1.png'
+import "../css/HomePage.css";
+import slider1 from "../images/slider1.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function HomePage() {
-
   const { addToWishlist, wishlistLoading } = useWishlist();
 
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const [minPriceFilter, setMinPriceFilter] = useState(0);   // Assuming you want to start with 0
+  const [minPriceFilter, setMinPriceFilter] = useState(0); // Assuming you want to start with 0
   const [maxPriceFilter, setMaxPriceFilter] = useState(10000); // Assuming you want to start with 10000 as the max
 
-
   // const [priceFilter, setPriceFilter] = useState('');
-  const [categoryFilter, setCategoryFilter] = useState('');
-  const [subCategoryFilter, setSubCategoryFilter] = useState('');
-  const [conditionFilter, setConditionFilter] = useState('');
-  const [provinceFilter, setProvinceFilter] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState("");
+  const [subCategoryFilter, setSubCategoryFilter] = useState("");
+  const [conditionFilter, setConditionFilter] = useState("");
+  const [provinceFilter, setProvinceFilter] = useState("");
 
-  const [cityFilter, setCityFilter] = useState('');
+  const [cityFilter, setCityFilter] = useState("");
 
   // Constants for the filter data
   const provinces = [
@@ -72,7 +70,6 @@ export default function HomePage() {
     Saskatchewan: ["Prince Albert", "Regina", "Saskatoon"],
   };
 
-
   const categories = {
     "home-appliance": "Home Appliance",
     electronics: "Electronics",
@@ -105,9 +102,8 @@ export default function HomePage() {
         console.log("response", response);
         console.log("response data", response.data);
         console.log("response prods", response.data.products);
-        console.log("data is ")
-        console.log(products)
-
+        console.log("data is ");
+        console.log(products);
       })
       .catch((error) => {
         console.error(error);
@@ -119,7 +115,7 @@ export default function HomePage() {
   // );
 
   const applyAllFilter = () => {
-    const results = products.filter(product => {
+    const results = products.filter((product) => {
       return (
         (product.price >= minPriceFilter || !minPriceFilter) &&
         (product.price <= maxPriceFilter || !maxPriceFilter) &&
@@ -127,8 +123,7 @@ export default function HomePage() {
         (product.subcategory === subCategoryFilter || !subCategoryFilter) &&
         (product.condition === conditionFilter || !conditionFilter) &&
         (product.province === provinceFilter || !provinceFilter) &&
-        (product.productName.toLowerCase().includes(search.toLowerCase()))
-
+        product.productName.toLowerCase().includes(search.toLowerCase())
       );
     });
 
@@ -139,23 +134,23 @@ export default function HomePage() {
     applyAllFilter();
   }, [search]);
 
-
-
-
-
   return (
     <div>
       <Navbar />
       <div className="flex sm:py-12">
-
         {/* Filter Sidebar */}
         <aside className="w-1/4 p-4 border-r-2">
-          <h2 className="text-2xl font-bold mb-4">Filters</h2> {/* Added title */}
-
+          <h2 className="text-2xl font-bold mb-4">Filters</h2>{" "}
+          {/* Added title */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Price</h3>
             <div className="mt-2 mb-4">
-              <label htmlFor="minPrice" className="block text-sm font-medium mb-2">From:</label>
+              <label
+                htmlFor="minPrice"
+                className="block text-sm font-medium mb-2"
+              >
+                From:
+              </label>
               <input
                 type="number"
                 id="minPrice"
@@ -165,7 +160,12 @@ export default function HomePage() {
               />
             </div>
             <div className="mt-2 mb-4">
-              <label htmlFor="maxPrice" className="block text-sm font-medium mb-2">To:</label>
+              <label
+                htmlFor="maxPrice"
+                className="block text-sm font-medium mb-2"
+              >
+                To:
+              </label>
               <input
                 type="number"
                 id="maxPrice"
@@ -175,56 +175,79 @@ export default function HomePage() {
               />
             </div>
           </div>
-
           {/* Category filter */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Category</h3>
-            <select value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)} className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200">
+            <select
+              value={categoryFilter}
+              onChange={(e) => setCategoryFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
               <option value="">All Categories</option>
               {Object.entries(categories).map(([key, value]) => (
-                <option key={key} value={key}>{value}</option>
+                <option key={key} value={key}>
+                  {value}
+                </option>
               ))}
             </select>
           </div>
-
           {/* Sub-Category filter */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Sub-Category</h3>
-            <select value={subCategoryFilter} onChange={(e) => setSubCategoryFilter(e.target.value)} className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200">
+            <select
+              value={subCategoryFilter}
+              onChange={(e) => setSubCategoryFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
               <option value="">All Sub-Categories</option>
-              {subcategories[categoryFilter]?.map(sub => (
-                <option key={sub} value={sub}>{sub}</option>
+              {subcategories[categoryFilter]?.map((sub) => (
+                <option key={sub} value={sub}>
+                  {sub}
+                </option>
               ))}
             </select>
           </div>
-
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Condition</h3>
-            <select value={conditionFilter} onChange={(e) => setConditionFilter(e.target.value)} className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200">
+            <select
+              value={conditionFilter}
+              onChange={(e) => setConditionFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
               <option value="">All Conditions</option>
               <option value="mint">Mint</option>
               {/* Add more conditions as needed */}
             </select>
           </div>
-
           {/* Province filter */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">Province</h3>
-            <select value={provinceFilter} onChange={(e) => setProvinceFilter(e.target.value)} className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200">
+            <select
+              value={provinceFilter}
+              onChange={(e) => setProvinceFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
               <option value="">All Provinces</option>
-              {provinces.map(province => (
-                <option key={province} value={province}>{province}</option>
+              {provinces.map((province) => (
+                <option key={province} value={province}>
+                  {province}
+                </option>
               ))}
             </select>
           </div>
-
           {/* City filter based on selected province */}
           <div className="mb-6">
             <h3 className="text-lg font-semibold mb-3">City</h3>
-            <select value={cityFilter} onChange={(e) => setCityFilter(e.target.value)} className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200">
+            <select
+              value={cityFilter}
+              onChange={(e) => setCityFilter(e.target.value)}
+              className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
+            >
               <option value="">All Cities</option>
-              {cities[provinceFilter]?.map(city => (
-                <option key={city} value={city}>{city}</option>
+              {cities[provinceFilter]?.map((city) => (
+                <option key={city} value={city}>
+                  {city}
+                </option>
               ))}
             </select>
           </div>
@@ -235,8 +258,6 @@ export default function HomePage() {
             Apply
           </button>
         </aside>
-
-
 
         {/* Main All Products Section */}
         <main className="w-3/4 px-4 py-8">
@@ -250,7 +271,7 @@ export default function HomePage() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search products..."
               className="p-2 border rounded-md"
-              style={{ width: '250px' }}  // Adjust width based on your preference
+              style={{ width: "250px" }} // Adjust width based on your preference
             />
           </div>
           <div className="grid grid-cols-3 gap-4">
@@ -270,15 +291,13 @@ export default function HomePage() {
                   variant="contained"
                   startIcon={<AddShoppingCart />}
                   color="primary"
-                >
-                </Button>
-
+                ></Button>
               </div>
             ))}
           </div>
           <ToastContainer position="bottom-right" />
         </main>
       </div>
-    </div >
+    </div>
   );
-}  
+}
