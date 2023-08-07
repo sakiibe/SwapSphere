@@ -13,7 +13,7 @@ const product = new mongoose.Schema({
   },
 
   fileUpload: {
-    type: String, // TODO: change later
+    type: String,
     required: false,
   },
   price: {
@@ -41,6 +41,10 @@ const product = new mongoose.Schema({
     required: true,
   },
   city: {
+    type: String,
+    required: true,
+  },
+  email: {
     type: String,
     required: true,
   },
