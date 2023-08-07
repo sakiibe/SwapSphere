@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
-import ReactSlider from "react-slider";
-import { Link } from "react-router-dom";
-import product_image from "../images/product.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@mui/material";
@@ -10,7 +7,6 @@ import { Favorite, AddShoppingCart } from "@mui/icons-material";
 import axios from "axios";
 import useWishlist from "./useWishlist";
 import "../css/HomePage.css";
-import slider1 from "../images/slider1.png";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 

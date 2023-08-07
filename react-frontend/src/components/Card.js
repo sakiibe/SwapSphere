@@ -23,6 +23,18 @@ export default function Card({ product }) {
         <p className="text-gray-700 text-base">
           <span className="font-semibold">Location:</span> {product.city}
         </p>
+        {
+          product.noOfTimesProductReported > 0 && product.noOfTimesProductReported < 5 &&
+          <p className="text-orange-500 text-base">
+            Alert: This product was reported {product.noOfTimesProductReported} number of times.
+          </p>
+        }
+        {
+          product.noOfTimesProductReported > 5 &&
+          <p className="text-red-500 text-base">
+            Warning: This product was reported {product.noOfTimesProductReported} number of times.
+          </p>
+        }
       </div>
     </div>
   );
