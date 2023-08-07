@@ -1,13 +1,17 @@
 import React from "react";
 
-function Share() {
+function Share({ showShareButtons }) {
   const url = window.location.href; // Get page URL
   const text = "Check out this amazing product!";
   const encodedUrl = encodeURIComponent(url);
   const encodedText = encodeURIComponent(text);
 
   return (
-    <div className="mt-4 flex items-center">
+    <div
+      className={`flex items-center transition-transform duration-500 ease-in-out transform ${
+        showShareButtons ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
       {/* <span className="mr-4 text-base text-black font-medium border-b">
         Share
       </span> */}

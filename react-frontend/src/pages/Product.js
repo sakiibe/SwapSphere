@@ -329,9 +329,9 @@ const Product = () => {
                   Report Item
                 </button>
               </div>
-              <div className="mt-4">
+              <div className="flex items-center mt-4">
                 <button
-                  className="mr-2 px-4 py-2 bg-gray-500 text-white rounded"
+                  className="bg-black hover:bg-gray-100 text-white mr-2 px-4 py-2 border border-gray-400 rounded shadow"
                   onClick={() => setShowShareButtons(!showShareButtons)}
                 >
                   Share
