@@ -16,7 +16,7 @@ function CreateListing() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState();
   const [subcategory, setSubcategory] = useState("");
-  const [condition, setCondition] = useState("mint");
+  const [condition, setCondition] = useState("");
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
