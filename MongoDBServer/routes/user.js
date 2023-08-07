@@ -82,30 +82,31 @@ router.post(
   })
 );
 
-router.post(
-  "/forgotpassword",
-  asyncHandler(async (req, res) => {
-    try {
-      const { email } = req.body;
-      // user id ,token email
-      const token = generateToken(email);
-      const authToken = await authenticationTokens.findOne({ email });
-      if (authToken) {
-        authToken.token = token;
-      } else {
-        const newAuthToken = new authenticationTokens({
-          email: email,
-          token: token,
-        });
-        // Save the new user to the database
-        await newAuthToken.save();
-      }
-      res.status(200).json({ status: "true", token: token });
-    } catch (error) {
-      res.status(500).json({ status: "false" });
-    }
-  })
-);
+// router.post(
+//   "/forgotpassword",
+//   asyncHandler(async (req, res) => {
+//     try {
+//       const { email } = req.body;
+//       // user id ,token email
+//       const token = generateToken(email);
+//       const authToken = await authenticationTokens.findOne({ email: email });
+//       if (authToken) {
+//         authToken.token = token;
+//       } else {
+//         const newAuthToken = new authenticationTokens({
+//           email: email,
+//           token: token,
+//         });
+//         // Save the new user to the database
+//         await newAuthToken.save();
+//         console.log("Flag");
+//       }
+//       res.status(200).json({ status: "true", token: token });
+//     } catch (error) {
+//       res.status(500).json({ status: "false" });
+//     }
+//   })
+// );
 
 router.post(
   "/checkTokens",
