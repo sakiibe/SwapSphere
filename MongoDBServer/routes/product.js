@@ -43,7 +43,8 @@ router.get("/product/getAll", async (req, res) => {
   //   console.error("Error:", error);
   //   res.status(500).json({ message: "Internal server error: " + error.message });
   // }
-  product.find({}, { _id: 0 })
+  product
+    .find({}, { _id: 0 })
     .exec()
     .then((products) => {
       if (!products || !products.length) {
@@ -62,19 +63,24 @@ router.get("/product/getAll", async (req, res) => {
     });
 });
 
-router.post("/add", upload.single("fileUpload"), async (req, res) => {
+router.post("/add", upload.array("fileUpload"), async (req, res) => {
   try {
     console.log(req.body);
-    let fileUploadURL = null;
+    let fileUploadURLs = [];
 
-    if (req.file) {
-      fileUploadURL = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.key}`;
+    if (req.files) {
+      // fileUploadURL = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${req.file.key}`;
+
+      fileUploadURLs = req.files.map(
+        (file) =>
+          `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/${file.key}`
+      );
     }
 
     const newProduct = new product({
       productID: req.body.productID,
       productName: req.body.productName,
-      fileUpload: fileUploadURL,
+      fileUpload: fileUploadURLs,
       price: req.body.price,
       category: req.body.category,
       subcategory: req.body.subcategory,
@@ -95,52 +101,28 @@ router.post("/add", upload.single("fileUpload"), async (req, res) => {
   }
 });
 
-// //get the product based on the productID
-// router.get("/product/:id", async (req, res) => {
-//   // const productId = req.params.id;
-//   // console.log(productId);
-
-//   // try {
-//   //   const existingProduct = await product.findById(productId);
-//   //   if (!existingProduct) {
-//   //     return res.status(404).json({ message: "Product not found" });
-//   //   }
-//   //   return res.status(200).json({ product: existingProduct });
-//   // } catch (error) {
-//   //   console.error("Error:", error);
-//   //   res
-//   //     .status(500)
-//   //     .json({ message: "Internal server error: " + error.message });
-//   // }
-// });
-
-
-router.get('/product/:id', async (req, res) => {
+router.get("/product/:id", async (req, res) => {
   try {
     const productId = req.params.id; // Extract the product ID from the request parameters
 
     // Validate the product ID format (optional)
-   
 
     // Find the product with the given productID
     const foundProduct = await product.findOne({ productID: productId });
 
     if (!foundProduct) {
-      return res.status(404).json({ error: 'Product not found' });
+      return res.status(404).json({ error: "Product not found" });
     }
 
     // Return the product as JSON
     res.json(foundProduct);
   } catch (err) {
-    console.error('Error retrieving product:', err);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("Error retrieving product:", err);
+    res.status(500).json({ error: "Internal server error" });
   }
 });
 
-
-
-
-
+//get single image for a product
 router.get("/:id/fileUpload", async (req, res) => {
   const productId = req.params.id;
 
@@ -149,8 +131,35 @@ router.get("/:id/fileUpload", async (req, res) => {
     if (!existingProduct) {
       return res.status(404).json({ message: "Product not found" });
     }
-    // Send back the fileUpload URL
-    return res.status(200).json({ fileUpload: existingProduct.fileUpload });
+
+    // Check if there's at least one image in fileUpload
+    if (existingProduct.fileUpload && existingProduct.fileUpload.length > 0) {
+      // Send back the main image URL
+      return res.status(200).json({ mainImage: existingProduct.fileUpload[0] });
+    } else {
+      return res
+        .status(404)
+        .json({ message: "No main image found for this product." });
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    res
+      .status(500)
+      .json({ message: "Internal server error: " + error.message });
+  }
+});
+
+//get all images for a product
+router.get("/:id/fileUploads", async (req, res) => {
+  const productId = req.params.id;
+
+  try {
+    const existingProduct = await product.findOne({ productID: productId });
+    if (!existingProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    // Send back the array of fileUpload URLs
+    return res.status(200).json({ fileUploads: existingProduct.fileUpload });
   } catch (error) {
     console.error("Error:", error);
     res

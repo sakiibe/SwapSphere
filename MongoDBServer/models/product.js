@@ -13,7 +13,7 @@ const product = new mongoose.Schema({
   },
 
   fileUpload: {
-    type: String,
+    type: [String],
     required: false,
   },
   price: {
