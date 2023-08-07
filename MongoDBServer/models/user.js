@@ -33,7 +33,7 @@ const user = new mongoose.Schema({
     type: String,
     default: "user",
   },
-  NoOfTimesUserReported: {
+  noOfTimesUserReported: {
     type: Number,
     default: 0,
   },

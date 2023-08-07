@@ -15,8 +15,8 @@ router.get(
       if (!reportedUser) {
         return res.status(404).json({ error: "User not found" });
       }
-      reportedUser.NoOfTimesUserReported =
-        (reportedUser.NoOfTimesUserReported || 0) + 1;
+      reportedUser.noOfTimesUserReported =
+        (reportedUser.noOfTimesUserReported || 0) + 1;
       await reportedUser.save();
       res.json(reportedUser);
     } catch (error) {
@@ -35,8 +35,8 @@ router.get(
       if (!reportedProduct) {
         return res.status(404).json({ error: "Product not found" });
       }
-      reportedProduct.NoOfTimesProductReported =
-        (reportedProduct.NoOfTimesProductReported || 0) + 1;
+      reportedProduct.noOfTimesProductReported =
+        (reportedProduct.noOfTimesProductReported || 0) + 1;
       await reportedProduct.save();
       res.json(reportedProduct);
     } catch (error) {
