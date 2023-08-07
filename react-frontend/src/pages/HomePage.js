@@ -278,14 +278,7 @@ export default function HomePage() {
             {filteredProducts.map((product) => (
               // ... (rest of the code remains unchanged)
               <div key={product.id}>
-                <Card
-                  title={product.productName}
-                  imageSrc={product.fileUpload}
-                  price={product.price}
-                  email={product.email}
-                  productID={product.productID}
-                  location={product.city}
-                />
+                <Card product={product} />
                 <Button
                   onClick={() => addToWishlist(product)}
                   variant="contained"
