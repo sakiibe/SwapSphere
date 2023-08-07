@@ -19,7 +19,7 @@ export default function Navbar() {
     };
     axios
       .get(
-        "https://swapsphere-backend.onrender.com/user/getUserDetailwithToken",
+        "http://localhost:8080/user/getUserDetailwithToken",
         headersData
       )
       .then((response) => {
@@ -193,7 +193,7 @@ export default function Navbar() {
                   <span className="sr-only">Open user menu</span>
                   <img
                     className="h-8 w-8 rounded-full"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    src={profilePicture}
                     alt=""
                   />
                 </button>
@@ -209,6 +209,15 @@ export default function Navbar() {
                   tabIndex="-1"
                 >
                   {/* Dropdown menu items */}
+                  <div
+                    className="block px-4 py-2 text-sm text-gray-700"
+                    role="menuitem"
+                    tabIndex="-1"
+                    id="user-menu-item-0"
+                    onClick={handleViewUserProfile}
+                  >
+                    View Profile
+                  </div>
                   <div
                     className="block px-4 py-2 text-sm text-gray-700"
                     role="menuitem"

@@ -300,7 +300,7 @@ const Product = () => {
                 {user.firstName + " " + user.lastName}
               </h2>
               <p className="text-gray-600">Email: {user.email}</p>
-              <p className="text-gray-600">Phone: {user.phoneNumber}</p>
+              <p className="text-gray-600">Phone: {user.mobile}</p>
               <div className="mt-4">
                 <button className="mr-2 px-4 py-2 bg-blue-500 text-white rounded">
                   User Profile
