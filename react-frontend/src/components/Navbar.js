@@ -18,10 +18,7 @@ export default function Navbar() {
       },
     };
     axios
-      .get(
-        "http://localhost:8080/user/getUserDetailwithToken",
-        headersData
-      )
+      .get("http://localhost:8080/user/getUserDetailwithToken", headersData)
       .then((response) => {
         const userData = response.data;
         setProfilePicture(userData.userProfilePhoto);
@@ -49,7 +46,8 @@ export default function Navbar() {
       console.log(response);
 
       if (response.data.status === "true") {
-        localStorage.setItem("authToken", " ");
+        localStorage.setItem("authToken", "");
+        localStorage.setItem("email", "");
         navigate("/user/login");
       }
     } catch (error) {

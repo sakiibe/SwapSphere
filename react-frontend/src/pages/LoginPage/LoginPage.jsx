@@ -28,6 +28,7 @@ const LoginPage = () => {
 
           const  token  = response.data.token;
           localStorage.setItem('authToken', token);
+          localStorage.setItem('email', response.data.email);
           if(response.data.status === 'true'){
 
             navigate("/home")
