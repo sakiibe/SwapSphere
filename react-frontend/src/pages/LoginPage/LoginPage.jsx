@@ -93,7 +93,7 @@ const LoginPage = () => {
                                   <div className="row">
                                     <label for="password" class=" mb-1 col-6">Password:</label>
                                     <div class="col-6 d-flex justify-content-end">
-                                      <button class="link-btn" onClick={() => navigate("/user/forgotpassword")}>forgot password?</button>
+                                      <button class="link-btn text-blue-underline" onClick={() => navigate("/user/forgotpassword")}>forgot password?</button>
                                     </div>                                 
                                   </div>
                                   <input type="password" class="form-control rounded" value={password} id="password" placeholder="Enter your password" onChange={handlePasswordChange}/>
@@ -106,8 +106,7 @@ const LoginPage = () => {
                                       Incorrect Login credentials. Please Try again.
                                     </p>
                                   )}
-                                  <span>Don't have an account? </span>
-                                <button className="link-btn  mt-4 text-blue text-blue-underline" onClick={() => navigate("/user/register")}>Register here.</button>
+                                  <span>Don't have an account? <button className="link-btn  mt-4 text-blue text-blue-underline margin-botton" onClick={() => navigate("/user/register")}>Register here.</button></span>
                                 {/* </div> */}
                             </form>
                         </div>

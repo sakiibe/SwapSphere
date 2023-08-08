@@ -30,6 +30,17 @@ export default function HomePage() {
 
   const [cityFilter, setCityFilter] = useState("");
 
+  const resetFilters = () => {
+    setMinPriceFilter(0);
+    setMaxPriceFilter(10000);
+    setCategoryFilter("");
+    setSubCategoryFilter("");
+    setConditionFilter("");
+    setProvinceFilter("");
+    setCityFilter("");
+    setSearch("");
+    fetchData();
+  };
   // Constants for the filter data
   const provinces = [
     "Alberta",
@@ -114,7 +125,11 @@ export default function HomePage() {
       .catch((error) => {
         console.log(error);
       });
+    fetchData();
 
+  }, []);
+
+  const fetchData = () => {
     axios
       .get("http://localhost:8080/product/product/getAll")
       .then((response) => {
@@ -129,7 +144,12 @@ export default function HomePage() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
+
+  const handleProvinceChange = (e) => {
+    setProvinceFilter(e.target.value);
+    setCityFilter('');
+  }
 
   // const filteredProducts = products.filter(product =>
   //   product.productName.toLowerCase().includes(search.toLowerCase())
@@ -144,6 +164,7 @@ export default function HomePage() {
         (product.subcategory === subCategoryFilter || !subCategoryFilter) &&
         (product.condition === conditionFilter || !conditionFilter) &&
         (product.province === provinceFilter || !provinceFilter) &&
+        (product.city === cityFilter || !cityFilter) &&
         product.productName.toLowerCase().includes(search.toLowerCase())
       );
     });
@@ -237,7 +258,8 @@ export default function HomePage() {
             >
               <option value="">All Conditions</option>
               <option value="mint">Mint</option>
-              {/* Add more conditions as needed */}
+              <option value="used">Used</option>
+              <option value="aged">Aged</option>
             </select>
           </div>
           {/* Province filter */}
@@ -245,7 +267,7 @@ export default function HomePage() {
             <h3 className="text-lg font-semibold mb-3">Province</h3>
             <select
               value={provinceFilter}
-              onChange={(e) => setProvinceFilter(e.target.value)}
+              onChange={handleProvinceChange}
               className="p-2 w-full border rounded-md focus:ring-2 focus:ring-blue-200"
             >
               <option value="">All Provinces</option>
@@ -277,6 +299,12 @@ export default function HomePage() {
             onClick={applyAllFilter}
           >
             Apply
+          </button>
+          <button
+            className="mt-2 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-500 w-full transition duration-200 transform hover:scale-105"
+            onClick={resetFilters}
+          >
+            Reset Filters
           </button>
         </aside>
 

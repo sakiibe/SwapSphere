@@ -18,7 +18,7 @@ import UserProfilePage from "../src/pages/UserProfile/UserProfile";
 import Admin from "../src/pages/Admin";
 import EditListing from "./pages/EditListing";
 import MyListings from "./pages/MyListings";
-
+import UserListings from './pages/UserListings';
 function App() {
   return (
     <BrowserRouter>
@@ -43,6 +43,7 @@ function App() {
           <Route path="myListings" element={<MyListings />} />
           <Route path="/user/userprofile" element={<UserProfilePage />} />
           <Route path="/admin" element={<Admin />} />
+          <Route path='/userListings' element={< UserListings />} />
         </Routes>
       </div>
     </BrowserRouter>
