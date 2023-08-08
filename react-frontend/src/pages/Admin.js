@@ -61,21 +61,23 @@ const Admin = () => {
   const handleDeleteProduct = (productId) => {
     axios
       .delete(`http://localhost:8080/admin/deleteProduct/${productId}`)
-      .then((response) => { })
+      .then((response) => {
+        fetchData();
+      })
       .catch((error) => {
         console.error(error);
       });
-    fetchData();
   };
 
   const handleDeleteUser = (userId) => {
     axios
       .delete(`http://localhost:8080/admin/deleteUser/${userId}`)
-      .then((response) => { })
+      .then((response) => {
+        fetchData();
+      })
       .catch((error) => {
         console.error(error);
       });
-    fetchData();
   };
 
   const handleLogout = async (e) => {
