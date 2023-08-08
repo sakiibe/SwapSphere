@@ -13,7 +13,10 @@ const Admin = () => {
     fetchData();
 
     // Run the token verification logic when the component is loaded
-    if (localStorage.getItem("authToken") === "") {
+    if (
+      localStorage.getItem("authToken") === "" ||
+      localStorage.getItem("role") !== "admin"
+    ) {
       navigate("/user/login");
     }
     const authTokenData = {

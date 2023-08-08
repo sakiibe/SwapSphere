@@ -15,7 +15,10 @@ const WishlistPage = () => {
 
   useEffect(() => {
     // Run the token verification logic when the component is loaded
-    if (localStorage.getItem("authToken") === "") {
+    if (
+      localStorage.getItem("authToken") === "" ||
+      localStorage.getItem("role") !== "user"
+    ) {
       navigate("/user/login");
     }
     const authTokenData = {

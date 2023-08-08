@@ -17,7 +17,6 @@ const LoginPage = () => {
     useEffect(() => {
       // Hide the emailAlert element on initial load
       document.getElementById("emailAlert").style.display = 'none';
-      document.getElementById("incorrectMessage").style.display = 'none';
     }, []);
     const handleLogin = async (e) => {
       e.preventDefault();
@@ -32,20 +31,18 @@ const LoginPage = () => {
           const  token  = response.data.token;
           localStorage.setItem('authToken', token);
           localStorage.setItem('email', response.data.email);
+          localStorage.setItem('role', response.data.role);
           if(response.data.status === 'true'){
             localStorage.setItem("email",email);
             if(response.data.role ==="user"){
               navigate("/home");
             }
             else{
-              navigate("/product");  //need to change the navigation.
+              navigate("/admin");
             }
-          }else{
-            document.getElementById("incorrectMessage").style.display = 'block';
           }
 
         } catch (error) {
-          document.getElementById("incorrectMessage").style.display = 'block';
           if (error.response && error.response.data && error.response.data.error) {
             setInvalidCredentials(true);
             setLoginError(error.response.data.error);
@@ -56,7 +53,6 @@ const LoginPage = () => {
       };
 
  const emailValidation=(e)=>{
-  document.getElementById("incorrectMessage").style.display = 'none';
     setEmail(e.target.value);
         const email_regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
         if(document.getElementById("email").value===''){
@@ -72,7 +68,6 @@ const LoginPage = () => {
     }
     const handlePasswordChange = (e) => {
       setPassword(e.target.value);
-      document.getElementById("incorrectMessage").style.display = 'none';
     };
     
     return (
