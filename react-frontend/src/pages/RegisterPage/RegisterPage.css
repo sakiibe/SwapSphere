@@ -17,3 +17,7 @@
     display: none;
   }
 }
+.text-blue-underline {
+  color: blue;
+  text-decoration: underline;
+}

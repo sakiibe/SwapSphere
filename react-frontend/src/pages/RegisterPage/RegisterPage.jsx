@@ -162,9 +162,9 @@ const RegisterPage = () => {
                                 <input type="password" class="form-control rounded" id="confirmPassword" placeholder="Enter Confirm Password" onChange={passwordMatchValidation}/>
                                 <div id="confirmPasswordAlert" class='text-white bg-danger rounded-2 ps-2'>Password do not match. </div>
                                 </div>
-                                <button type="submit " class="btn btn-primary mt-3 mx-1">Submit</button>
+                                <button type="submit " class="btn btn-primary mt-3 mx-1">Register</button>
                              
-                                    <button className="link-btn font-weight-bolder mt-3 " onClick={() => navigate("/user/login")}>Already have an account? Login here.</button>
+                                    <button className=" link-btn font-weight-bolder mt-3 text-blue-underline" onClick={() => navigate("/user/login")}>Already have an account? Login here.</button>
             
                             </form>
                         </div>

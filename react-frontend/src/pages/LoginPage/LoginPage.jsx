@@ -34,6 +34,7 @@ const LoginPage = () => {
           localStorage.setItem('role', response.data.role);
           if(response.data.status === 'true'){
             localStorage.setItem("email",email);
+            localStorage.setItem('role',response.data.role);
             if(response.data.role ==="user"){
               navigate("/home");
             }
@@ -99,13 +100,13 @@ const LoginPage = () => {
                                 </div>
 {/*                                 
                                 <div className="d-flex flex-row justify-content-end w-100 p-5"> */}
-                                <button type="submit " class="btn btn-light mr-5  mx-1" onClick={handleLogin}>Login</button>
+                                <button type="submit " class="btn btn-primary mr-5  mx-1" onClick={handleLogin}>Login</button>
                                   {invalidCredentials && (
                                     <p className="text-red-500 text-base">
                                       Incorrect Login credentials. Please Try again.
                                     </p>
                                   )}
-                                <button className="link-btn  mt-4 text-white" onClick={() => navigate("/user/register")}>Don't have an account? Register here.</button>
+                                <button className="link-btn  mt-4 text-blue text-blue-underline" onClick={() => navigate("/user/register")}>Don't have an account? Register here.</button>
                                 {/* </div> */}
                             </form>
                         </div>

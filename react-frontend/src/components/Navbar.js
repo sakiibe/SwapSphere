@@ -40,7 +40,7 @@ export default function Navbar() {
     try {
       console.log(tokenrequest.token);
       const response = await axios.post(
-        "https://swapsphere-backend.onrender.com/user/deleteTokens",
+        "http://localhost:8080/user/deleteTokens",
         tokenrequest
       );
       console.log(response);
@@ -81,7 +81,12 @@ export default function Navbar() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
                 </svg>
               ) : (
                 <svg
@@ -91,22 +96,52 @@ export default function Navbar() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               )}
             </button>
           </div>
           <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex-shrink-0 flex items-center">
-              <Link to="/home" className="flex items-center text-decoration-none">
-                <h1 className="text-white font-bold text-xl italic">Swap Sphere</h1>
+              <Link
+                to="/home"
+                className="flex items-center text-decoration-none"
+              >
+                <h1 className="text-white font-bold text-xl italic">
+                  Swap Sphere
+                </h1>
               </Link>
             </div>
             <div className="hidden sm:flex sm:ml-6 mt-0 space-x-4 items-center">
-              <Link to="/home" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Home</Link>
-              <Link to="/about" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">About</Link>
-              <Link to="/contact" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">Contact</Link>
-              <Link to="/faq" className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none">FAQ</Link>
+              <Link
+                to="/home"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+              >
+                Home
+              </Link>
+              <Link
+                to="/about"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+              >
+                About
+              </Link>
+              <Link
+                to="/contact"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+              >
+                Contact
+              </Link>
+              <Link
+                to="/faq"
+                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+              >
+                FAQ
+              </Link>
             </div>
           </div>
           <div className="flex-1 flex sm:justify-end">
@@ -199,7 +234,8 @@ export default function Navbar() {
             <div className="relative ml-3">
               <Link
                 to="/createListing"
-                className="flex bg-blue-300 hover:bg-blue-500 text-black font-bold py-1 px-3 rounded text-xs sm:text-sm w-auto"
+                className="flex bg-white hover:bg-blue-500 text-black font-bold py-1 px-3 rounded text-xs sm:text-sm w-auto text-decoration-none"
+                style={{ color: "#292c33" }}
               >
                 Create Listing
               </Link>
