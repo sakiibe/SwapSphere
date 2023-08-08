@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useParams } from "react-router-dom";
 import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function EditListing({ match }) {
-  const productId = match.params.id;
+function EditListing() {
+  const { productID: productID } = useParams();
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [fileUpload, setFileUpload] = useState(null);
@@ -30,7 +31,8 @@ function EditListing({ match }) {
     }
 
     if (currentPage === 3) {
-      if (!price.trim() || isNaN(price) || Number(price) <= 0) {
+      let priceStr = String(price);
+      if (!priceStr.trim() || isNaN(price) || Number(price) <= 0) {
         alert("Please enter a valid price");
         return;
       }
@@ -51,10 +53,11 @@ function EditListing({ match }) {
     const fetchProductDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/product/${productId}`
+          `http://localhost:8080/product/product/${productID}`
         );
+        console.log(response);
         const data = await response.json();
-
+        console.log(data);
         setTitle(data.productName);
         setPrice(data.price);
         setCategory(data.category);
@@ -70,7 +73,7 @@ function EditListing({ match }) {
     };
 
     fetchProductDetails();
-  }, [productId]);
+  }, [productID]);
 
   const handleFormSubmission = async () => {
     // Form a FormData object to hold the file and other data
@@ -94,7 +97,7 @@ function EditListing({ match }) {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/product/update/${productId}`,
+        `http://localhost:8080/product/product/update/${productID}`,
         {
           method: "PUT",
           body: formData,

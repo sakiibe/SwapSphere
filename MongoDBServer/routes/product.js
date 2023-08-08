@@ -104,11 +104,11 @@ router.post("/add", upload.array("fileUpload"), async (req, res) => {
 router.get("/product/:id", async (req, res) => {
   try {
     const productId = req.params.id; // Extract the product ID from the request parameters
-
-    // Validate the product ID format (optional)
+    // console.log("Product ID:", productId);
 
     // Find the product with the given productID
     const foundProduct = await product.findOne({ productID: productId });
+    // console.log("Found product:", foundProduct);
 
     if (!foundProduct) {
       return res.status(404).json({ error: "Product not found" });
