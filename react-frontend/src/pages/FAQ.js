@@ -19,10 +19,7 @@ const FAQ = () => {
       token: localStorage.getItem("authToken"),
     };
     axios
-      .post(
-        "https://swapsphere-backend.onrender.com/user/checkTokens",
-        authTokenData
-      )
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
       .then((response) => {
         const tokenstatus = response.data.status;
         console.log(tokenstatus);
@@ -87,8 +84,9 @@ const FAQ = () => {
               >
                 <span className="font-medium">{item.question}</span>
                 <svg
-                  className={`w-6 h-6 transition-transform ${activeIndex === index ? "transform rotate-180" : ""
-                    }`}
+                  className={`w-6 h-6 transition-transform ${
+                    activeIndex === index ? "transform rotate-180" : ""
+                  }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -115,7 +113,6 @@ const FAQ = () => {
       </div>
       <Footer />
     </div>
-
   );
 };
 

@@ -23,10 +23,7 @@ const Admin = () => {
       token: localStorage.getItem("authToken"),
     };
     axios
-      .post(
-        "https://swapsphere-backend.onrender.com/user/checkTokens",
-        authTokenData
-      )
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
       .then((response) => {
         const tokenstatus = response.data.status;
         console.log(tokenstatus);
@@ -87,7 +84,7 @@ const Admin = () => {
     };
     try {
       const response = await axios.post(
-        "https://swapsphere-backend.onrender.com/user/deleteTokens",
+        "http://localhost:8080/user/deleteTokens",
         tokenrequest
       );
       if (response.data.status === "true") {

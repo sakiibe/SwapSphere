@@ -103,10 +103,7 @@ export default function HomePage() {
       token: localStorage.getItem("authToken"),
     };
     axios
-      .post(
-        "https://swapsphere-backend.onrender.com/user/checkTokens",
-        authTokenData
-      )
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
       .then((response) => {
         const tokenstatus = response.data.status;
         console.log(tokenstatus);

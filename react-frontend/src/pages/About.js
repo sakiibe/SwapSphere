@@ -8,25 +8,27 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function About() {
-
   const navigate = useNavigate();
   useEffect(() => {
     // Run the token verification logic when the component is loaded
-    if (localStorage.getItem('authToken') === '') {
+    if (localStorage.getItem("authToken") === "") {
       navigate("/user/login");
-    };
-    const authTokenData = {
-      token: localStorage.getItem('authToken'),
     }
-    axios.post('https://swapsphere-backend.onrender.com/user/checkTokens', authTokenData).then((response) => {
-      const tokenstatus = response.data.status;
-      console.log(tokenstatus)
-      if (tokenstatus != "true") {
-        navigate("/user/login"); // Assuming you have a login route defined
-      }
-    }).catch((error) => {
-      console.log(error)
-    });
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (

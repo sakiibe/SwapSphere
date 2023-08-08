@@ -106,7 +106,8 @@ const LoginPage = () => {
                                       Incorrect Login credentials. Please Try again.
                                     </p>
                                   )}
-                                <button className="link-btn  mt-4 text-blue text-blue-underline" onClick={() => navigate("/user/register")}>Don't have an account? Register here.</button>
+                                  <span>Don't have an account? </span>
+                                <button className="link-btn  mt-4 text-blue text-blue-underline" onClick={() => navigate("/user/register")}>Register here.</button>
                                 {/* </div> */}
                             </form>
                         </div>

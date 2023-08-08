@@ -53,10 +53,7 @@ const Product = () => {
       token: localStorage.getItem("authToken"),
     };
     axios
-      .post(
-        "https://swapsphere-backend.onrender.com/user/checkTokens",
-        authTokenData
-      )
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
       .then((response) => {
         const tokenstatus = response.data.status;
         console.log(tokenstatus);
@@ -88,6 +85,10 @@ const Product = () => {
       });
   }, []);
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
     axios
       .get("http://localhost:8080/product/product/" + productID)
       .then((response) => {
@@ -113,7 +114,7 @@ const Product = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
 
   // const images = [product_image, product_image1, product_image2];
 
@@ -266,6 +267,7 @@ const Product = () => {
         toast.success("User reported successfully.");
         // Refresh the user details after reporting
         setUser(response.data);
+        fetchData();
       })
       .catch((error) => {
         toast.error("An error occurred while reporting the user.");
@@ -274,7 +276,7 @@ const Product = () => {
   };
 
   const handleclickUserProfile = () => {
-    navigate('/user/userprofile')
+    navigate("/user/userprofile");
   };
 
   const handleReportProduct = () => {
@@ -285,6 +287,7 @@ const Product = () => {
         toast.success("Product reported successfully.");
         // Refresh the product details after reporting
         setUser(response.data);
+        fetchData();
       })
       .catch((error) => {
         toast.error("An error occurred while reporting the product.");
@@ -303,8 +306,8 @@ const Product = () => {
               <div className="w-full">
                 <img
                   className="w-25 h-25"
-                // src={product.fileUpload}
-                // alt={product.productName}
+                  // src={product.fileUpload}
+                  // alt={product.productName}
                 />
                 <img
                   src={images[selectedImage]}
@@ -316,8 +319,9 @@ const Product = () => {
                 {images.map((image, index) => (
                   <div
                     key={index}
-                    className={`w-1/4 cursor-pointer p-1 ${index === selectedImage ? " border-2 border-blue-500" : ""
-                      }`}
+                    className={`w-1/4 cursor-pointer p-1 ${
+                      index === selectedImage ? " border-2 border-blue-500" : ""
+                    }`}
                     onClick={() => handleImageClick(index)}
                   >
                     <img
@@ -354,9 +358,9 @@ const Product = () => {
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
                   onClick={() => addToWishlist(product)}
-                // variant="contained"
-                // startIcon={<AddShoppingCart />}
-                // color="primary"
+                  // variant="contained"
+                  // startIcon={<AddShoppingCart />}
+                  // color="primary"
                 >
                   Add to Wishlist
                 </button>
@@ -408,8 +412,10 @@ const Product = () => {
                 >
                   User Profile
                 </button>
-                <button className="px-4 py-2 bg-red-500 text-white rounded"
-                  onClick={handleReportUser}>
+                <button
+                  className="px-4 py-2 bg-red-500 text-white rounded"
+                  onClick={handleReportUser}
+                >
                   Report User
                 </button>
               </div>
