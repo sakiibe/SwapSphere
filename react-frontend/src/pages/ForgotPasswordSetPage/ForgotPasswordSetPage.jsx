@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect } from 'react';
-import ForgotPassword from '../../images/rakshit images/forgotpasword.gif'
+import ForgotPassword from '../../images/rakshit images/ForgotePassword.gif';
 import '../ForgotPasswordPage/ForgotPasswordPage.css';
 import axios from 'axios'; // Import Axios
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 // const nodemailer = require("nodemailer");
 
 const ForgotPasswordSetPage = () => {
+  const navigate = useNavigate();
     const[error,setError] = useState('');
     const [otp, setOtp] = useState('');
     const[boolean,setBoolean] = useState('');
@@ -21,6 +22,24 @@ const ForgotPasswordSetPage = () => {
         setOtp(e.target.value);
       };
     useEffect(() => {
+
+ // Run the token verification logic when the component is loaded
+ if (localStorage.getItem('authToken') === '') {
+  navigate("/user/login");
+};
+const authTokenData = {
+  token: localStorage.getItem('authToken'),
+}
+axios.post('https://swapsphere-backend.onrender.com/user/checkTokens', authTokenData).then((response) => {
+  const tokenstatus = response.data.status;
+  console.log(tokenstatus)
+  if (tokenstatus != "true") {
+    navigate("/user/login"); // Assuming you have a login route defined
+  }
+}).catch((error) => {
+  console.log(error)
+});
+
         // Hide the emailAlert element on initial load
         document.getElementById("confirmPasswordAlert").style.display = 'none';
       }, []);
@@ -71,8 +90,8 @@ const ForgotPasswordSetPage = () => {
                 <div class="col-lg-5 d-none d-lg-flex justify-content-center align-items-center max-height p-0"><img src={ForgotPassword}  alt="" /></div>
                 <div class="col-lg-7  max-height p-0 d-flex align-items-center ">
                     <div class="container-fluid m-0 p-4 ">
-                        <div className="text-white flex-responsive d-flex flex-column align-items-center justify-content-center">        
-                            <p class="fs-1 font">Forgot Password</p>
+                        <div className="flex-responsive d-flex flex-column align-items-center justify-content-center">        
+                            <p class="fs-1 font">Forgot Password Page</p>
                         </div>
                         <form className='d-flex flex-column align-items-center justify-content-center mb-0'>
                         <div class="form-group my-2 w-75 ">
@@ -90,7 +109,7 @@ const ForgotPasswordSetPage = () => {
                         <input type="password" class="form-control rounded" id="confirmPassword" placeholder="Enter Confirm Password" onChange={passwordMatchValidation}/>
                         <div id="confirmPasswordAlert" class='text-white bg-danger rounded-2 ps-2'>Password do not match. </div>
                         </div>
-                        <button type="submit " class="btn btn-light mt-3 mx-1" onClick={handleForgotPassword}>Submit</button>
+                        <button type="submit " class="btn btn-primary mt-3 mx-1" onClick={handleForgotPassword}>Submit</button>
                         </form>
                         </div>
                     </div>  

@@ -4,8 +4,11 @@ import Footer from "../components/Footer";
 import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function EditListing({ match }) {
+  const navigate = useNavigate();
   const productId = match.params.id;
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
@@ -48,6 +51,29 @@ function EditListing({ match }) {
     }
   };
   useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    if (localStorage.getItem("authToken") === "") {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post(
+        "https://swapsphere-backend.onrender.com/user/checkTokens",
+        authTokenData
+      )
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     const fetchProductDetails = async () => {
       try {
         const response = await fetch(

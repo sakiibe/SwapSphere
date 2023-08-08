@@ -1,17 +1,36 @@
 import React from 'react';
 import { useEffect } from 'react';
-import ForgotPassword from '../../images/rakshit images/forgotpasword.gif'
+import ForgotPassword from '../../images/rakshit images/ForgotePassword.gif'
 import './ForgotPasswordPage.css';
 import axios from 'axios'; // Import Axios
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
+
 const ForgotPasswordPage = () => {
+  const navigate = useNavigate();
     const[error,setError] = useState('');
     const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
     useEffect(() => {
+  // Run the token verification logic when the component is loaded
+  if (localStorage.getItem('authToken') === '') {
+    navigate("/user/login");
+  };
+  const authTokenData = {
+    token: localStorage.getItem('authToken'),
+  }
+  axios.post('https://swapsphere-backend.onrender.com/user/checkTokens', authTokenData).then((response) => {
+    const tokenstatus = response.data.status;
+    console.log(tokenstatus)
+    if (tokenstatus != "true") {
+      navigate("/user/login"); // Assuming you have a login route defined
+    }
+  }).catch((error) => {
+    console.log(error)
+  });
+
         // Hide the emailAlert element on initial load
         document.getElementById("emailAlert").style.display = 'none';
       }, []);
@@ -63,18 +82,18 @@ const ForgotPasswordPage = () => {
                 <div class="col-lg-5 d-none d-lg-flex justify-content-center align-items-center max-height p-0"><img src={ForgotPassword}  alt="" /></div>
                 <div class="col-lg-7  max-height p-0 d-flex align-items-center ">
                     <div class="container-fluid m-0 p-4 ">
-                        <div className=" text-white flex-responsive d-flex flex-column align-items-center justify-content-center">        
-                            <p class="fs-1 font">Forgot Password</p>
+                        <div className="  flex-responsive d-flex flex-column align-items-center justify-content-center">        
+                            <p class="fs-1 font">Forgot Password Page</p>
                         </div>
                         <form className=' d-flex flex-column align-items-center justify-content-center mb-0'>
 
                             <div class="form-group  w-75 ">
-                            <label for="email " class=" mb-1 text-white   ">Enter the registered Email:</label>
+                            <label for="email " class=" mb-1    ">Enter the registered Email:</label>
                             <input type="email" class="form-control" id="email" placeholder="Enter your email" onChange={emailValidation}/>
                             <div id="emailAlert" class='text-white bg-danger rounded-2'>The email is not correct</div>
                             </div>
 
-                            <button type="submit " class="btn btn-light ms-3 mt-3 mx-1" onClick = {handleForgotPassword} >Submit</button>
+                            <button type="submit " class="btn btn-primary ms-3 mt-3 mx-1" onClick = {handleForgotPassword} >Submit</button>
                         </form>
                     </div>
                 </div>  
