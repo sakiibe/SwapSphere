@@ -17,6 +17,7 @@ import ForgotPasswordSetPage from "../src/pages/ForgotPasswordSetPage/ForgotPass
 import UserProfilePage from "../src/pages/UserProfile/UserProfile";
 import Admin from "../src/pages/Admin";
 import EditListing from "./pages/EditListing";
+import MyListings from "./pages/MyListings";
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
             path="/user/forgotsetpassword"
             element={<ForgotPasswordSetPage />}
           />
+          <Route path="myListings" element={<MyListings />} />
           <Route path="/user/userprofile" element={<UserProfilePage />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
