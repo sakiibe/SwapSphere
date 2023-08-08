@@ -84,9 +84,8 @@ const FAQ = () => {
               >
                 <span className="font-medium">{item.question}</span>
                 <svg
-                  className={`w-6 h-6 transition-transform ${
-                    activeIndex === index ? "transform rotate-180" : ""
-                  }`}
+                  className={`w-6 h-6 transition-transform ${activeIndex === index ? "transform rotate-180" : ""
+                    }`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -111,7 +110,9 @@ const FAQ = () => {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
+
   );
 };
 

@@ -5,6 +5,8 @@ import './ForgotPasswordPage.css';
 import axios from 'axios'; // Import Axios
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import Footer from "../../components/Footer";
+
 
 
 const ForgotPasswordPage = () => {
@@ -98,6 +100,7 @@ const ForgotPasswordPage = () => {
                     </div>
                 </div>  
             </div>
+            <Footer />
         </div>
     
 );

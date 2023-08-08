@@ -5,6 +5,7 @@ import '../ForgotPasswordPage/ForgotPasswordPage.css';
 import axios from 'axios'; // Import Axios
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer'
 
 // const nodemailer = require("nodemailer");
 
@@ -114,6 +115,7 @@ axios.post('https://swapsphere-backend.onrender.com/user/checkTokens', authToken
                         </div>
                     </div>  
                 </div>
+                <Footer />
             </div>
     );
 }

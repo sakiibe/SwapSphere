@@ -5,6 +5,7 @@ import  LoginImage from '../../images/rakshit images/Login.gif'
 import axios from 'axios'; // Import Axios
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from "../../components/Footer";
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -115,6 +116,8 @@ const LoginPage = () => {
                         </div>
                     </div>  
                 </div>
+                <Footer />
+
             </div>
     );
 };

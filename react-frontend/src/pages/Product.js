@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Product.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -21,10 +21,8 @@ import {
   Box,
   Divider,
 } from "@mui/material";
-import product_image from "../images/tomato.jpeg";
-import product_image1 from "../images/flower.jpeg";
-import product_image2 from "../images/fries.jpeg";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import useWishlist from "./useWishlist";
 
 const Product = () => {
@@ -273,6 +271,10 @@ const Product = () => {
       });
   };
 
+  const handleclickUserProfile = () => {
+    navigate('/user/userprofile')
+  };
+
   const handleReportProduct = () => {
     console.log("productId", product._id);
     axios
@@ -299,8 +301,8 @@ const Product = () => {
               <div className="w-full">
                 <img
                   className="w-25 h-25"
-                  // src={product.fileUpload}
-                  // alt={product.productName}
+                // src={product.fileUpload}
+                // alt={product.productName}
                 />
                 <img
                   src={images[selectedImage]}
@@ -312,9 +314,8 @@ const Product = () => {
                 {images.map((image, index) => (
                   <div
                     key={index}
-                    className={`w-1/4 cursor-pointer p-1 ${
-                      index === selectedImage ? " border-2 border-blue-500" : ""
-                    }`}
+                    className={`w-1/4 cursor-pointer p-1 ${index === selectedImage ? " border-2 border-blue-500" : ""
+                      }`}
                     onClick={() => handleImageClick(index)}
                   >
                     <img
@@ -351,9 +352,9 @@ const Product = () => {
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
                   onClick={() => addToWishlist(product)}
-                  // variant="contained"
-                  // startIcon={<AddShoppingCart />}
-                  // color="primary"
+                // variant="contained"
+                // startIcon={<AddShoppingCart />}
+                // color="primary"
                 >
                   Add to Wishlist
                 </button>
@@ -364,7 +365,7 @@ const Product = () => {
                   className="px-4 py-2 bg-red-500 text-white rounded"
                   onClick={handleReportProduct}
                 >
-                  Report Item
+                  Report Product
                 </button>
               </div>
               <div className="flex items-center mt-4">
@@ -401,11 +402,12 @@ const Product = () => {
               <div className="mt-4">
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
-                  onClick={handleReportUser}
+                  onClick={handleclickUserProfile}
                 >
                   User Profile
                 </button>
-                <button className="px-4 py-2 bg-red-500 text-white rounded">
+                <button className="px-4 py-2 bg-red-500 text-white rounded"
+                  onClick={handleReportUser}>
                   Report User
                 </button>
               </div>
@@ -525,6 +527,7 @@ const Product = () => {
       {/* {END OF COMMENT FEATURE} */}
 
       <ToastContainer position="bottom-right" />
+      <Footer />
     </div>
   );
 };
