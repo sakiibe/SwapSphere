@@ -5,6 +5,7 @@ import './RegisterPage.css'
 import axios from 'axios'; // Import Axios
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 const RegisterPage = () => {
     const navigate = useNavigate();
@@ -169,6 +170,7 @@ const RegisterPage = () => {
                         </div>
                     </div>  
                 </div>
+                <Footer />
             </div>
     );
 };

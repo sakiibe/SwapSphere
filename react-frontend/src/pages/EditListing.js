@@ -407,6 +407,7 @@ function EditListing({ match }) {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

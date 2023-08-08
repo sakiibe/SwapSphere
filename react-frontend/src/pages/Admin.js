@@ -58,7 +58,7 @@ const Admin = () => {
   const handleDeleteProduct = (productId) => {
     axios
       .delete(`http://localhost:8080/admin/deleteProduct/${productId}`)
-      .then((response) => {})
+      .then((response) => { })
       .catch((error) => {
         console.error(error);
       });
@@ -68,7 +68,7 @@ const Admin = () => {
   const handleDeleteUser = (userId) => {
     axios
       .delete(`http://localhost:8080/admin/deleteUser/${userId}`)
-      .then((response) => {})
+      .then((response) => { })
       .catch((error) => {
         console.error(error);
       });
@@ -223,6 +223,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
