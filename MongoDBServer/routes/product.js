@@ -205,7 +205,7 @@ router.get("/products/getAll/:email", async (req, res) => {
   }
 });
 
-//put api for products
+//put api for product
 router.put(
   "/product/update/:productID",
   upload.array("fileUpload"),
@@ -251,3 +251,25 @@ router.put(
     }
   }
 );
+
+//delete api for product
+router.delete("/product/delete/:productID", async (req, res) => {
+  try {
+    const productID = req.params.productID; // Extract the product ID from the request parameters
+
+    // Delete the product with the given productID
+    const deletedProduct = await product.findOneAndDelete({
+      productID: productID,
+    });
+
+    if (!deletedProduct) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // If the product has been deleted, return a success message
+    res.status(200).json({ message: "Product successfully deleted" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
