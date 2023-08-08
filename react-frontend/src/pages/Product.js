@@ -304,6 +304,19 @@ const Product = () => {
           </div>
           <div className="w-1/2">
             <div className="p-4">
+              {product.noOfTimesProductReported > 0 &&
+                product.noOfTimesProductReported < 5 && (
+                  <p className="text-orange-500 text-base">
+                    Alert: This product was reported{" "}
+                    {product.noOfTimesProductReported} times.
+                  </p>
+                )}
+              {product.noOfTimesProductReported >= 5 && (
+                <p className="text-red-500 text-base">
+                  Warning: This product was reported{" "}
+                  {product.noOfTimesProductReported} times.
+                </p>
+              )}
               <h2 className="text-xl font-semibold">{product.productName}</h2>
               <p className="text-gray-600">{product.description}</p>
               <p className="text-gray-800 font-bold">{"$" + product.price}</p>
@@ -342,6 +355,19 @@ const Product = () => {
               </div>
             </div>
             <div className="p-4">
+              {user.noOfTimesUserReported > 0 &&
+                user.noOfTimesUserReported < 5 && (
+                  <p className="text-orange-500 text-base">
+                    Alert: This user was reported {user.noOfTimesUserReported}{" "}
+                    times.
+                  </p>
+                )}
+              {user.noOfTimesUserReported >= 5 && (
+                <p className="text-red-500 text-base">
+                  Warning: This user was reported {user.noOfTimesUserReported}{" "}
+                  times.
+                </p>
+              )}
               <h2 className="text-xl font-semibold">
                 {user.firstName + " " + user.lastName}
               </h2>

@@ -235,7 +235,7 @@ export default function Navbar() {
                 to="/createListing"
                 className="flex bg-blue-300 hover:bg-blue-500 text-black font-bold py-1 px-3 rounded text-xs sm:text-sm w-auto"
               >
-                New Listing
+                Create Listing
               </Link>
             </div>
           </div>

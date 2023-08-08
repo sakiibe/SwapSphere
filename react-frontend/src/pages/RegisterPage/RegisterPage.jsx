@@ -129,7 +129,7 @@ const RegisterPage = () => {
                     <div class="col-lg-7 custom-color max-height p-0 d-flex align-items-center ">
                         <div class="container-fluid m-0 p-4 ">
                             <div className="m-3  flex-responsive d-flex flex-column align-items-center justify-content-center">        
-                                <p class="fs-1 font">Register Page</p>
+                                <p class="fs-1 font">Register</p>
                             </div>
                             <form className=' d-flex flex-column align-items-center justify-content-center p-3' onSubmit={handleSubmit}>
                             <div class="form-group my-2 w-75 ">
