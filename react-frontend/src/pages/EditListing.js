@@ -4,6 +4,7 @@ import Footer from "../components/Footer";
 import { useParams } from "react-router-dom";
 import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 
 function EditListing() {
@@ -20,6 +21,8 @@ function EditListing() {
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
   const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
   const handleNextClick = () => {
     if (currentPage === 1) {
       if (!title.trim() || title.length < 5) {
@@ -107,6 +110,9 @@ function EditListing() {
       const result = await response.json();
       console.log(result.message);
       alert("Listing has been updated!");
+      navigate(`/product/${productID}`, {
+        state: { email: email, productID: productID },
+      });
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while updating the listing.");
