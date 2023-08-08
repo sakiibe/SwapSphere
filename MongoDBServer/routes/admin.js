@@ -41,6 +41,9 @@ router.delete(
       if (!deletedUser) {
         return res.status(404).json({ error: "User not found" });
       }
+
+      await product.deleteMany({ email: deletedUser.email });
+
       res.json(deletedUser);
     } catch (error) {
       res.status(500).json({ error: "Failed to delete user" });
