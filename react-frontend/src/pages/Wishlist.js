@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import Card from '../components/Card';
 
 const WishlistPage = () => {
   const [wishlistItems, setWishlistItems] = useState([]);
@@ -63,22 +64,22 @@ const WishlistPage = () => {
       <h1 className="text-2xl font-bold mb-4">Wishlist</h1>
       {wishlistItems && wishlistItems.length > 0 ? (
         <div className="grid grid-cols-3 gap-4">
+          
           {wishlistItems.map((item) => (
             <div key={item._id} className="bg-white border rounded p-4">
-              <div>
-                <h2 className="text-xl font-bold mb-2">{item.productName}</h2>
-                <button
+              {/* {console.log(item)} */}
+              <Card product={item} />
+              <button
                   className="text-red-500 hover:text-red-700"
                   onClick={() => handleDelete(item.productID)}
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
-              </div>
             </div>
           ))}
         </div>
       ) : (
-        <p>Your wishlist is empty.</p>
+        <p>Your wishlist is empty!</p>
       )}
       <ToastContainer /> 
     </div>
