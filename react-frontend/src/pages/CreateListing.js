@@ -25,26 +25,33 @@ function CreateListing() {
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
 
-
-
   //adding session management.
   useEffect(() => {
     // Run the token verification logic when the component is loaded
-    if (localStorage.getItem('authToken') === '') {
+    if (
+      localStorage.getItem("authToken") === "" ||
+      localStorage.getItem("role") !== "user"
+    ) {
       navigate("/user/login");
-    };
-    const authTokenData = {
-      token: localStorage.getItem('authToken'),
     }
-    axios.post('https://swapsphere-backend.onrender.com/user/checkTokens', authTokenData).then((response) => {
-      const tokenstatus = response.data.status;
-      console.log(tokenstatus)
-      if (tokenstatus != "true") {
-        navigate("/user/login"); // Assuming you have a login route defined
-      }
-    }).catch((error) => {
-      console.log(error)
-    });
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post(
+        "https://swapsphere-backend.onrender.com/user/checkTokens",
+        authTokenData
+      )
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const handleNextClick = () => {
