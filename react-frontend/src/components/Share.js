@@ -1,4 +1,13 @@
 import React from "react";
+import {
+  FaFacebook,
+  FaFacebookMessenger,
+  FaTwitter,
+  FaPinterestP,
+  FaEnvelope,
+  FaWhatsapp,
+  FaInstagram,
+} from "react-icons/fa";
 
 function Share({ showShareButtons }) {
   const url = window.location.href; // Get page URL
@@ -12,24 +21,14 @@ function Share({ showShareButtons }) {
         showShareButtons ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      {/* <span className="mr-4 text-base text-black font-medium border-b">
-        Share
-      </span> */}
-
       {/* Facebook Share Button */}
       <a
         href={`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="mr-4"
+        className="mr-4 text-3xl"
       >
-        <img
-          src={
-            require("../images/Share-buttons/iconmonstr-facebook-5.svg").default
-          }
-          alt="Facebook"
-          className="w-10 h-10"
-        />
+        <FaFacebook color="#1877F2" />
       </a>
 
       {/* Messenger Share Button */}
@@ -37,16 +36,9 @@ function Share({ showShareButtons }) {
         href={`https://www.facebook.com/dialog/send?link=${encodedUrl}&app_id=1601543886921602&redirect_uri=${encodedUrl}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="mr-4"
+        className="mr-4 text-3xl"
       >
-        <img
-          src={
-            require("../images/Share-buttons/iconmonstr-facebook-messenger-5.svg")
-              .default
-          }
-          alt="Messenger"
-          className="w-10 h-10"
-        />
+        <FaFacebookMessenger color="#0084FF" />
       </a>
 
       {/* Twitter Share Button */}
@@ -54,15 +46,9 @@ function Share({ showShareButtons }) {
         href={`https://twitter.com/intent/tweet?text=${text}&url=${url}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="mr-4"
+        className="mr-4 text-3xl"
       >
-        <img
-          src={
-            require("../images/Share-buttons/iconmonstr-twitter-5.svg").default
-          }
-          alt="Twitter"
-          className="w-10 h-10"
-        />
+        <FaTwitter color="#1DA1F2" />
       </a>
 
       {/* Pinterest Share Button */}
@@ -70,30 +56,37 @@ function Share({ showShareButtons }) {
         href={`https://pinterest.com/pin/create/button/?url=${url}&description=${text}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="mr-4"
+        className="mr-4 text-3xl"
       >
-        <img
-          src={
-            require("../images/Share-buttons/iconmonstr-pinterest-5.svg")
-              .default
-          }
-          alt="Pinterest"
-          className="w-10 h-10"
-        />
+        <FaPinterestP color="#BD081C" />
+      </a>
+
+      {/* WhatsApp Share Button */}
+      <a
+        href={`https://wa.me/?text=${encodedText} ${encodedUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mr-4 text-3xl"
+      >
+        <FaWhatsapp color="#25D366" />
+      </a>
+
+      {/* Instagram Share Button */}
+      <a
+        href="https://instagram.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mr-4 text-3xl"
+      >
+        <FaInstagram color="#C13584" />
       </a>
 
       {/* Email Share Button */}
       <a
         href={`mailto:?subject=${text}&body=${text} - ${url}`}
-        className="mr-4"
+        className="mr-4 text-3xl"
       >
-        <img
-          src={
-            require("../images/Share-buttons/iconmonstr-gmail-5.svg").default
-          }
-          alt="Email"
-          className="w-10 h-10"
-        />
+        <FaEnvelope color="#D44638" />{" "}
       </a>
     </div>
   );

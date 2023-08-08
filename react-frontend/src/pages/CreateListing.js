@@ -303,6 +303,7 @@ function CreateListing() {
                 value={condition}
                 onChange={(e) => setCondition(e.target.value)}
               >
+                <option value="">Select condition</option>
                 <option value="mint">Mint</option>
                 <option value="used">Used</option>
                 <option value="aged">Aged</option>
