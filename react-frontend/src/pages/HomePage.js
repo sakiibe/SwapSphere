@@ -9,8 +9,10 @@ import useWishlist from "./useWishlist";
 import "../css/HomePage.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const { addToWishlist, wishlistLoading } = useWishlist();
 
   const [products, setProducts] = useState([]);
@@ -90,6 +92,29 @@ export default function HomePage() {
     tools: ["Hand Tools", "Power Tools", "Gardening Tools", "Automotive Tools"],
   };
   useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    if (localStorage.getItem("authToken") === "") {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post(
+        "https://swapsphere-backend.onrender.com/user/checkTokens",
+        authTokenData
+      )
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     axios
       .get("http://localhost:8080/product/product/getAll")
       .then((response) => {
@@ -287,6 +312,7 @@ export default function HomePage() {
           <ToastContainer position="bottom-right" />
         </main>
       </div>
+      <Footer />
     </div>
   );
 }

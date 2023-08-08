@@ -4,6 +4,7 @@ import axios from "axios";
 import "../css/Product.css";
 import { ToastContainer, toast } from "react-toastify";
 import Share from "../components/Share";
+import { useNavigate } from "react-router-dom";
 import {
   Favorite,
   AddShoppingCart,
@@ -27,6 +28,7 @@ import Navbar from "../components/Navbar";
 import useWishlist from "./useWishlist";
 
 const Product = () => {
+  const navigate = useNavigate();
   const { addToWishlist, wishlistLoading } = useWishlist();
 
   const location = useLocation();
@@ -43,6 +45,29 @@ const Product = () => {
   const [showShareButtons, setShowShareButtons] = useState(false);
 
   useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    if (localStorage.getItem("authToken") === "") {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post(
+        "https://swapsphere-backend.onrender.com/user/checkTokens",
+        authTokenData
+      )
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     //fetch all comments
     fetch(`${backendURL}/comment/getAll/${productID}`)
       .then((response) => response.json())

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -10,6 +11,29 @@ const Admin = () => {
 
   useEffect(() => {
     fetchData();
+
+    // Run the token verification logic when the component is loaded
+    if (localStorage.getItem("authToken") === "") {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post(
+        "https://swapsphere-backend.onrender.com/user/checkTokens",
+        authTokenData
+      )
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   const fetchData = () => {
