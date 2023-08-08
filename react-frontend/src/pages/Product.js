@@ -4,7 +4,6 @@ import axios from "axios";
 import "../css/Product.css";
 import { ToastContainer, toast } from "react-toastify";
 import Share from "../components/Share";
-import { useNavigate } from "react-router-dom";
 import {
   Favorite,
   AddShoppingCart,
