@@ -6,6 +6,8 @@ import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function EditListing() {
   const { productID: productID } = useParams();
@@ -53,6 +55,29 @@ function EditListing() {
     }
   };
   useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    if (
+      localStorage.getItem("authToken") === "" ||
+      localStorage.getItem("role") !== "user"
+    ) {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     const fetchProductDetails = async () => {
       try {
         const response = await fetch(
@@ -390,6 +415,7 @@ function EditListing() {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

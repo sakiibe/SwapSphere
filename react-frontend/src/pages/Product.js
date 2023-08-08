@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Product.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -20,13 +20,12 @@ import {
   Box,
   Divider,
 } from "@mui/material";
-import product_image from "../images/tomato.jpeg";
-import product_image1 from "../images/flower.jpeg";
-import product_image2 from "../images/fries.jpeg";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 import useWishlist from "./useWishlist";
 
 const Product = () => {
+  const navigate = useNavigate();
   const { addToWishlist, wishlistLoading } = useWishlist();
 
   const location = useLocation();
@@ -43,6 +42,29 @@ const Product = () => {
   const [showShareButtons, setShowShareButtons] = useState(false);
 
   useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    if (
+      localStorage.getItem("authToken") === "" ||
+      localStorage.getItem("role") !== "user"
+    ) {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     //fetch all comments
     fetch(`${backendURL}/comment/getAll/${productID}`)
       .then((response) => response.json())
@@ -63,6 +85,10 @@ const Product = () => {
       });
   }, []);
   useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
     axios
       .get("http://localhost:8080/product/product/" + productID)
       .then((response) => {
@@ -88,7 +114,7 @@ const Product = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  };
 
   // const images = [product_image, product_image1, product_image2];
 
@@ -241,11 +267,16 @@ const Product = () => {
         toast.success("User reported successfully.");
         // Refresh the user details after reporting
         setUser(response.data);
+        fetchData();
       })
       .catch((error) => {
         toast.error("An error occurred while reporting the user.");
         console.error(error);
       });
+  };
+
+  const handleclickUserProfile = () => {
+    navigate("/user/userprofile");
   };
 
   const handleReportProduct = () => {
@@ -256,6 +287,7 @@ const Product = () => {
         toast.success("Product reported successfully.");
         // Refresh the product details after reporting
         setUser(response.data);
+        fetchData();
       })
       .catch((error) => {
         toast.error("An error occurred while reporting the product.");
@@ -339,7 +371,7 @@ const Product = () => {
                   className="px-4 py-2 bg-red-500 text-white rounded"
                   onClick={handleReportProduct}
                 >
-                  Report Item
+                  Report Product
                 </button>
               </div>
               <div className="flex items-center mt-4">
@@ -376,11 +408,14 @@ const Product = () => {
               <div className="mt-4">
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
-                  onClick={handleReportUser}
+                  onClick={handleclickUserProfile}
                 >
                   User Profile
                 </button>
-                <button className="px-4 py-2 bg-red-500 text-white rounded">
+                <button
+                  className="px-4 py-2 bg-red-500 text-white rounded"
+                  onClick={handleReportUser}
+                >
                   Report User
                 </button>
               </div>
@@ -500,6 +535,7 @@ const Product = () => {
       {/* {END OF COMMENT FEATURE} */}
 
       <ToastContainer position="bottom-right" />
+      <Footer />
     </div>
   );
 };

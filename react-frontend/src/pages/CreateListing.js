@@ -8,6 +8,8 @@ import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from "axios";
 
 function CreateListing() {
   const navigate = useNavigate();
@@ -22,6 +24,32 @@ function CreateListing() {
   const [description, setDescription] = useState("");
   const [province, setProvince] = useState("");
   const [city, setCity] = useState("");
+
+  //adding session management.
+  useEffect(() => {
+    // Run the token verification logic when the component is loaded
+    if (
+      localStorage.getItem("authToken") === "" ||
+      localStorage.getItem("role") !== "user"
+    ) {
+      navigate("/user/login");
+    }
+    const authTokenData = {
+      token: localStorage.getItem("authToken"),
+    };
+    axios
+      .post("http://localhost:8080/user/checkTokens", authTokenData)
+      .then((response) => {
+        const tokenstatus = response.data.status;
+        console.log(tokenstatus);
+        if (tokenstatus != "true") {
+          navigate("/user/login"); // Assuming you have a login route defined
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const handleNextClick = () => {
     if (currentPage === 1) {
@@ -377,6 +405,7 @@ function CreateListing() {
           </button>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

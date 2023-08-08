@@ -30,16 +30,20 @@ export default function Card({ product }) {
           <span className="font-semibold">Location:</span> {product.city}
         </p>
         {product.noOfTimesProductReported > 0 &&
-          product.noOfTimesProductReported < 5 && (
-            <p className="text-orange-500 text-base">
-              Alert: This product was reported{" "}
-              {product.noOfTimesProductReported} times.
-            </p>
-          )}
-        {product.noOfTimesProductReported >= 5 && (
+        product.noOfTimesProductReported < 5 ? (
+          <p className="text-orange-500 text-base">
+            Alert: This product was reported {product.noOfTimesProductReported}{" "}
+            times.
+          </p>
+        ) : product.noOfTimesProductReported >= 5 ? (
           <p className="text-red-500 text-base">
             Warning: This product was reported{" "}
             {product.noOfTimesProductReported} times.
+          </p>
+        ) : (
+          <p className="text-white text-base">
+            Alert: This product was reported {product.noOfTimesProductReported}{" "}
+            times.
           </p>
         )}
       </div>
