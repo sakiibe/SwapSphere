@@ -13,6 +13,23 @@ const MyListings = () => {
   const [myListingItems, setMyListingItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const handleEditListingClick = (productID) => {
+    console.log("Route is " + "/EditListing/" + productID)
+    navigate(`/EditListing/${productID}`)
+  };
+
+  const handleDeleteListingClick = (productID) => {
+    axios
+      .delete(`http://localhost:8080/product/product/delete/${productID}`)
+      .then((response) => {
+        fetchData();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    // navigate(`/myListings`)
+  };
+
   useEffect(() => {
     // Run the token verification logic when the component is loaded
     if (
@@ -37,6 +54,15 @@ const MyListings = () => {
         console.log(error);
       });
 
+    fetchData();
+  }, []);
+
+  const navigate = useNavigate();
+  const handleCreateListing = () => {
+    navigate("/CreateListing");
+  };
+
+  const fetchData = () => {
     const email = localStorage.getItem("email");
 
     fetch("http://localhost:8080/product/products/getAll/" + email)
@@ -49,12 +75,7 @@ const MyListings = () => {
         console.log(error);
         setIsLoading(false);
       });
-  }, []);
-
-  const navigate = useNavigate();
-  const handleCreateListing = () => {
-    navigate("/CreateListing");
-  };
+  }
 
   return (
     <div>
@@ -70,6 +91,18 @@ const MyListings = () => {
                 {myListingItems.map((item) => (
                   <div key={item._id} className="bg-white border rounded p-4">
                     <Card product={item} />
+                    <button
+                      className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
+                      onClick={() => handleEditListingClick(item.productID)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="px-4 py-2 bg-red-500 text-white rounded"
+                      onClick={() => handleDeleteListingClick(item.productID)}
+                    >
+                      Delete
+                    </button>
                   </div>
                 ))}
               </div>

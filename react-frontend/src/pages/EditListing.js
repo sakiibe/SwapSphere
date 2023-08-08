@@ -410,7 +410,7 @@ function EditListing() {
             id="nextButton"
             onClick={handleNextClick}
           >
-            {currentPage < 3 ? "Next" : "Post"}
+            {currentPage < 3 ? "Next" : "Update Listing"}
           </button>
         </div>
       </div>

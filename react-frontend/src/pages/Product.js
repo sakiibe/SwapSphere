@@ -40,7 +40,6 @@ const Product = () => {
   const backendURL = "http://localhost:8080"; //'https://swapsphere-backend.onrender.com'
   const [comments, setComments] = useState([]);
   const [showShareButtons, setShowShareButtons] = useState(false);
-
   useEffect(() => {
     // Run the token verification logic when the component is loaded
     if (
@@ -275,8 +274,11 @@ const Product = () => {
       });
   };
 
-  const handleclickUserProfile = () => {
-    navigate("/user/userprofile");
+  const handleclickUserListings = () => {
+    console.log("user email" + user.email)
+    navigate("/userListings", {
+      state: { useremail: user.email, name: user.firstName + " " + user.lastName }
+    });
   };
 
   const handleReportProduct = () => {
@@ -306,8 +308,8 @@ const Product = () => {
               <div className="w-full">
                 <img
                   className="w-25 h-25"
-                  // src={product.fileUpload}
-                  // alt={product.productName}
+                // src={product.fileUpload}
+                // alt={product.productName}
                 />
                 <img
                   src={images[selectedImage]}
@@ -319,9 +321,8 @@ const Product = () => {
                 {images.map((image, index) => (
                   <div
                     key={index}
-                    className={`w-1/4 cursor-pointer p-1 ${
-                      index === selectedImage ? " border-2 border-blue-500" : ""
-                    }`}
+                    className={`w-1/4 cursor-pointer p-1 ${index === selectedImage ? " border-2 border-blue-500" : ""
+                      }`}
                     onClick={() => handleImageClick(index)}
                   >
                     <img
@@ -358,9 +359,9 @@ const Product = () => {
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
                   onClick={() => addToWishlist(product)}
-                  // variant="contained"
-                  // startIcon={<AddShoppingCart />}
-                  // color="primary"
+                // variant="contained"
+                // startIcon={<AddShoppingCart />}
+                // color="primary"
                 >
                   Add to Wishlist
                 </button>
@@ -408,9 +409,9 @@ const Product = () => {
               <div className="mt-4">
                 <button
                   className="mr-2 px-4 py-2 bg-blue-500 text-white rounded"
-                  onClick={handleclickUserProfile}
+                  onClick={handleclickUserListings}
                 >
-                  User Profile
+                  User Listings
                 </button>
                 <button
                   className="px-4 py-2 bg-red-500 text-white rounded"
@@ -425,7 +426,7 @@ const Product = () => {
       </div>
       {/* {START OF COMMENT FEATURE} */}
       <Divider className="my-4" />
-      <Box sx={{ mt: 4, maxWidth: 600, margin: "0 auto" }}>
+      <Box sx={{ mt: 4, maxWidth: 600, margin: "0 auto", mb: 7 }}>
         <Box
           sx={{
             display: "flex",

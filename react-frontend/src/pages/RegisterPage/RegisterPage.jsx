@@ -163,8 +163,8 @@ const RegisterPage = () => {
                                 <div id="confirmPasswordAlert" class='text-white bg-danger rounded-2 ps-2'>Password do not match. </div>
                                 </div>
                                 <button type="submit " class="btn btn-primary mt-3 mx-1">Register</button>
-                             <span>Already have an account? </span>
-                                    <button className=" link-btn font-weight-bolder mt-3 text-blue-underline" onClick={() => navigate("/user/login")}>Login here.</button>
+                             <span>Already have an account?<button className=" link-btn font-weight-bolder mt-3 text-blue-underline margin-botton" onClick={() => navigate("/user/login")}>Login here.</button>
+ </span>
             
                             </form>
                         </div>
