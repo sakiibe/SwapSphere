@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [isToggleOpen, setIsToggleOpen] = React.useState(false);
@@ -27,6 +28,10 @@ export default function Navbar() {
         console.log(error);
       });
   }, []);
+
+  const isPageActive = (path) => {
+    return location.pathname === path;
+  };
 
   const handleViewUserProfile = async (e) => {
     navigate("/user/userprofile");
@@ -120,25 +125,33 @@ export default function Navbar() {
             <div className="hidden sm:flex sm:ml-6 mt-0 space-x-4 items-center">
               <Link
                 to="/home"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+                className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none ${
+                  isPageActive("/home") ? "bg-gray-700 text-white" : ""
+                }`}
               >
                 Home
               </Link>
               <Link
                 to="/about"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+                className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none ${
+                  isPageActive("/about") ? "bg-gray-700 text-white" : ""
+                }`}
               >
                 About
               </Link>
               <Link
                 to="/contact"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+                className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none ${
+                  isPageActive("/contact") ? "bg-gray-700 text-white" : ""
+                }`}
               >
                 Contact
               </Link>
               <Link
                 to="/faq"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none"
+                className={`text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium text-decoration-none ${
+                  isPageActive("/faq") ? "bg-gray-700 text-white" : ""
+                }`}
               >
                 FAQ
               </Link>
