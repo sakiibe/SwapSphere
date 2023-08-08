@@ -35,25 +35,27 @@ const LandingPage = () => {
             borderRadius: '5px',
             cursor: 'pointer',
             transition: 'all 0.3s ease',
+            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)',  // Adding a subtle box shadow
         },
+
         ctaSignIn: {
-            backgroundColor: '#007bff',
-            color: 'white',
+            backgroundColor: '#4A5568',  // Equivalent to bg-gray-700
+            color: '#EDF2F7',            // Equivalent to text-gray-200
         },
         ctaSignUp: {
-            backgroundColor: '#28a745',
-            color: 'white',
-        },
+            backgroundColor: '#2D3748',  // Equivalent to bg-gray-600
+            color: '#EDF2F7',            // Equivalent to text-gray-200
+        }
     };
 
     return (
         <div style={styles.landingPage}>
             <div style={styles.ctaButtons}>
                 <button onClick={handleSignIn} style={{ ...styles.ctaButton, ...styles.ctaSignIn }}>
-                    Sign In
+                    <strong>Sign In</strong>
                 </button>
                 <button onClick={handleSignUp} style={{ ...styles.ctaButton, ...styles.ctaSignUp }}>
-                    Sign Up
+                    <strong>Sign Up</strong>
                 </button>
             </div>
         </div>
