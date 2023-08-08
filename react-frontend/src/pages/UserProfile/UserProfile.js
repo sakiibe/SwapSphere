@@ -5,7 +5,10 @@ import "../UserProfile/UserProfile.css";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import editImage from "../../images/rakshit images/edit_icon.png";
+import { useNavigate } from "react-router-dom";
+
 const UserProfile = () => {
+  const navigate = useNavigate();
   const [isEditMode, setIsEditMode] = useState(false);
   const [profilePicture, setProfilePicture] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -74,6 +77,14 @@ const UserProfile = () => {
     }
   };
 
+  const handleMyWishlistButton = () => {
+    navigate("/wishlist");
+  };
+
+  const handleMyListingsButton = () => {
+    navigate("/myListings");
+  };
+
   return (
     <div>
       {" "}
@@ -111,7 +122,7 @@ const UserProfile = () => {
           <div class="col-lg-7 max-height p-0 d-flex align-items-lg-center user-profile-theme-color">
             <div class="container-fluid m-0 p-lg-4 p-md-0 ">
               <div className=" flex-responsive d-flex flex-column align-items-center justify-content-center">
-                <p class="me-lg-5 fs-1 font">User Profile Page</p>
+                <p class="me-lg-5 fs-1 font">User Profile</p>
               </div>
               <div className="d-flex flex-column align-items-center justify-content-center  me-lg-5">
                 <div class="mb-3 w-75 ">
@@ -180,38 +191,41 @@ const UserProfile = () => {
                 </div>
 
                 {isEditMode ? (
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      setEditableState();
+                      saveProfile();
+                    }}
+                  >
+                    Save
+                  </button>
+                ) : (
+                  <button class=" btn btn-light" onClick={setEditableState}>
+                    Edit
+                  </button>
+                )}
+
+                {!isEditMode ? (
                   <div class="row">
                     <div class=" col-12">
-                      <button class="btn btn-secondary me-5">
-                        Edit wishlist
+                      <button
+                        class="btn btn-primary me-5"
+                        onClick={handleMyWishlistButton}
+                      >
+                        My Wishlist
                       </button>
-                      <button class="btn btn-secondary ms-5">
-                        Edit listing
+                      <button
+                        class="btn btn-primary ms-5"
+                        onClick={handleMyListingsButton}
+                      >
+                        My Listings
                       </button>
                     </div>
                   </div>
                 ) : (
-                  <div class="output-font d-flex flex-row align-items-center choose-height">
-                    
-                  </div>
+                  <div class="output-font d-flex flex-row align-items-center choose-height"></div>
                 )}
-
-                <div className="btn btn-light mr-5  mx-1">
-                  {isEditMode ? (
-                    <button
-                      onClick={() => {
-                        setEditableState();
-                        saveProfile();
-                      }}
-                    >
-                      Save
-                    </button>
-                  ) : (
-                    <button class=" btn btn-primary" onClick={setEditableState}>
-                      Edit
-                    </button>
-                  )}
-                </div>
               </div>
             </div>
           </div>
