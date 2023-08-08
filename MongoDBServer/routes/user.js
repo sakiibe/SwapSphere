@@ -94,7 +94,7 @@ router.post(
       });
       console.log(authToken);
       if (authToken) {
-        console.log("savedUser");
+        console.log("savedUser" + authToken);
         res.status(201).json({
           status: "true",
         });

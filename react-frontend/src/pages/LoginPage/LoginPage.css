@@ -37,3 +37,8 @@
 .float-right{
   float:right;
 }
+
+.text-blue-underline {
+  color: blue;
+  text-decoration: underline;
+}
