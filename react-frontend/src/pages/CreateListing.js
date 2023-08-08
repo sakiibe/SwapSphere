@@ -60,7 +60,9 @@ function CreateListing() {
   const handleFormSubmission = async () => {
     // Form a FormData object to hold the file and other data
     const formData = new FormData();
-    formData.append("productID", uuidv4()); // Autogenerate unique product ID
+    const generatedProductID = uuidv4(); // Autogenerate unique product ID
+    formData.append("productID", generatedProductID);
+
     formData.append("productName", title);
 
     if (fileUpload) {
@@ -89,8 +91,13 @@ function CreateListing() {
       console.log(result.message);
       toast.success("Listing has been added!");
       setTimeout(() => {
-        navigate("/home");
-      }, 6000);
+        navigate(`/product/${generatedProductID}`, {
+          state: {
+            email: localStorage.getItem("email"),
+            productID: generatedProductID,
+          },
+        });
+      }, 2000);
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while adding the listing.");
