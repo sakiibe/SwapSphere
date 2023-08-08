@@ -7,8 +7,10 @@ import Footer from "../components/Footer";
 import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 function CreateListing() {
+  const navigate = useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const [title, setTitle] = useState("");
   const [fileUpload, setFileUpload] = useState(null);
@@ -85,7 +87,10 @@ function CreateListing() {
 
       const result = await response.json();
       console.log(result.message);
-      alert("Listing has been added!");
+      toast.success("Listing has been added!");
+      setTimeout(() => {
+        navigate("/home");
+      }, 6000);
     } catch (error) {
       console.error("Error:", error);
       alert("An error occurred while adding the listing.");

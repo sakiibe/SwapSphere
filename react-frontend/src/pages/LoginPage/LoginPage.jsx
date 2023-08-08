@@ -11,6 +11,7 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loginError,setLoginError]= useState('');
+    const [invalidCredentials,setInvalidCredentials]= useState(false);
    
     useEffect(() => {
       // Hide the emailAlert element on initial load
@@ -35,6 +36,7 @@ const LoginPage = () => {
           }
         } catch (error) {
           if (error.response && error.response.data && error.response.data.error) {
+            setInvalidCredentials(true);
             setLoginError(error.response.data.error);
           } else {
             setLoginError('An error occurred during login');
@@ -64,7 +66,7 @@ const LoginPage = () => {
                     <div class="col-lg-7  max-height p-0 d-flex align-items-center ">
                         <div class="container-fluid m-0 p-4 ">
                             <div className=" text-white flex-responsive d-flex flex-column align-items-center justify-content-center">        
-                                <p class="fs-1 font">Login Page</p>
+                                <p class="fs-1 font">Login</p>
                             </div>
                             <form className='d-flex flex-column align-items-center justify-content-center px-3' >
 
@@ -87,6 +89,11 @@ const LoginPage = () => {
 {/*                                 
                                 <div className="d-flex flex-row justify-content-end w-100 p-5"> */}
                                 <button type="submit " class="btn btn-light mr-5  mx-1" onClick={handleLogin}>Login</button>
+                                  {invalidCredentials && (
+                                    <p className="text-red-500 text-base">
+                                      Incorrect Login credentials. Please Try again.
+                                    </p>
+                                  )}
                                 <button className="link-btn  mt-4 text-white" onClick={() => navigate("/user/register")}>Don't have an account? Register here.</button>
                                 {/* </div> */}
                             </form>

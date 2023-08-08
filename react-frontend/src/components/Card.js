@@ -33,13 +33,13 @@ export default function Card({ product }) {
           product.noOfTimesProductReported < 5 && (
             <p className="text-orange-500 text-base">
               Alert: This product was reported{" "}
-              {product.noOfTimesProductReported} number of times.
+              {product.noOfTimesProductReported} times.
             </p>
           )}
-        {product.noOfTimesProductReported > 5 && (
+        {product.noOfTimesProductReported >= 5 && (
           <p className="text-red-500 text-base">
             Warning: This product was reported{" "}
-            {product.noOfTimesProductReported} number of times.
+            {product.noOfTimesProductReported} times.
           </p>
         )}
       </div>

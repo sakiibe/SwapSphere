@@ -64,7 +64,7 @@ const ForgotPasswordPage = () => {
                 <div class="col-lg-7  max-height p-0 d-flex align-items-center ">
                     <div class="container-fluid m-0 p-4 ">
                         <div className=" text-white flex-responsive d-flex flex-column align-items-center justify-content-center">        
-                            <p class="fs-1 font">Forgot Password Page</p>
+                            <p class="fs-1 font">Forgot Password</p>
                         </div>
                         <form className=' d-flex flex-column align-items-center justify-content-center mb-0'>
 
