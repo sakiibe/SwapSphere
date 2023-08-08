@@ -6,7 +6,6 @@ import DragDropUploader from "../components/DragDropUploader";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function EditListing() {
