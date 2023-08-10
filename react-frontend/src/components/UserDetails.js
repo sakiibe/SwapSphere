@@ -1,3 +1,5 @@
+//author: Raj Patel <rj540530@dal.ca>
+
 import React from "react";
 
 const UserDetails = () => {

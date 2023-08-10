@@ -3,8 +3,6 @@ import ContactUsPage from "./pages/ContactUsPage";
 import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import FAQ from "./pages/FAQ";
 import Wishlist from "./pages/Wishlist";
 import CreateListing from "./pages/CreateListing";

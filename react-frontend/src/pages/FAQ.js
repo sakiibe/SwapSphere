@@ -1,3 +1,5 @@
+//author: Raj Patel <rj540530@dal.ca>
+
 import React, { useState } from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";

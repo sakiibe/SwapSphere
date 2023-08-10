@@ -1,9 +1,8 @@
+//author: Raj Patel <rj540530@dal.ca>
+
 import React from "react";
 import { useLocation } from "react-router-dom";
-import useWishlist from "../pages/useWishlist";
 const ProductDetails = () => {
-  const { addToWishlist, wishlistLoading } = useWishlist();
-
   const location = useLocation();
   const { email, productID } = location.state;
   console.log(email, productID);
