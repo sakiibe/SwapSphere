@@ -1,3 +1,5 @@
+//author: Raj Patel <rj540530@dal.ca>
+
 const express = require("express");
 const router = express.Router();
 const user = require("../models/user");
