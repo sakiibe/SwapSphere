@@ -1,17 +1,12 @@
+//author: Raj Patel <rj540530@dal.ca>
+
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../css/Product.css";
 import { ToastContainer, toast } from "react-toastify";
 import Share from "../components/Share";
-import {
-  Favorite,
-  AddShoppingCart,
-  Edit,
-  Delete,
-  Send,
-  Save,
-} from "@mui/icons-material";
+import { Favorite, Edit, Delete, Send, Save } from "@mui/icons-material";
 import {
   IconButton,
   TextField,

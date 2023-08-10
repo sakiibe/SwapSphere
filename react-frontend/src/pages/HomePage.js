@@ -3,7 +3,7 @@ import Card from "../components/Card";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@mui/material";
-import { Favorite, AddShoppingCart } from "@mui/icons-material";
+import { AddShoppingCart } from "@mui/icons-material";
 import axios from "axios";
 import useWishlist from "./useWishlist";
 import "../css/HomePage.css";

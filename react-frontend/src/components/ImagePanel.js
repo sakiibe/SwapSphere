@@ -1,3 +1,5 @@
+//author: Raj Patel <rj540530@dal.ca>
+
 import React, { useState } from "react";
 import product_image from "../images/tomato.jpeg";
 import product_image1 from "../images/flower.jpeg";
