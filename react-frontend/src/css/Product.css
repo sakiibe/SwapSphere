@@ -1,6 +1,0 @@
-.selected-image {
-    width: 400px; /* Set the desired width for the selected image */
-    height: 400px; /* Set the desired height for the selected image */
-    object-fit: contain; /* To ensure the image fills the container without distortion */
-  }
-  
