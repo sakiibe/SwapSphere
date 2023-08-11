@@ -1,3 +1,5 @@
+//Author: Sakib Sadman <sakib.sadman@dal.ca>
+
 import React from "react";
 import {
   FaFacebook,

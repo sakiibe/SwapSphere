@@ -33,16 +33,6 @@ const upload = multer({
 });
 
 router.get("/product/getAll", async (req, res) => {
-  // try {
-  //   const allProducts = await product.find();
-  //   if (!allProducts || allProducts.length === 0) {
-  //     return res.status(404).json({ message: "No products found" });
-  //   }
-  //   return res.status(200).json({ products: allProducts });
-  // } catch (error) {
-  //   console.error("Error:", error);
-  //   res.status(500).json({ message: "Internal server error: " + error.message });
-  // }
   product
     .find({}, { _id: 0 })
     .exec()
