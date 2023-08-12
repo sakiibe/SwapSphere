@@ -8,6 +8,7 @@ engaging platform that facilitates both browsing and buying.
 - _Date Created_: 26 JUL 2023
 - _Last Modification Date_: 26 JUL 2023
 - _Git URL_: <https://git.cs.dal.ca/ushah/csci-5709-grp-15>
+- _Deployment URL_: <https://csci-5709-grp-15.netlify.app/>
 
 ## Authors
 
@@ -46,12 +47,12 @@ Follow these steps to get a copy of the project running on your machine:
 
 3. Running the Frontend:
 
-`cd react-frontend`
+`cd Frontend`
 `npm install`
 
 4. Running the Backend:
 
-`cd backend`
+`cd Backend`
 `npm install`
 
 ## Deployment
@@ -69,6 +70,7 @@ Link: <https://csci-5709-grp-15.netlify.app/>
 - [Express](https://expressjs.com/) - Web application framework used for building web applications in Node.js.
 - [MongoDB] (https://www.mongodb.com/) - NoSQL database used for storing application data.
 - [AWS] (https://aws.amazon.com/) - Cloud platform used for storing product images.
+- [MaterialUI] (https://mui.com/material-ui/) - CSS Framework used for building custom user interfaces.
 
 ## Acknowledgments
 
